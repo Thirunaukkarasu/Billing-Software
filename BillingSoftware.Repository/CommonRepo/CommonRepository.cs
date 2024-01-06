@@ -17,7 +17,8 @@ namespace BillingSoftware.Repository.CommonRepo
         }
 
         public List<CompanyDetails> GetCompanyDetails()
-        { 
+        {
+             
             return dbContext.CompanyDetails.ToList();
         }
 

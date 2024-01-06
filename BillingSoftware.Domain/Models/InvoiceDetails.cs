@@ -7,7 +7,7 @@ namespace BillingSoftware.Domain.Models
     {
         [Key]
         public int Id { get; set; }
-        public Guid InvoicId { get; set; } = Guid.NewGuid();
+        public Guid InvoiceId { get; set; } = Guid.NewGuid();
         public Guid CompanyId { get; set; }
         public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }

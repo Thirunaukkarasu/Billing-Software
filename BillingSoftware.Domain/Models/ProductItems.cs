@@ -8,6 +8,8 @@ namespace Billing.Domain.Models
         [Key]
         public int Id { get; set; }
         public Guid ProductId { get; set; } = Guid.NewGuid();
+        public Guid InvoiceId { get; set; }
+        public Guid CompanyId { get; set; }
         public string ProductName { get; set; }
         public string Category { get; set; }
         public string DisplayName { get; set; }
@@ -17,6 +19,7 @@ namespace Billing.Domain.Models
         public string HSNCode { get; set; }
         public string MRP { get; set; }
         public string PurchaseRate { get; set; }
+        public string SalesRate { get; set; }
         public string GSTPercent { get; set; }
         public string DiscountPercent { get; set; }
 

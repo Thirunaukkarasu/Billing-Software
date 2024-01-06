@@ -78,7 +78,7 @@
                       Text="{Binding SelectedInvoiceDetails.SupplierPhoneNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"></TextBox>
                     <TextBox  Grid.Row="6" Grid.RowSpan="2" Grid.Column="1" Name="txtAddress" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedInvoiceDetails.SupplierAddress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     </TextBox>
-                    <TextBox Grid.Row="8" Grid.Column="1"  Name="txtProductName" Text="{Binding Product.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}">
+                    <TextBox Grid.Row="8" Grid.Column="1"  Name="txtProductName" Text="{Binding ProductItem.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}">
                     </TextBox>
                     <ComboBox Grid.Row="9" Grid.Column="1"  Name="cbCategory" Margin="2" >
                     </ComboBox>
@@ -103,11 +103,11 @@
                     <TextBlock Grid.Row="2" Name="lblQuantity" Text="Quantity Per Unit" Style="{StaticResource Text_Style}"/>
                     <TextBlock Grid.Row="3" Text="No of Units" Name="lblNoOfUnits" Style="{StaticResource Text_Style}"/>
                     <TextBlock Grid.Row="4" Text="HSN Code" Name="lblHSNCode" Style="{StaticResource Text_Style}"/>
-                    <TextBox Grid.Row="0" Grid.Column="1"  Name="txtDisplayName"  Style="{StaticResource TextBoxStyle}" Text="{Binding Product.DisplayName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                    <TextBox Grid.Row="1" Grid.Column="1"  Name="txtBatchNo"  Style="{StaticResource TextBoxStyle}" Text="{Binding Product.BatchNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                    <TextBox Grid.Row="2" Grid.Column="1"  Name="txtQuantity"  Style="{StaticResource TextBoxStyle}" Text="{Binding Product.Quantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                    <TextBox Grid.Row="3" Grid.Column="1"  Name="txtNoOfUnits"  Style="{StaticResource TextBoxStyle}"  Text="{Binding Product.HSNCode,   Mode=TwoWay}"></TextBox>
-                    <TextBox Grid.Row="4" Grid.Column="1"  Name="txtHSNCode"  Style="{StaticResource TextBoxStyle}"  Text="{Binding Product.NoOfUnits, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="0" Grid.Column="1"  Name="txtDisplayName"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.DisplayName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" IsEnabled="False"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1"  Name="txtBatchNo"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.BatchNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="2" Grid.Column="1"  Name="txtQuantity"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.QuantityPerUnit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="3" Grid.Column="1"  Name="txtNoOfUnits"  Style="{StaticResource TextBoxStyle}"  Text="{Binding ProductItem.NoOfUnits,   Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="4" Grid.Column="1"  Name="txtHSNCode"  Style="{StaticResource TextBoxStyle}"  Text="{Binding ProductItem.HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                 </Grid>
             </DockPanel>
             <DockPanel Grid.Column="1" Grid.Row="1">
@@ -129,17 +129,16 @@
                     <TextBlock Grid.Row="2" Name="lblSalesRate" Text="Sales Rate" Style="{StaticResource Text_Style}"/>
                     <TextBlock Grid.Row="3" Text="GST %" Name="lblGST" Style="{StaticResource Text_Style}"/>
                     <TextBlock Grid.Row="4" Text="Discount %" Name="lblDiscount" Style="{StaticResource Text_Style}"/>
-                    <TextBox Grid.Row="4" Grid.Column="1"  Name="txtMRP"  Style="{StaticResource TextBoxStyle}"></TextBox>
-                    <TextBox Grid.Row="0" Grid.Column="1"  Name="txtPurchaseRate"  Style="{StaticResource TextBoxStyle}" Text="{Binding Product.PurchaseRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                    <TextBox Grid.Row="1" Grid.Column="1"  Name="txtSalesRate"  Style="{StaticResource TextBoxStyle}"  Text="{Binding Product.SalesRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                    <TextBox Grid.Row="2" Grid.Column="1"  Name="txtGST"  Style="{StaticResource TextBoxStyle}" Text="{Binding Product.GSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"></TextBox>
-                    <TextBox Grid.Row="3" Grid.Column="1"  Name="txtDiscount"  Style="{StaticResource TextBoxStyle}" Text="{Binding Product.DiscountPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="4" Grid.Column="1"  Name="txtMRP"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.MRP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="0" Grid.Column="1"  Name="txtPurchaseRate"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.PurchaseRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1"  Name="txtSalesRate"  Style="{StaticResource TextBoxStyle}"  Text="{Binding ProductItem.SalesRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="2" Grid.Column="1"  Name="txtGST"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.GSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox Grid.Row="3" Grid.Column="1"  Name="txtDiscount"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.DiscountPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                 </Grid>
             </DockPanel>
             <DockPanel Grid.ColumnSpan="2" Grid.Row="2">
                 <DataGrid Name = "dataGrid" AlternatingRowBackground = "LightBlue"  
    AlternationCount = "2" HorizontalScrollBarVisibility="Visible" SelectionMode="Single" AutoGenerateColumns = "False" IsReadOnly="True" FrozenColumnCount="0" ItemsSource="{Binding ProductItemsSource,  UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" Margin="10">
-
                     <DataGrid.Columns>
                         <DataGridTextColumn Header = "Display Name" Binding = "{Binding Path=DisplayName}" />
                         <DataGridTextColumn Header = "Company Name" Binding = "{Binding CompanyName}" />

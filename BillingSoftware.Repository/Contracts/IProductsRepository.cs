@@ -4,6 +4,6 @@ namespace Billing.Repository.Contracts
 {
     public interface IProductsRepository
     {
-        bool SaveProductsDetails(ProductItems userDetails);
+        bool SaveProductsDetails(ProductItems productItems);
     }
 }

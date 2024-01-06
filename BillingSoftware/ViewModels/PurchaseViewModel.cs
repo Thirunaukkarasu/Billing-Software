@@ -24,6 +24,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
     private ICommand _companyDDSelectionChangeCommand;
     private ObservableCollection<ProductsCollection> _productItems;
     private readonly ICommonService _commonService;
+    private readonly IProductService _productService;
     #endregion Declaration
 
     #region Commands
@@ -184,9 +185,10 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
     #endregion Properties
 
     #region Constructor
-    public PurchaseViewModel(ICommonService commonService)
+    public PurchaseViewModel(ICommonService commonService, IProductService productService)
     { 
         _commonService = commonService; 
+        _productService = productService;
         ProductItemsSource = new ObservableCollection<ProductsCollection>();
         ProductItem = new ProductItems(); 
         CompanySource =  _commonService.GetCompanyDetails().Value.ToObservableCollection(); 
@@ -197,7 +199,21 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
     #region CommandMethods 
     public void SaveProducts()
     {
-         
+        bool IsNewCompany = false;
+        if(SelectedCompany != null)
+        { 
+            ProductItem.CompanyId = SelectedCompany.CompanyId;
+        }
+        if(SelectedInvoiceDetails != null)
+        {
+            ProductItem.InvoiceId = SelectedInvoiceDetails.InvoiceId;
+        }
+        
+
+        _productService.SaveProductItems(ProductItem);
+
+
+
     }
 
     public void ProductSelectionChanged()

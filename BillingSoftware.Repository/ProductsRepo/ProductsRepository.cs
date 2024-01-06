@@ -6,17 +6,17 @@ namespace Billing.Repository.Imp.ProductsRepo
 {
     public class ProductsRepository : IProductsRepository
     {
-        private POSBillingDBContext dbContext;
+        private readonly POSBillingDBContext dbContext;
         public ProductsRepository(POSBillingDBContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public bool SaveProductsDetails(ProductItems userDetails)
+        public bool SaveProductsDetails(ProductItems productItems)
         {
-            dbContext.ProductItems.Add(userDetails);
+            dbContext.ProductItems.Add(productItems);
             var rowAffected = dbContext.SaveChanges();
-            return rowAffected > 0 ? true : false;
+            return rowAffected > 0;
         }
     }
 }
