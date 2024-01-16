@@ -11,5 +11,7 @@ namespace BillingSoftware.Core.Contracts
     public interface IProductService
     {
         Result<bool> SaveProductItems(ProductItems productItems);
+
+        Result<ProductsCollection> GetProductsItemsDetails(Guid invoiceId, Guid companyId);
     }
 }

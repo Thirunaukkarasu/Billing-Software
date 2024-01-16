@@ -138,7 +138,7 @@
             </DockPanel>
             <DockPanel Grid.ColumnSpan="2" Grid.Row="2">
                 <DataGrid Name = "dataGrid" AlternatingRowBackground = "LightBlue"  
-   AlternationCount = "2" HorizontalScrollBarVisibility="Visible" SelectionMode="Single" AutoGenerateColumns = "False" IsReadOnly="True" FrozenColumnCount="0" ItemsSource="{Binding ProductItemsSource,  UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" Margin="10">
+   AlternationCount = "2" HorizontalScrollBarVisibility="Visible" SelectionMode="Single" AutoGenerateColumns = "False" IsReadOnly="True" FrozenColumnCount="0" ItemsSource="{Binding ProductItemsSource,  UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedProductRow, Mode=OneWay}" Margin="10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header = "Display Name" Binding = "{Binding Path=DisplayName}" />
                         <DataGridTextColumn Header = "Company Name" Binding = "{Binding CompanyName}" />
@@ -161,7 +161,7 @@
                 <Button x:Name="btnSave" Height="30" Margin="2" DockPanel.Dock="Top" Command="{Binding SaveProductsCommand}" BorderThickness="3">save</Button>
                 <Button x:Name="btnUpdate" Height="30" Margin="2" DockPanel.Dock="Top" Command="{Binding UpdateProducts}" BorderThickness="3">Update</Button>
                 <Button x:Name="btnDelete" Height="30" Margin="2" DockPanel.Dock="Top" Command="{Binding DeleteProducts}" BorderThickness="3">Delete</Button>
-                <Button x:Name="BtnPrint" Height="30" Margin="2" DockPanel.Dock="Top" BorderThickness="3">Print</Button>
+                <Button x:Name="BtnPrint" Height="30" Margin="2" DockPanel.Dock="Top" BorderThickness="3" Command="{Binding PrintInvoiceCommand}" >Print</Button>
                 <Button x:Name="BtnPrintPreview"  Margin="2" DockPanel.Dock="Top" BorderThickness="3" VerticalAlignment="Top">Preview</Button>
             </DockPanel>
         </Grid>

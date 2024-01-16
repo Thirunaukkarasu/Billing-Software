@@ -99,6 +99,9 @@ public partial class App : Application
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddScoped<ICommonService, CommonService>();
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IPrintingService, PrintingService>();
+        services.AddScoped<IPaginator, Paginator>();
 
         // Views and ViewModels
         services.AddTransient<IShellWindow, ShellWindow>();

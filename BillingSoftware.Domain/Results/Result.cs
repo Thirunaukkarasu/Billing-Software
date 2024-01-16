@@ -24,7 +24,7 @@ namespace Billing.Domain.Results
         }
 
         public static Result<T> Fail<T>(string message)
-        {
+            {
             return new Result<T>(default, false, message);
         }
 

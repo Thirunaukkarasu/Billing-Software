@@ -14,10 +14,10 @@ namespace Billing.Repository.Imp.DBContext
         #endregion
 
         #region Public properties
-        public DbSet<User> User { get; set; }
-        public DbSet<ProductItems> ProductItems { get; set; }
-        public DbSet<CompanyDetails> CompanyDetails { get; set; }
-        public DbSet<InvoiceDetails> InvoiceDetails { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<ProductItems> ProductItems { get; set; }
+        public virtual DbSet<CompanyDetails> CompanyDetails { get; set; }
+        public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
         #endregion
 
         #region Overridden method

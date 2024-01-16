@@ -20,6 +20,19 @@ namespace BillingSoftware.Core.Services
             _productsRepository = productsRepository;
         }
 
+        public Result<ProductsCollection> GetProductsItemsDetails(Guid invoiceId, Guid companyId)
+        {
+            try
+            {
+                var result = _productsRepository.GetProductsItemsDetails(invoiceId, companyId);
+                return result == null ? Result.Fail<ProductsCollection>("Unable to save product items. Please try again") : Result.Ok(result);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail<ProductsCollection>("Error while reading " + e.Message);
+            } 
+        }
+
         public Result<bool> SaveProductItems(ProductItems productItems)
         {
 
