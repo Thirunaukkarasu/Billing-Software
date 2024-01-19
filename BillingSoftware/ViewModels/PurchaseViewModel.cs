@@ -1,13 +1,11 @@
 ﻿using Billing.Domain.Models;
 using BillingSoftware.Core.Contracts;
 using BillingSoftware.Core.Contracts.Services;
-using BillingSoftware.Core.Services;
 using BillingSoftware.Domain.Extentions;
 using BillingSoftware.Domain.Models;
 using BillingSoftware.PrintTemplates;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -70,6 +68,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
     {
         get
         {
+            
             return _productItem;
         }
         set
@@ -77,6 +76,22 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
             _productItem = new ProductItems();
             SetProperty(ref _productItem, value);
             OnPropertyChanged("Product");
+            OnPropertyChanged("DisplayName");
+        }
+    }
+
+    private string _displayName;
+    public string DisplayName
+    {
+        get 
+        {
+            var companyName = SelectedCompany != null ? SelectedCompany.CompanyName : CompanyText;
+            return $"{companyName} {ProductItem?.ProductName} {ProductItem?.QuantityPerUnit}";   
+        }
+        set
+        {
+            SetProperty(ref _displayName, value);
+            OnPropertyChanged("DisplayName");
         }
     }
 
@@ -117,14 +132,15 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         }
         set
         {
-            _SelectedCompany = value; 
+            _SelectedCompany = value;  
             OnPropertyChanged("SelectedCompany");
         }
     }
 
     private string _companyText;
     public string CompanyText
-    { 
+    {
+        get => _companyText;
         set
         {
             _companyText = value;
@@ -156,7 +172,12 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
             _SelectedInvoice = value;
             GetProductItemsByInvoice(value.InvoiceId, SelectedCompany.CompanyId);
             ProductItem = ProductItemsSource.FirstOrDefault();
+            if (ProductItem == null)
+            {
+                ProductItem = new ProductItems();
+            }
             OnPropertyChanged("SelectedInvoice");
+            OnPropertyChanged("ProductItem");
         }
     }
 
@@ -169,8 +190,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         }
         set
         {
-            _SelectedInvoiceDetails = value;
-           
+            _SelectedInvoiceDetails = value; 
             OnPropertyChanged("SelectedInvoiceDetails");
             OnPropertyChanged("ProductItemsSource");
         }
@@ -181,6 +201,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
     private string _invoiceText;
     public string InvoiceText
     {
+        get => _invoiceText;
         set
         {
             _invoiceText = value;
@@ -222,8 +243,9 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         _productService = productService;
         _printingService = printingService;
         _paginator = paginator;
-        //ProductItemsSource = new ObservableCollection<ProductItems>();
         ProductItem = new ProductItems(); 
+        SelectedInvoiceDetails = new InvoiceDetails();
+        SelectedInvoiceDetails.InvoiceDate = DateTime.Now; 
         CompanySource =  _commonService.GetCompanyDetails().Value.ToObservableCollection(); 
     }
     #endregion Constructor
@@ -231,23 +253,49 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
     #region CommandMethods 
     public void SaveProducts()
     {
-        bool IsNewCompany = false;
-        if(SelectedCompany != null)
-        { 
+        var companyDetails = new CompanyDetails(); 
+        if (SelectedCompany != null)
+        {
             ProductItem.CompanyId = SelectedCompany.CompanyId;
         }
-        if(SelectedInvoiceDetails != null)
+        else
         {
-            ProductItem.InvoiceId = SelectedInvoiceDetails.InvoiceId;
-        } 
+            companyDetails.CompanyName = CompanyText;
+            ProductItem.CompanyId = companyDetails.CompanyId;
+            _commonService.SaveCompanyDetails(companyDetails);
+            CompanySource = _commonService.GetCompanyDetails().Value.ToObservableCollection();
+            SelectedCompany = CompanySource.Where(x => companyDetails.CompanyId == x.CompanyId).FirstOrDefault();
+        }
+        if (SelectedInvoice != null)
+        {
+            ProductItem.InvoiceId = SelectedInvoice.InvoiceId;
+        }
+        else 
+        {
+            var invoiceDetails = new InvoiceDetails()
+            {
+                InvoiceNo = InvoiceText,
+                InvoiceDate = SelectedInvoiceDetails.InvoiceDate,
+                SupplierAddress = SelectedInvoiceDetails.SupplierAddress,
+                SupplierName = SelectedInvoiceDetails.SupplierName,
+                SupplierPhoneNumber = SelectedInvoiceDetails.SupplierPhoneNumber,
+                CompanyId = companyDetails.CompanyId,
+                InvoiceDisplayNumber = $"{InvoiceText} - ({SelectedInvoiceDetails.InvoiceDate:dd MMMM yyyy})"
+            };
+            ProductItem.InvoiceId = invoiceDetails.InvoiceId;
+            _commonService.SaveInvoiceDetails(invoiceDetails); 
+        }
+        ProductItem.DisplayName = DisplayName;
         _productService.SaveProductItems(ProductItem);
+        InvoiceSource = _commonService.GetInvoiceDetails().Value.ToObservableCollection();
+        SelectedInvoice = InvoiceSource.Where(x => ProductItem.InvoiceId == x.InvoiceId).FirstOrDefault();
+        GetProductItemsByInvoice(ProductItem.InvoiceId, ProductItem.CompanyId);
         ProductItem = new();
-        GetProductItemsByInvoice(SelectedInvoice.InvoiceId, SelectedCompany.CompanyId);
     }
 
     public void ProductSelectionChanged()
     {
-       
+        ProductItem = SelectedProductRow;
     }
 
     public void CompanyDDSelectionChanged()

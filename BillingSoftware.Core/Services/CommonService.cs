@@ -2,6 +2,7 @@
 using BillingSoftware.Core.Contracts;
 using BillingSoftware.Domain.Models;
 using BillingSoftware.Repository.Contracts;
+using System.ComponentModel.Design;
 
 namespace BillingSoftware.Core.Services
 {
@@ -38,6 +39,16 @@ namespace BillingSoftware.Core.Services
             {
                 return Result.Fail<List<InvoiceDetails>>("Error while reading " + e.Message);
             }
+        }
+
+        public void SaveCompanyDetails(CompanyDetails companyDetails)
+        {
+            _commonRepository.SaveCompanyDetails(companyDetails); 
+        }
+
+        public void SaveInvoiceDetails(InvoiceDetails invoiceDetails)
+        { 
+            _commonRepository.SaveInvoiceDetails(invoiceDetails); 
         }
     }
 }

@@ -6,7 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:properties="clr-namespace:BillingSoftware.Properties"
-    xmlns:cb="clr-namespace:BillingSoftware.Behaviors"
+    xmlns:cb="clr-namespace:BillingSoftware.Behaviors" 
+    xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -72,7 +73,7 @@
        Text ="{Binding InvoiceText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                               >
                     </ComboBox>
-                    <DatePicker Grid.Row="2" Grid.Column="1" Height="30" Margin="2" SelectedDate="{Binding SelectedInvoiceDetails.InvoiceDate}" />
+                    <DatePicker Grid.Row="2" Grid.Column="1" Height="30" Margin="2" SelectedDate="{Binding SelectedInvoiceDetails.InvoiceDate , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedDateFormat="Short" />
                     <TextBox Grid.Row="4" Grid.Column="1"  Name="txtSupplierName"  Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedInvoiceDetails.SupplierName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ></TextBox>
                     <TextBox Grid.Row="5" Grid.Column="1"  Name="txtPhoneNumber" 
                       Text="{Binding SelectedInvoiceDetails.SupplierPhoneNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"></TextBox>
@@ -103,7 +104,7 @@
                     <TextBlock Grid.Row="2" Name="lblQuantity" Text="Quantity Per Unit" Style="{StaticResource Text_Style}"/>
                     <TextBlock Grid.Row="3" Text="No of Units" Name="lblNoOfUnits" Style="{StaticResource Text_Style}"/>
                     <TextBlock Grid.Row="4" Text="HSN Code" Name="lblHSNCode" Style="{StaticResource Text_Style}"/>
-                    <TextBox Grid.Row="0" Grid.Column="1"  Name="txtDisplayName"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.DisplayName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" IsEnabled="False"></TextBox>
+                    <TextBox Grid.Row="0" Grid.Column="1"  Name="txtDisplayName"  Style="{StaticResource TextBoxStyle}" Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" IsEnabled="False"></TextBox>
                     <TextBox Grid.Row="1" Grid.Column="1"  Name="txtBatchNo"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.BatchNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                     <TextBox Grid.Row="2" Grid.Column="1"  Name="txtQuantity"  Style="{StaticResource TextBoxStyle}" Text="{Binding ProductItem.QuantityPerUnit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                     <TextBox Grid.Row="3" Grid.Column="1"  Name="txtNoOfUnits"  Style="{StaticResource TextBoxStyle}"  Text="{Binding ProductItem.NoOfUnits,   Mode=TwoWay}"></TextBox>
@@ -137,23 +138,26 @@
                 </Grid>
             </DockPanel>
             <DockPanel Grid.ColumnSpan="2" Grid.Row="2">
-                <DataGrid Name = "dataGrid" AlternatingRowBackground = "LightBlue"  
-   AlternationCount = "2" HorizontalScrollBarVisibility="Visible" SelectionMode="Single" AutoGenerateColumns = "False" IsReadOnly="True" FrozenColumnCount="0" ItemsSource="{Binding ProductItemsSource,  UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedProductRow, Mode=OneWay}" Margin="10">
+                <DataGrid Name = "ProductDataGrid" AlternatingRowBackground = "LightBlue"  
+   AlternationCount = "2" HorizontalScrollBarVisibility="Visible" SelectionMode="Single" AutoGenerateColumns = "False" IsReadOnly="True" FrozenColumnCount="0" ItemsSource="{Binding ProductItemsSource,  UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedProductRow,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10">
+                    <ie:Interaction.Triggers>
+                        <ie:EventTrigger EventName="SelectionChanged">
+                            <ie:InvokeCommandAction Command="{Binding ProductSelectionChangedCommand}"  CommandParameter="{Binding ElementName=ProductDataGrid, Path=SelectedItem}"/>
+                        </ie:EventTrigger>
+                    </ie:Interaction.Triggers>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header = "Display Name" Binding = "{Binding Path=DisplayName}" />
-                        <DataGridTextColumn Header = "Company Name" Binding = "{Binding CompanyName}" />
-                        <DataGridTextColumn Header = "Product Name" Binding = "{Binding CompanyName}"/>
-                        <DataGridTextColumn Header = "Quantity"  Binding = "{Binding PhoneNumber}" />
-                        <DataGridTextColumn Header = "No Of Units"  Binding = "{Binding Path=HSNCode}"/>
-                        <DataGridTextColumn Header = "HSN Code" />
-                        <DataGridTextColumn Header = "MRP" />
-                        <DataGridTextColumn Header = "Sales Price" />
-                        <DataGridTextColumn Header = "GST %" />
-                        <DataGridTextColumn Header = "Discount" />
-                        <DataGridTextColumn Header = "Net Price" />
-                        <DataGridTextColumn Header = "Expiry Date" />
+                        <DataGridTextColumn Header = "Product Name" Binding = "{Binding Path=ProductName}"/>
+                        <DataGridTextColumn Header = "Quantity"  Binding = "{Binding Path=QuantityPerUnit}" />
+                        <DataGridTextColumn Header = "No Of Units"  Binding = "{Binding Path=NoOfUnits}"/>
+                        <DataGridTextColumn Header = "HSN Code"  Binding = "{Binding Path=HSNCode}" />
+                        <DataGridTextColumn Header = "MRP"  Binding = "{Binding Path=MRP}" />
+                        <DataGridTextColumn Header = "Purchase Rate"  Binding = "{Binding Path=PurchaseRate}" />
+                        <DataGridTextColumn Header = "Sales Price"  Binding = "{Binding Path=SalesRate}" />
+                        <DataGridTextColumn Header = "GST %"  Binding = "{Binding Path=GSTPercent}" />
+                        <DataGridTextColumn Header = "Discount"  Binding = "{Binding Path=DiscountPercent}" />
+                        <DataGridTextColumn Header = "Expiry Date"  Binding = "{Binding Path=NoOfUnits}" />
                     </DataGrid.Columns>
-
                 </DataGrid>
 
             </DockPanel>

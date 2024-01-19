@@ -8,5 +8,8 @@ namespace BillingSoftware.Repository.Contracts
     {
         List<CompanyDetails> GetCompanyDetails();
         List<InvoiceDetails> GetInvoiceDetails(Guid? companyId = null);
+
+        void SaveCompanyDetails(CompanyDetails companyDetails);
+        void SaveInvoiceDetails(InvoiceDetails invoiceDetails);
     }
 }

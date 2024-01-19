@@ -8,5 +8,9 @@ namespace BillingSoftware.Core.Contracts
         Result<List<CompanyDetails>> GetCompanyDetails();
 
         Result<List<InvoiceDetails>> GetInvoiceDetails(Guid? companyId = null);
+
+        void SaveCompanyDetails(CompanyDetails companyDetails);
+
+        void SaveInvoiceDetails(InvoiceDetails invoiceDetails);
     }
 }

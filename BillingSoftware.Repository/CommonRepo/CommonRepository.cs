@@ -18,7 +18,6 @@ namespace BillingSoftware.Repository.CommonRepo
 
         public List<CompanyDetails> GetCompanyDetails()
         {
-             
             return dbContext.CompanyDetails.ToList();
         }
 
@@ -33,5 +32,18 @@ namespace BillingSoftware.Repository.CommonRepo
                 return dbContext.InvoiceDetails.ToList();
             } 
         }
+
+        public void SaveCompanyDetails(CompanyDetails companyDetails)
+        {
+            dbContext.CompanyDetails.Add(companyDetails);
+            dbContext.SaveChanges();
+        }
+
+        public void SaveInvoiceDetails(InvoiceDetails invoiceDetails)
+        {
+            dbContext.InvoiceDetails.Add(invoiceDetails);
+            dbContext.SaveChanges();
+        }
+         
     }
 }
