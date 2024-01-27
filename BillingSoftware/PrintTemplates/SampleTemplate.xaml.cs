@@ -11,11 +11,7 @@ namespace BillingSoftware.PrintTemplates
         public SampleTemplate()
         {
             InitializeComponent();
-
-            for (var i = 1; i <= 30; i++)
-            {
-                ItemsControl1.Items.Add(new ReportDataModel(i, $"Col {i}", "Part of list 1"));
-            }
+ 
 
             for (var i = 1; i <= 100; i++)
             {

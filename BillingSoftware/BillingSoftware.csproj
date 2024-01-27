@@ -11,6 +11,16 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <None Remove="Images\IMG1.jpg" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="Images\IMG1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
