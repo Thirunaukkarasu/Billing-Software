@@ -1,17 +1,19 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Billing.Domain.Models
 {
+    [Table("ProductItem")]
     public class ProductItems
     {
         [Key]
-        public int Id { get; set; }
-        public Guid ProductId { get; set; } = Guid.NewGuid();
+        public Guid? ProductId { get; set; }
         public Guid InvoiceId { get; set; }
         public Guid CompanyId { get; set; }
         public string ProductName { get; set; }
-        public string Category { get; set; }
+        public Guid? CategoryId { get; set; }
+        public Guid? MeasurementUnitId { get; set; }
         public string DisplayName { get; set; }
         public string BatchNo { get; set; }
         public string QuantityPerUnit { get; set; }
@@ -22,6 +24,5 @@ namespace Billing.Domain.Models
         public string SalesRate { get; set; }
         public string GSTPercent { get; set; }
         public string DiscountPercent { get; set; }
-
     }
 }

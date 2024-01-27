@@ -1,6 +1,7 @@
 ﻿using Billing.Domain.Results;
 using BillingSoftware.Core.Contracts;
 using BillingSoftware.Domain.Models;
+using BillingSoftware.Repository.CommonRepo;
 using BillingSoftware.Repository.Contracts;
 using System.ComponentModel.Design;
 
@@ -9,9 +10,13 @@ namespace BillingSoftware.Core.Services
     public class CommonService : ICommonService
     {
         private readonly ICommonRepository _commonRepository;
-        public CommonService(ICommonRepository commonRepository)
+        private readonly IProductCategoryRepository _productCategoryRepository;
+        private readonly IProductMeasurementRepository _productMeasurementRepository;
+        public CommonService(ICommonRepository commonRepository, IProductCategoryRepository productCategoryRepository, IProductMeasurementRepository productMeasurementRepository)
         {
             _commonRepository = commonRepository;
+            _productCategoryRepository = productCategoryRepository;
+            _productMeasurementRepository = productMeasurementRepository;
         }
 
         public Result<List<CompanyDetails>> GetCompanyDetails()
@@ -41,14 +46,42 @@ namespace BillingSoftware.Core.Services
             }
         }
 
-        public void SaveCompanyDetails(CompanyDetails companyDetails)
+        public Guid SaveCompanyDetails(CompanyDetails companyDetails)
         {
-            _commonRepository.SaveCompanyDetails(companyDetails); 
+           return _commonRepository.SaveCompanyDetails(companyDetails); 
         }
 
-        public void SaveInvoiceDetails(InvoiceDetails invoiceDetails)
-        { 
-            _commonRepository.SaveInvoiceDetails(invoiceDetails); 
+        public Guid SaveInvoiceDetails(InvoiceDetails invoiceDetails)
+        {
+            return _commonRepository.SaveInvoiceDetails(invoiceDetails); 
+        }
+
+        public Result<List<ProductItemCategory>> GetProductItemCategory()
+        {
+
+            try
+            {
+                var result = _productCategoryRepository.GetProductItemCategory();
+                return result is null ? Result.Fail<List<ProductItemCategory>>("Category not fount. Please add Category") : Result.Ok(result);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail<List<ProductItemCategory>>("Error while reading " + e.Message);
+            }
+        }
+
+        public Result<List<ProductItemMeasurementUnit>> GetProductItemMeasurementUnit()
+        {
+
+            try
+            {
+                var result = _productMeasurementRepository.GetProductMeasurementUnit();
+                return result is null ? Result.Fail<List<ProductItemMeasurementUnit>>("Measurement Units not fount. Please add Category") : Result.Ok(result);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail<List<ProductItemMeasurementUnit>>("Error while reading " + e.Message);
+            }
         }
     }
 }

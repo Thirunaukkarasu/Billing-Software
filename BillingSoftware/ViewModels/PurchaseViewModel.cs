@@ -1,6 +1,7 @@
 ﻿using Billing.Domain.Models;
 using BillingSoftware.Core.Contracts;
 using BillingSoftware.Core.Contracts.Services;
+using BillingSoftware.Domain.Entities;
 using BillingSoftware.Domain.Extentions;
 using BillingSoftware.Domain.Models;
 using BillingSoftware.PrintTemplates;
@@ -52,7 +53,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         {
             _productItemsSource = new();
             SetProperty(ref _productItemsSource, value); 
-            OnPropertyChanged("ProductItems");
+            OnPropertyChanged(nameof(ProductItemsSource));
         }
     }
     public ProductItems SelectedProductRow
@@ -61,22 +62,29 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         set
         {
             SetProperty(ref _selectedItem, value); 
-            OnPropertyChanged("SelectedProductRow");
+            OnPropertyChanged(nameof(SelectedProductRow));
         }
     } 
     public ProductItems ProductItem
     {
         get
-        {
-            
+        { 
             return _productItem;
         }
         set
         {
             _productItem = new ProductItems();
             SetProperty(ref _productItem, value);
-            OnPropertyChanged("Product");
-            OnPropertyChanged("DisplayName");
+            if (value.CategoryId != null)
+            {
+                SelectedProductItemCategory = ProductItemCategorySource.FirstOrDefault(x => x.CategoryId == value.CategoryId);
+            }
+            if (value.MeasurementUnitId != null)
+            {
+                SelectedProductItemMeasurementUnit = ProductItemMeasurementUnitSource.FirstOrDefault(x => x.MeasurementUnitId == value.MeasurementUnitId);
+            }
+            OnPropertyChanged(nameof(ProductItem)); 
+            OnPropertyChanged(nameof(DisplayName)); 
         }
     }
 
@@ -86,12 +94,12 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         get 
         {
             var companyName = SelectedCompany != null ? SelectedCompany.CompanyName : CompanyText;
-            return $"{companyName} {ProductItem?.ProductName} {ProductItem?.QuantityPerUnit}";   
+            return $"{companyName} {ProductItem?.ProductName} {ProductItem?.QuantityPerUnit}{SelectedProductItemMeasurementUnit?.Symbol}";   
         }
         set
         {
-            SetProperty(ref _displayName, value);
-            OnPropertyChanged("DisplayName");
+            SetProperty(ref _displayName, value); 
+            OnPropertyChanged(nameof(DisplayName));
         }
     }
 
@@ -105,7 +113,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         set 
         {
             _companySource = value;
-            OnPropertyChanged("CompanySource");
+            OnPropertyChanged(nameof(CompanySource));
         } 
     }
 
@@ -119,7 +127,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         set
         {
             _invoiceSource = value;
-            OnPropertyChanged("InvoiceSource");
+            OnPropertyChanged(nameof(InvoiceSource));
         }
     }
 
@@ -133,7 +141,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         set
         {
             _SelectedCompany = value;  
-            OnPropertyChanged("SelectedCompany");
+            OnPropertyChanged(nameof(SelectedCompany));
         }
     }
 
@@ -153,9 +161,9 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
             if (SelectedCompany != null)
             {
                 InvoiceSource = _commonService.GetInvoiceDetails(_SelectedCompany.CompanyId).Value.ToObservableCollection();
-                OnPropertyChanged("InvoiceSource");
+                OnPropertyChanged(nameof(InvoiceSource));
             }
-            OnPropertyChanged("CompanyText");
+            OnPropertyChanged(nameof(CompanyText));
         }
     }
 
@@ -169,15 +177,26 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         }
         set
         {
-            _SelectedInvoice = value;
-            GetProductItemsByInvoice(value.InvoiceId, SelectedCompany.CompanyId);
-            ProductItem = ProductItemsSource.FirstOrDefault();
-            if (ProductItem == null)
-            {
-                ProductItem = new ProductItems();
+            if(value != null) 
+            { 
+                _SelectedInvoice = value;
+                GetProductItemsByInvoice(value.InvoiceId, SelectedCompany.CompanyId);
+                ProductItem = ProductItemsSource.FirstOrDefault();
+                if (ProductItem?.CategoryId != null)
+                {
+                    SelectedProductItemCategory = ProductItemCategorySource.FirstOrDefault(x => x.CategoryId == ProductItem.CategoryId);
+                }
+                if (ProductItem?.MeasurementUnitId != null)
+                {
+                    SelectedProductItemMeasurementUnit = ProductItemMeasurementUnitSource.FirstOrDefault(x => x.MeasurementUnitId == ProductItem.MeasurementUnitId);
+                }
+                if (ProductItem == null)
+                {
+                    ProductItem = new ProductItems();
+                }
+                OnPropertyChanged(nameof(SelectedInvoice));
+                OnPropertyChanged(nameof(ProductItem));
             }
-            OnPropertyChanged("SelectedInvoice");
-            OnPropertyChanged("ProductItem");
         }
     }
 
@@ -191,12 +210,10 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         set
         {
             _SelectedInvoiceDetails = value; 
-            OnPropertyChanged("SelectedInvoiceDetails");
-            OnPropertyChanged("ProductItemsSource");
+            OnPropertyChanged(nameof(SelectedInvoiceDetails));
+            OnPropertyChanged(nameof(ProductItemsSource));
         }
-    }
-
-   
+    } 
 
     private string _invoiceText;
     public string InvoiceText
@@ -213,11 +230,96 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
             if (SelectedInvoice != null)
             {
                 SelectedInvoiceDetails = SelectedInvoice;
-                OnPropertyChanged("SelectedInvoiceDetails");
+                OnPropertyChanged(nameof(SelectedInvoiceDetails));
             }
-            OnPropertyChanged("InvoiceText");
+            OnPropertyChanged(nameof(InvoiceText));
         }
     }
+
+
+    private ObservableCollection<ProductItemCategory> _productItemCategorySource;
+    public ObservableCollection<ProductItemCategory> ProductItemCategorySource
+    {
+        get
+        {
+            return _productItemCategorySource;
+        }
+        set
+        {
+            _productItemCategorySource = value;
+            OnPropertyChanged(nameof(ProductItemCategorySource));
+        }
+    }
+
+    private ProductItemCategory _SelectedProductItemCategory;
+    public ProductItemCategory SelectedProductItemCategory
+    {
+        get
+        {
+            return _SelectedProductItemCategory;
+        }
+        set
+        {
+            _SelectedProductItemCategory = value;
+            ProductItem.CategoryId = value?.CategoryId;
+            OnPropertyChanged(nameof(SelectedProductItemCategory));
+        }
+    }
+
+    private string _ProductItemCategoryText;
+    public string ProductItemCategoryText
+    {
+        get => _ProductItemCategoryText;
+        set
+        {
+            _ProductItemCategoryText = value; 
+            OnPropertyChanged(nameof(ProductItemCategoryText));
+        }
+    }
+
+
+    //MeasurementUnit 
+
+    private ObservableCollection<ProductItemMeasurementUnit> _productItemMeasurementUnitSource;
+    public ObservableCollection<ProductItemMeasurementUnit> ProductItemMeasurementUnitSource
+    {
+        get
+        {
+            return _productItemMeasurementUnitSource;
+        }
+        set
+        {
+            _productItemMeasurementUnitSource = value;
+            OnPropertyChanged(nameof(ProductItemMeasurementUnitSource));
+        }
+    }
+
+    private ProductItemMeasurementUnit _SelectedProductItemMeasurementUnit;
+    public ProductItemMeasurementUnit SelectedProductItemMeasurementUnit
+    {
+        get
+        {
+            return _SelectedProductItemMeasurementUnit;
+        }
+        set
+        {
+            _SelectedProductItemMeasurementUnit = value;
+            ProductItem.MeasurementUnitId = value?.MeasurementUnitId;
+            OnPropertyChanged(nameof(SelectedProductItemMeasurementUnit));
+        }
+    }
+
+    private string _ProductItemMeasurementUnitText;
+    public string ProductItemMeasurementUnitText
+    {
+        get => _ProductItemMeasurementUnitText;
+        set
+        {
+            _ProductItemMeasurementUnitText = value;
+            OnPropertyChanged(nameof(ProductItemMeasurementUnitText));
+        }
+    }
+
 
     /// <summary>
     /// XPS version of the FixedDocument. 
@@ -247,50 +349,63 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         SelectedInvoiceDetails = new InvoiceDetails();
         SelectedInvoiceDetails.InvoiceDate = DateTime.Now; 
         CompanySource =  _commonService.GetCompanyDetails().Value.ToObservableCollection(); 
+        ProductItemCategorySource = _commonService.GetProductItemCategory().Value.ToObservableCollection();
+        ProductItemMeasurementUnitSource = _commonService.GetProductItemMeasurementUnit().Value.ToObservableCollection();
     }
     #endregion Constructor
 
     #region CommandMethods 
     public void SaveProducts()
     {
-        var companyDetails = new CompanyDetails(); 
-        if (SelectedCompany != null)
+        var companyDetails = new CompanyDetails();
+        Guid companyId = Guid.Empty;
+        if (ProductItem.ProductId != null)
         {
-            ProductItem.CompanyId = SelectedCompany.CompanyId;
+            _productService.SaveProductItems(ProductItem);
         }
         else
         {
-            companyDetails.CompanyName = CompanyText;
-            ProductItem.CompanyId = companyDetails.CompanyId;
-            _commonService.SaveCompanyDetails(companyDetails);
-            CompanySource = _commonService.GetCompanyDetails().Value.ToObservableCollection();
-            SelectedCompany = CompanySource.Where(x => companyDetails.CompanyId == x.CompanyId).FirstOrDefault();
-        }
-        if (SelectedInvoice != null)
-        {
-            ProductItem.InvoiceId = SelectedInvoice.InvoiceId;
-        }
-        else 
-        {
-            var invoiceDetails = new InvoiceDetails()
+            if (SelectedCompany != null)
             {
-                InvoiceNo = InvoiceText,
-                InvoiceDate = SelectedInvoiceDetails.InvoiceDate,
-                SupplierAddress = SelectedInvoiceDetails.SupplierAddress,
-                SupplierName = SelectedInvoiceDetails.SupplierName,
-                SupplierPhoneNumber = SelectedInvoiceDetails.SupplierPhoneNumber,
-                CompanyId = companyDetails.CompanyId,
-                InvoiceDisplayNumber = $"{InvoiceText} - ({SelectedInvoiceDetails.InvoiceDate:dd MMMM yyyy})"
-            };
-            ProductItem.InvoiceId = invoiceDetails.InvoiceId;
-            _commonService.SaveInvoiceDetails(invoiceDetails); 
+                ProductItem.CompanyId = SelectedCompany.CompanyId;
+            }
+            else
+            {
+                companyDetails.CompanyName = CompanyText;
+                companyId = _commonService.SaveCompanyDetails(companyDetails);
+                CompanySource = _commonService.GetCompanyDetails().Value.ToObservableCollection();
+                SelectedCompany = CompanySource.Where(x => x.CompanyId == companyId).FirstOrDefault();
+                ProductItem.CompanyId = companyId;
+            }
+            if (SelectedInvoice != null)
+            {
+                ProductItem.InvoiceId = SelectedInvoice.InvoiceId;
+            }
+            else
+            {
+                var invoiceDetails = new InvoiceDetails()
+                {
+                    InvoiceNo = InvoiceText,
+                    InvoiceDate = SelectedInvoiceDetails.InvoiceDate,
+                    SupplierAddress = SelectedInvoiceDetails.SupplierAddress,
+                    SupplierName = SelectedInvoiceDetails.SupplierName,
+                    SupplierPhoneNumber = SelectedInvoiceDetails.SupplierPhoneNumber,
+                    CompanyId = companyId,
+                    InvoiceDisplayNumber = $"{InvoiceText} - ({SelectedInvoiceDetails.InvoiceDate:dd MMMM yyyy})"
+                };
+
+                ProductItem.InvoiceId = _commonService.SaveInvoiceDetails(invoiceDetails);
+            }
+            ProductItem.DisplayName = DisplayName;
+            _productService.SaveProductItems(ProductItem);
+             
         }
-        ProductItem.DisplayName = DisplayName;
-        _productService.SaveProductItems(ProductItem);
-        InvoiceSource = _commonService.GetInvoiceDetails().Value.ToObservableCollection();
+        InvoiceSource = _commonService.GetInvoiceDetails(ProductItem.CompanyId).Value.ToObservableCollection();
         SelectedInvoice = InvoiceSource.Where(x => ProductItem.InvoiceId == x.InvoiceId).FirstOrDefault();
         GetProductItemsByInvoice(ProductItem.InvoiceId, ProductItem.CompanyId);
         ProductItem = new();
+        SelectedProductItemCategory = null;
+        SelectedProductItemMeasurementUnit = null;
     }
 
     public void ProductSelectionChanged()
@@ -307,10 +422,8 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
     {
         Func<UIElement> reportFactory;
         reportFactory = () => new SampleTemplate();
-
         LoadReport(reportFactory,  CancellationToken.None); 
     }
-
     #endregion CommandMethods
 
     #region Private Methods

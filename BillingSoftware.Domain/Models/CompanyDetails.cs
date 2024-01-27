@@ -1,14 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Windows.Devices.Sensors;
 
 namespace BillingSoftware.Domain.Models
 {
     public class CompanyDetails
-    {
-        [Key]
-        public int Id { get; set; } 
-        public Guid CompanyId { get; set; } = Guid.NewGuid();
+    { 
+        public Guid CompanyId { get; set; }
         public string CompanyName { get; set;}
         public string CompanyDescription { get; set;} = string.Empty;
         public string CompanyEmail { get; set;}
@@ -16,8 +15,10 @@ namespace BillingSoftware.Domain.Models
         public string CompanyCity { get; set;}
         public string CompanyState { get; set;}
         public string CompanyZipCode { get; set;}
-        public string CompanyCountry { get; set;}   
-        public string IsActive { get; set;} 
+        public string CompanyCountry { get; set;}
+        public bool IsActive { get; set; } = true;
+        public DateTime InsertDt { get; set; }
+        public DateTime ModifiedDt { get; set; }
         public override string ToString()
         {
             return CompanyName;

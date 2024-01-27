@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Billing.Domain.Models;
 using BillingSoftware.Domain.Models;
+using BillingSoftware.Domain.Entities;
 
 namespace Billing.Repository.Imp.DBContext
 {
@@ -14,19 +15,23 @@ namespace Billing.Repository.Imp.DBContext
         #endregion
 
         #region Public properties
-        public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<ProductItems> ProductItems { get; set; }
-        public virtual DbSet<CompanyDetails> CompanyDetails { get; set; }
-        public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<ProductItem> ProductItem { get; set; }
+        public DbSet<Company> Company { get; set; }
+        public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<ProductCategory> ProductCategory { get; set; }
+        public DbSet<ProductMeasurementUnit> ProductMeasurementUnit { get; set; } 
         #endregion
 
         #region Overridden method
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>();
-            modelBuilder.Entity<ProductItems>();
-            modelBuilder.Entity<CompanyDetails>();
-            modelBuilder.Entity<InvoiceDetails>();
+            modelBuilder.Entity<ProductItem>();
+            modelBuilder.Entity<Company>();
+            modelBuilder.Entity<Invoice>();
+            modelBuilder.Entity<ProductCategory>();
+            modelBuilder.Entity<ProductMeasurementUnit>();
             base.OnModelCreating(modelBuilder);
         }
         #endregion

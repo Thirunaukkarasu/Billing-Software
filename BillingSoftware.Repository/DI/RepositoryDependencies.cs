@@ -20,6 +20,8 @@ namespace Billing.Repository.Imp.DI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
+            services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddScoped<IProductMeasurementRepository, ProductMeasurementRepository>();
         }
     }
 }
