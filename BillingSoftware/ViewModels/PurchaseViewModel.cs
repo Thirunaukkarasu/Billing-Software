@@ -1,7 +1,6 @@
 ﻿using Billing.Domain.Models;
 using BillingSoftware.Core.Contracts;
 using BillingSoftware.Core.Contracts.Services;
-using BillingSoftware.Domain.Entities;
 using BillingSoftware.Domain.Extentions;
 using BillingSoftware.Domain.Models;
 using BillingSoftware.PrintTemplates;
@@ -27,6 +26,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
     private ICommand _productSelectionChangedCommand;
     private ICommand _companyDDSelectionChangeCommand;
     private ICommand _printInvoiceCommand;
+    private ICommand _addNewProductCommand;
     private ObservableCollection<ProductItems> _productItemsSource;
     private readonly ICommonService _commonService;
     private readonly IProductService _productService;
@@ -39,7 +39,10 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
     public ICommand ProductSelectionChangedCommand => _productSelectionChangedCommand ?? (_productSelectionChangedCommand = new RelayCommand(ProductSelectionChanged));
     public ICommand CompanyDDSelectionChangeCommand => _companyDDSelectionChangeCommand ?? (_companyDDSelectionChangeCommand = new RelayCommand(CompanyDDSelectionChanged));
     public ICommand PrintInvoiceCommand => _printInvoiceCommand ?? (_printInvoiceCommand = new RelayCommand(PrintInvoice));
-     
+    public ICommand AddNewProductCommand => _addNewProductCommand ?? (_addNewProductCommand = new RelayCommand(AddNewProduct));
+
+
+
     #endregion Commands
 
     #region Properties
@@ -88,18 +91,12 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         }
     }
 
-    private string _displayName;
     public string DisplayName
     {
         get 
         {
             var companyName = SelectedCompany != null ? SelectedCompany.CompanyName : CompanyText;
             return $"{companyName} {ProductItem?.ProductName} {ProductItem?.QuantityPerUnit}{SelectedProductItemMeasurementUnit?.Symbol}";   
-        }
-        set
-        {
-            SetProperty(ref _displayName, value); 
-            OnPropertyChanged(nameof(DisplayName));
         }
     }
 
@@ -140,8 +137,8 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         }
         set
         {
-            _SelectedCompany = value;  
-            OnPropertyChanged(nameof(SelectedCompany));
+           SetProperty(ref _SelectedCompany, value, nameof(SelectedCompany));
+           ResetInvoiceField();
         }
     }
 
@@ -151,9 +148,9 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         get => _companyText;
         set
         {
-            _companyText = value;
+            _companyText = value; 
             //selected company
-            if (SelectedCompany != null && SelectedCompany.CompanyName.ToLower() != value.ToLower())
+            if (SelectedCompany != null && SelectedCompany.CompanyName.ToLower() != value?.ToLower())
             {
                 SelectedCompany = null;
             }
@@ -197,6 +194,10 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
                 OnPropertyChanged(nameof(SelectedInvoice));
                 OnPropertyChanged(nameof(ProductItem));
             }
+            else
+            {
+                SetProperty(ref _SelectedInvoice, value);
+            }
         }
     }
 
@@ -221,17 +222,17 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         get => _invoiceText;
         set
         {
-            _invoiceText = value;
-            if (SelectedInvoice != null && SelectedInvoice.ToString().ToLower() != value.ToLower())
+            _invoiceText = value;  
+            if (SelectedInvoice != null && SelectedInvoice.ToString().ToLower() != value?.ToLower()) //on change of text
             {
                SelectedInvoice = null;
                SelectedInvoiceDetails = null;
             }
-            if (SelectedInvoice != null)
+            if (SelectedInvoice != null) // on change of DD
             {
                 SelectedInvoiceDetails = SelectedInvoice;
                 OnPropertyChanged(nameof(SelectedInvoiceDetails));
-            }
+            } 
             OnPropertyChanged(nameof(InvoiceText));
         }
     }
@@ -306,6 +307,7 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
             _SelectedProductItemMeasurementUnit = value;
             ProductItem.MeasurementUnitId = value?.MeasurementUnitId;
             OnPropertyChanged(nameof(SelectedProductItemMeasurementUnit));
+            OnPropertyChanged(nameof(DisplayName));
         }
     }
 
@@ -398,7 +400,6 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
             }
             ProductItem.DisplayName = DisplayName;
             _productService.SaveProductItems(ProductItem);
-             
         }
         InvoiceSource = _commonService.GetInvoiceDetails(ProductItem.CompanyId).Value.ToObservableCollection();
         SelectedInvoice = InvoiceSource.Where(x => ProductItem.InvoiceId == x.InvoiceId).FirstOrDefault();
@@ -433,6 +434,12 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         ProductItemsSource = result.Products.ToObservableCollection();
     }
 
+    private void AddNewProduct()
+    {
+        MessageBox.Show("Current fields will be reseted");
+        ResetProductItemFields();
+    }
+
     private void LoadReport(Func<UIElement> reportFactory, CancellationToken cancellationToken)
     {
         var printTicket = _printingService.GetPrintTicket("Microsoft Print to PDF", new PageMediaSize(PageMediaSizeName.NorthAmericaLetter, 816, 1056), PageOrientation.Portrait);
@@ -442,11 +449,11 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         {
             var pageSize = new Size(printCapabilities.OrientedPageMediaWidth.Value, printCapabilities.OrientedPageMediaHeight.Value);
 
-            var desiredMargin = new Thickness(15);
+            var desiredMargin = new Thickness(40);
             var printerMinMargins = _printingService.GetMinimumPageMargins(printCapabilities);
             AdjustMargins(ref desiredMargin, printerMinMargins);
 
-            var pages = _paginator.PaginateAsync(reportFactory, pageSize, desiredMargin, cancellationToken);
+            var pages = _paginator.PaginateAsync(reportFactory, pageSize, desiredMargin, cancellationToken); 
             var fixedDocument = _paginator.GetFixedDocumentFromPages(pages, pageSize);
 
             // We now could simply assign the fixedDocument to GeneratedDocument
@@ -504,6 +511,34 @@ public class PurchaseViewModel : ObservableObject, INotifyPropertyChanged
         {
             pageMargins.Bottom = minimumMargins.Bottom;
         }
+    }
+
+    private void ResetInvoiceField()
+    {
+        SelectedInvoice = null;
+        SelectedInvoiceDetails = new InvoiceDetails(); 
+        ResetProductItemFields();
+        ResetCategoryField();
+        ResetUnitField();
+    }
+
+    private void ResetProductItemFields()
+    { 
+        ProductItem = new ProductItems();
+        ResetCategoryField();
+        ResetUnitField();
+    }
+
+    private void ResetCategoryField()
+    {
+        SelectedProductItemCategory = null;
+        ProductItemCategoryText = null; 
+    }
+
+    private void ResetUnitField()
+    {
+        SelectedProductItemMeasurementUnit = null;
+        ProductItemMeasurementUnitText = null;
     }
     #endregion Private Methods
 }

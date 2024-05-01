@@ -46,5 +46,6 @@ public class ToastNotificationActivationHandler : IActivationHandler
         }
 
         await Task.CompletedTask;
+
     }
 }

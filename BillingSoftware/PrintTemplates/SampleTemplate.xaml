@@ -5,78 +5,292 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BillingSoftware.PrintTemplates"
              xmlns:reports="clr-namespace:BillingSoftware.Models"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              xmlns:lib="clr-namespace:BillingSoftware.Core.Services;assembly=BillingSoftware.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" /> 
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" /> 
+            <RowDefinition Height="Auto" /> 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".2*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition> 
-                </Grid.ColumnDefinitions>
-                <Image Source="../Images/IMG1.jpg" Width="100" Height="60" HorizontalAlignment="Left" Grid.Column="0" Margin="10"/>
-                <TextBlock Text="Varatharaja Perumal Thunai" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26"></TextBlock>
-            </Grid>
+            <Border BorderBrush="Black" BorderThickness="2,2,2,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".5*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Source="../Images/IMG1.jpg" Width="100" Height="60" HorizontalAlignment="Left" Grid.Column="0" Margin="10"/>
+                    <StackPanel Grid.Column="1" >
+                        <TextBlock Text="Varatharaja Perumal Thunai" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" Margin="5"  FontSize="9"></TextBlock>
+                        <TextBlock Text="ELECTRICALS &amp; HARDWARES" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"  FontFamily="Arial" Margin="20,5,0,0"></TextBlock>
+                        <TextBlock Text="Krsihnagiri Main Road, Mittapalli - 635 307." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontWeight="Normal"  FontFamily="Arial" Margin="20,5,0,0"></TextBlock>
+                        <TextBlock Text="QUOTATION"  HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="JasmineUPC" FontWeight="Bold" FontSize="10" Margin="10"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <StackPanel  Margin="5">
+                            <TextBlock Text="Ph:9600574014"  HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Arial"  FontSize="12"></TextBlock>
+                            <TextBlock Text="2132131212" FontFamily="Arial"  Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="12"></TextBlock>
+                        </StackPanel>
+                        <TextBlock Text="GSTIN :   33BPNPK9032D1ZZ"  HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Arial" FontWeight="Bold" FontSize="12"></TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Border>
         </StackPanel>
-        
-        <ItemsControl Grid.Row="1" x:Name="ItemsControl2" Margin="0,0,0,0"
-                   lib:Document.Paginate="True">
+        <StackPanel Grid.Row="1"  lib:Document.VisibleOnFirstPageOnly="True">
+            <Border BorderBrush="Black" BorderThickness="2,1,2,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                        <TextBlock Text="CUSTOMER NAME :" Margin="1"></TextBlock>
+                        <TextBlock Text="NAME" Margin="1"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="1"  Orientation="Horizontal">
+                        <TextBlock Text="Quotation No. :" Margin="1" ></TextBlock>
+                        <TextBlock Text="NAME" Margin="1" ></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0"  Orientation="Horizontal">
+                        <TextBlock>
+                            
+                            <Run Text="Address :" /> <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat=dd/MM/yyyy}" />
+
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1"  Orientation="Horizontal">
+                        <TextBlock HorizontalAlignment="Left">
+     <Run Text="Date:" /> <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat=dd/MM/yyyy}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+        <!-- List header -->
+        <Grid Grid.Row="2"  Margin="0,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> 
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".4*"/>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width=".8*" />
+                    <ColumnDefinition Width=".8*" />
+                    <ColumnDefinition Width=".8*" />
+                    <ColumnDefinition Width=".8*" />
+                </Grid.ColumnDefinitions>
+                <Border Height="25" Grid.Row="0" Grid.Column="0" BorderThickness="1"  BorderBrush="Black">
+                    <TextBlock Text="S. No"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Border>
+                <Border Height="25" Grid.Row="0"  Grid.Column="1" BorderThickness="1"  BorderBrush="Black">
+                    <TextBlock Text="Product Name"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Border>
+                <Border Height="25" Grid.Row="0"  Grid.Column="2" BorderThickness="1"  BorderBrush="Black">
+                    <TextBlock Text="HSN Code"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Border>
+                <Border Height="25" Grid.Row="0"  Grid.Column="3" BorderThickness="1"  BorderBrush="Black">
+                    <TextBlock Text="Rate"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Border>
+                <Border Height="25" Grid.Row="0"  Grid.Column="4" BorderThickness="1"  BorderBrush="Black">
+                    <TextBlock Text="Quantity" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Border>
+                <Border Height="25" Grid.Row="0"  Grid.Column="5" BorderThickness="1"  BorderBrush="Black">
+                    <TextBlock Text="GST%"  VerticalAlignment="Center" HorizontalAlignment="Center"  />
+                </Border>
+                <Border Height="25" Grid.Row="0"  Grid.Column="6" BorderThickness="1"  BorderBrush="Black">
+                    <TextBlock Text="Amount" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Border>
+            </Grid>
+        </Grid>
+        <Grid  Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="itemControlRow" Height="*" />
+                <RowDefinition x:Name="itemControlFooter" Height="auto" />
+            </Grid.RowDefinitions>
+            <ItemsControl Background="HotPink" Grid.Row="0" x:Name="ItemsControl2" Margin="0,0,0,0" lib:Document.Paginate="True">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type reports:ReportDataModel}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".2*" />
-                            <ColumnDefinition Width="4.9*" />
-                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width=".4*"/>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width=".8*" />
+                            <ColumnDefinition Width=".8*" />
+                            <ColumnDefinition Width=".8*" />
+                            <ColumnDefinition Width=".8*" />
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" BorderThickness="1">
-                            <TextBlock Text="{Binding Id}" />
+                        <Border Height="25" Grid.Column="0"  BorderThickness="1" BorderBrush="Black">
+                            <TextBlock Text="{Binding Id}" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         </Border>
-                        <Border Grid.Column="1" BorderThickness="1">
-                            <TextBlock Text="{Binding Name}" />
+                        <Border Height="25" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+                            <TextBlock Text="{Binding Name}" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Left"  />
                         </Border>
-                        <Border Grid.Column="2" BorderThickness="1">
-                            <TextBlock Text="{Binding Description}" />
+                        <Border Height="25" Grid.Column="2"  BorderThickness="1" BorderBrush="Black">
+                            <TextBlock Text="{Binding HSNCode}" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </Border>
+                        <Border Height="25" Grid.Column="3"  BorderThickness="1" BorderBrush="Black">
+                            <TextBlock Text="{Binding Quantity}" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </Border>
+                        <Border Height="25" Grid.Column="4"  BorderThickness="1" BorderBrush="Black">
+                            <TextBlock Text="{Binding Rate}" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </Border>
+                        <Border Height="25" Grid.Column="5"  BorderThickness="1" BorderBrush="Black">
+                            <TextBlock Text="{Binding GST}" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </Border>
+                        <Border Height="25" Grid.Column="6" BorderThickness="1" BorderBrush="Black">
+                            <TextBlock Text="{Binding Amount}" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         </Border>
                     </Grid>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.Template>
-                <ControlTemplate TargetType="{x:Type ItemsControl}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".2*"  />
-                            <ColumnDefinition  Width="4.9*" />
-                            <ColumnDefinition  Width="5*" />
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Row="0" Grid.Column="0" BorderThickness="1">
-                            <TextBlock Text="Id" />
-                        </Border>
-                        <Border Grid.Row="0"  Grid.Column="1" BorderThickness="1">
-                            <TextBlock Text="Name" />
-                        </Border>
-                        <Border Grid.Row="0"  Grid.Column="2" BorderThickness="1">
-                            <TextBlock Text="Description" />
-                        </Border>
-                        <ItemsPresenter Grid.Row="1" Grid.ColumnSpan="3" Margin="0" />
-                    </Grid>
-                </ControlTemplate>
-            </ItemsControl.Template>
+            </ItemsControl.ItemTemplate> 
         </ItemsControl>
+            <StackPanel Grid.Row="1"  
+            lib:Document.VisibleOnLastPageOnly="True" 
+            Visibility="Collapsed">
+                <Border BorderBrush="Black" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                            <TextBlock Text="CUSTOMER NAMEdfsdfsdfsdf :" Margin="1"></TextBlock>
+                            <TextBlock Text="NAME" Margin="1"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1"  Orientation="Horizontal">
+                            <TextBlock Text="Quotation No. :" Margin="1" ></TextBlock>
+                            <TextBlock Text="NAME" Margin="1" ></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0"  Orientation="Horizontal">
+                            <TextBlock>
+               
+               <Run Text="Address :" /> <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat=dd/MM/yyyy}" />
 
-        <TextBlock Grid.Row="3" Text="Footer :)" HorizontalAlignment="Center" FontSize="42" />
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1"  Orientation="Horizontal">
+                            <TextBlock HorizontalAlignment="Left">
+                        <Run Text="Date:" /> <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat=dd/MM/yyyy}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="4"  
+                    lib:Document.VisibleOnLastPageOnly="True" 
+                    Visibility="Collapsed">
+            <Border BorderBrush="Black" BorderThickness="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                        <TextBlock Text="CUSTOMER NAME :" Margin="1"></TextBlock>
+                        <TextBlock Text="NAME" Margin="1"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="1"  Orientation="Horizontal">
+                        <TextBlock Text="Quotation No. :" Margin="1" ></TextBlock>
+                        <TextBlock Text="NAME" Margin="1" ></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0"  Orientation="Horizontal">
+                        <TextBlock>
+                       
+                       <Run Text="Address :" /> <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat=dd/MM/yyyy}" />
+
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1"  Orientation="Horizontal">
+                        <TextBlock HorizontalAlignment="Left">
+                                <Run Text="Date:" /> <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat=dd/MM/yyyy}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Margin="0" VerticalAlignment="Top" lib:Document.VisibleOnLastPageOnly="True" Visibility="Collapsed">
+            <Border BorderBrush="Black" BorderThickness="2,1,2,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                        <TextBlock Text="CUSTOMER NAME :" Margin="1"></TextBlock>
+                        <TextBlock Text="NAME" Margin="1"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="1"  Orientation="Horizontal">
+                        <TextBlock Text="Quotation No. :" Margin="1" ></TextBlock>
+                        <TextBlock Text="NAME" Margin="1" ></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0"  Orientation="Horizontal">
+                        <TextBlock>
+                
+                <Run Text="Address :" /> <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat=dd/MM/yyyy}" />
+
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1"  Orientation="Horizontal">
+                        <TextBlock HorizontalAlignment="Left">
+                         <Run Text="Date:" /> <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat=dd/MM/yyyy}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+        <!-- Footer -->
+        <Grid Grid.Row="6" VerticalAlignment="Bottom">
+            <TextBlock HorizontalAlignment="Left">
+    <Run Text="Date:" /> <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat=d}" />
+            </TextBlock>
+            <TextBlock Visibility="Hidden" HorizontalAlignment="Center" Text="{Binding (lib:Document.CurrentPageNumber), Mode=OneWay, RelativeSource={RelativeSource Self}}" lib:Document.SetCurrentPageNumberAttachedProperty = "false">
+
+
+
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Center" Text="Thank you!!" lib:Document.VisibleOnLastPageOnly="True"  Visibility="Hidden" />
+            <TextBlock HorizontalAlignment="Right">
+    <Run Text="Page:" />
+    <Run Text="{Binding (lib:Document.CurrentPageNumber), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+         lib:Document.SetCurrentPageNumberAttachedProperty = "True" />
+    <Run Text="(" /><Run Text="{Binding (lib:Document.LastPageNumber), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                         lib:Document.SetLastPageNumberAttachedProperty = "True"/><Run Text=")"/>
+            </TextBlock>
+        </Grid>
     </Grid>
 </UserControl>

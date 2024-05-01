@@ -1,4 +1,5 @@
 ﻿using Billing.Domain.Models;
+
 using BillingSoftware.Core.Contracts.Services;
 
 namespace BillingSoftware.Core.Services;

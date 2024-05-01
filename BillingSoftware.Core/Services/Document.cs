@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.Intrinsics.Arm;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace BillingSoftware.Core.Services
@@ -20,6 +21,23 @@ namespace BillingSoftware.Core.Services
         public static void SetVisibleOnFirstPageOnly(DependencyObject element, bool? value)
         {
             element.SetValue(VisibleOnFirstPageOnlyProperty, value);
+        }
+
+        /// <summary>
+        /// If true, <see cref="Paginator"/> shows this element only on the last page.
+        /// </summary>
+        public static readonly DependencyProperty VisibleOnLastPageOnlyProperty =
+            DependencyProperty.RegisterAttached("VisibleOnLastPageOnly", typeof(bool?), typeof(Document),
+                new PropertyMetadata(default(bool?)));
+
+        public static bool? GetVisibleOnLastPageOnly(DependencyObject element)
+        {
+            return (bool?)element.GetValue(VisibleOnLastPageOnlyProperty);
+        }
+
+        public static void SetVisibleOnLastPageOnly(DependencyObject element, bool? value)
+        {
+            element.SetValue(VisibleOnLastPageOnlyProperty, value);
         }
 
         /// <summary>

@@ -1,10 +1,15 @@
-﻿using BillingSoftware.Contracts.Services;
+﻿using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using BillingSoftware.Contracts.Services;
 using BillingSoftware.Properties;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using MahApps.Metro.Controls;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace BillingSoftware.ViewModels;
 
@@ -24,18 +29,19 @@ public class ShellViewModel : ObservableObject
     }
 
     // TODO: Change the icons and titles for all HamburgerMenuItems here.
-    public ObservableCollection<HamburgerMenuItem> MenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
+    
+    public ObservableCollection<HamburgerMenuImageItem> MenuItems { get; } = new ObservableCollection<HamburgerMenuImageItem>()
     {
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellMainPage, Glyph = "\uE8A5", TargetPageType = typeof(MainViewModel) },
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellDashboardPage, Glyph = "\uE8A5", TargetPageType = typeof(DashboardViewModel) },
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellPurchasePage, Glyph = "\uE8A5", TargetPageType = typeof(PurchaseViewModel) },
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellSalesPage, Glyph = "\uE8A5", TargetPageType = typeof(SalesViewModel) },
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellQuotationPage, Glyph = "\uE8A5", TargetPageType = typeof(QuotationViewModel) },
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellCustomersPage, Glyph = "\uE8A5", TargetPageType = typeof(CustomersViewModel) },
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellReportPage, Glyph = "\uE8A5", TargetPageType = typeof(ReportViewModel) },
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellBackupPage, Glyph = "\uE8A5", TargetPageType = typeof(BackupViewModel) },
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellContentGridPage, Glyph = "\uE8A5", TargetPageType = typeof(ContentGridViewModel) },
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellListDetailsPage, Glyph = "\uE8A5", TargetPageType = typeof(ListDetailsViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellMainPage, Thumbnail =  new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(MainViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellDashboardPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(DashboardViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellPurchasePage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(PurchaseViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellSalesPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(SalesViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellQuotationPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(QuotationViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellCustomersPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(CustomersViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellReportPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(ReportViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellBackupPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(BackupViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellContentGridPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(ContentGridViewModel) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellListDetailsPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(ListDetailsViewModel) },
     };
 
     public RelayCommand GoBackCommand => _goBackCommand ?? (_goBackCommand = new RelayCommand(OnGoBack, CanGoBack));

@@ -173,7 +173,8 @@
 
             </DockPanel>
             <DockPanel Grid.Column="2" Grid.RowSpan="2">
-                <Button x:Name="btnSave" Height="30" Margin="2" DockPanel.Dock="Top" Command="{Binding SaveProductsCommand}" BorderThickness="3">save</Button>
+                <Button x:Name="btnAddNewProduct" Height="30" Margin="2" DockPanel.Dock="Top" Command="{Binding AddNewProductCommand}" BorderThickness="3">Add New Product</Button>
+                <Button x:Name="btnSave" Height="30" Margin="2" DockPanel.Dock="Top" Command="{Binding SaveProductsCommand}" BorderThickness="3">Save</Button>
                 <Button x:Name="btnUpdate" Height="30" Margin="2" DockPanel.Dock="Top" Command="{Binding UpdateProducts}" BorderThickness="3">Update</Button>
                 <Button x:Name="btnDelete" Height="30" Margin="2" DockPanel.Dock="Top" Command="{Binding DeleteProducts}" BorderThickness="3">Delete</Button>
                 <Button x:Name="BtnPrint" Height="30" Margin="2" DockPanel.Dock="Top" BorderThickness="3" Command="{Binding PrintInvoiceCommand}" >Print</Button>

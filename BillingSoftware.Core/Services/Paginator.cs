@@ -71,7 +71,7 @@ namespace BillingSoftware.Core.Services
                 }
 
                 // Yield control back to the current dispatcher to keep UI responsive
-                Dispatcher.Yield();
+                 Dispatcher.Yield();
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
@@ -103,7 +103,7 @@ namespace BillingSoftware.Core.Services
                 fixedPage.Children.Add(page);
 
                 var pageContent = new PageContent();
-                ((IAddChild) pageContent).AddChild(fixedPage);
+                ((IAddChild)pageContent).AddChild(fixedPage);
 
                 fixedPage.Measure(pageSize);
                 fixedPage.Arrange(new Rect(new Point(), pageSize));
@@ -170,6 +170,7 @@ namespace BillingSoftware.Core.Services
                 if (dp.GetValue(Document.SetCurrentPageNumberAttachedPropertyProperty) is bool setPageNumber && setPageNumber)
                 {
                     dp.SetValue(Document.CurrentPageNumberProperty, pageNumber);
+                    //Document.SetCurrentPageNumber(dp, pageNumber);
                 }
             }
         }
@@ -184,13 +185,22 @@ namespace BillingSoftware.Core.Services
             {
                 itemsControl.ItemsSource = null;
                 itemsControl.Items.Clear();
-
+                 
                 if (paginationTracker.ContainsKey(itemsControl.Name))
                 {
                     var items = paginationTracker[itemsControl.Name].Items;
                     var startIndex = paginationTracker[itemsControl.Name].CurrentIndex;
 
                     var needsPagination = PopulateItemsControl(items, itemsControl, startIndex, out var currentItemIndex);
+                    
+                    itemsControl.Height = 25 * (itemsControl.Items.Count);
+                    itemsControl.Margin =new Thickness(0);
+                    itemsControl.VerticalAlignment = VerticalAlignment.Top;
+
+                    itemsControl.BorderBrush = Brushes.YellowGreen;
+                    itemsControl.BorderThickness = new Thickness(1);
+                    
+
                     if (needsPagination)
                     {
                         // Update CurrentIndex for this ItemsControl, so we continue where we left off when processing the next page.
@@ -234,15 +244,15 @@ namespace BillingSoftware.Core.Services
                 var itemContainer = (FrameworkElement)itemsControl.ItemContainerGenerator.ContainerFromItem(item);
                 var itemsPresenter = FindVisualParent<ItemsPresenter>(itemContainer).Single();
                 var isVisible = IsElementFullyVisibleInContainer(itemsPresenter, itemContainer);
-
+                
                 if (!isVisible)
                 {
                     itemsControl.Items.Remove(item);
                     currentItemIndex = i;
                     return true;
-                }
+                } 
             }
-
+           
             return false;
         }
 
@@ -263,19 +273,38 @@ namespace BillingSoftware.Core.Services
             return containerRect.Contains(topLeftPointRounded) && containerRect.Contains(topRightPointRounded) &&
                    containerRect.Contains(bottomLeftPointRounded) && containerRect.Contains(bottomRightPointRounded);
         }
-
         private static void PostProcessing(IReadOnlyCollection<UIElement> processedPages)
         {
             var lastPageNumber = processedPages.Count;
+            int lastPage = 0;
             foreach (var page in processedPages)
             {
+                lastPage++;
                 var logicalChildren = FindLogicalChildren(page).ToList();
-
+                int count = 0;
                 foreach (var dp in logicalChildren)
                 {
+                     
+                    if (dp is System.Windows.Controls.RowDefinition && ((RowDefinition)dp).Name == "itemControlRow")
+                    {
+                        ItemsControl myListElementType = logicalChildren.OfType<ItemsControl>().FirstOrDefault(); 
+                        ((RowDefinition)dp).Height = new GridLength(myListElementType.Height);
+                    }
                     if (dp.GetValue(Document.SetLastPageNumberAttachedPropertyProperty) is bool setLastPageNumber && setLastPageNumber)
                     {
                         dp.SetValue(Document.LastPageNumberProperty, lastPageNumber);
+                    }
+
+                    if (dp.GetValue(Document.VisibleOnLastPageOnlyProperty) is bool isLastPageVisible)
+                    {
+                        if (isLastPageVisible && lastPage == lastPageNumber)
+                        {
+                            dp.SetValue(UIElement.VisibilityProperty, Visibility.Visible);
+                        }
+                        else
+                        {
+                            dp.SetValue(UIElement.VisibilityProperty, Visibility.Collapsed);
+                        }
                     }
                 }
             }

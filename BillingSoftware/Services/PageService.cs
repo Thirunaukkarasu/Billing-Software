@@ -1,8 +1,10 @@
-﻿using BillingSoftware.Contracts.Services;
+﻿using System.Windows.Controls;
+
+using BillingSoftware.Contracts.Services;
 using BillingSoftware.ViewModels;
 using BillingSoftware.Views;
+
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Windows.Controls;
 
 namespace BillingSoftware.Services;
 

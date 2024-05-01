@@ -1,4 +1,10 @@
-﻿using Billing.Repository.Imp.DI;
+﻿using System.IO;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Threading;
+
+using Billing.Repository.Imp.DI;
+
 using BillingSoftware.Activation;
 using BillingSoftware.Contracts.Activation;
 using BillingSoftware.Contracts.Services;
@@ -10,14 +16,12 @@ using BillingSoftware.Models;
 using BillingSoftware.Services;
 using BillingSoftware.ViewModels;
 using BillingSoftware.Views;
+
 using CommunityToolkit.WinUI.Notifications;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.IO;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Threading;
 
 namespace BillingSoftware;
 
