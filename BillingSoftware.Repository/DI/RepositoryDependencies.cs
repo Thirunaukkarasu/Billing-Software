@@ -7,6 +7,7 @@ using Billing.Repository.Imp.UserRepo;
 using Billing.Repository.Contracts;
 using BillingSoftware.Repository.Contracts;
 using BillingSoftware.Repository.CommonRepo;
+using BillingSoftware.Repository.SuppliersRepo;
 
 namespace Billing.Repository.Imp.DI
 {
@@ -22,6 +23,7 @@ namespace Billing.Repository.Imp.DI
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddScoped<IProductMeasurementRepository, ProductMeasurementRepository>();
+            services.AddScoped<ISuppliersRepository, SuppliersRepository>();
         }
     }
 }

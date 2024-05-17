@@ -42,42 +42,42 @@ namespace BillingSoftware.Repository.CommonRepo
             return companyDetails;
         }
 
-        public List<InvoiceDetails> GetInvoiceDetails(Guid? companyId = null)
-        { 
-            var invoiceDetails = new List<InvoiceDetails>();
-            var invoices = new List<Invoice>(); 
-            if (companyId != null)
-            {
-               var company = dbContext.Company
-                                       .Include(x => x.Invoice)
-                                       .Where(company => company.CompanyId == companyId).FirstOrDefault();
-                if (company != null)
-                {
-                    invoices.AddRange(company.Invoice);
-                } 
-            }
-            else
-            {
-                 invoices = dbContext.Invoice.ToList();   
-            }
+        //public List<InvoiceDetails> GetInvoiceDetails(Guid? companyId = null)
+        //{ 
+        //    var invoiceDetails = new List<InvoiceDetails>();
+        //    var invoices = new List<Invoice>(); 
+        //    if (companyId != null)
+        //    {
+        //       var company = dbContext.Company
+        //                               .Include(x => x.Invoice)
+        //                               .Where(company => company.CompanyId == companyId).FirstOrDefault();
+        //        if (company != null)
+        //        {
+        //            invoices.AddRange(company.Invoice);
+        //        } 
+        //    }
+        //    else
+        //    {
+        //         invoices = dbContext.Invoice.ToList();   
+        //    }
 
-            foreach (var item in invoices)
-            {
-                invoiceDetails.Add(new InvoiceDetails
-                {
-                    CompanyId = item.CompanyId,
-                    InvoiceDate = item.InvoiceDate,
-                    InvoiceDisplayNumber = item.InvoiceDisplayNumber,
-                    InvoiceId = item.InvoiceId,
-                    InvoiceNo = item.InvoiceNo,
-                    IsActive = item.IsActive,
-                    SupplierAddress = item.SupplierAddress,
-                    SupplierName    = item.SupplierName,
-                    SupplierPhoneNumber = item.SupplierPhoneNumber
-                });  
-            }
-            return invoiceDetails;
-        }
+        //    foreach (var item in invoices)
+        //    {
+        //        invoiceDetails.Add(new InvoiceDetails
+        //        {
+        //            CompanyId = item.CompanyId,
+        //            InvoiceDate = item.InvoiceDate,
+        //            InvoiceDisplayNumber = item.InvoiceDisplayNumber,
+        //            InvoiceId = item.InvoiceId,
+        //            InvoiceNo = item.InvoiceNo,
+        //            IsActive = item.IsActive,
+        //            SupplierAddress = item.SupplierAddress,
+        //            SupplierName    = item.SupplierName,
+        //            SupplierPhoneNumber = item.SupplierPhoneNumber
+        //        });  
+        //    }
+        //    return invoiceDetails;
+        //}
 
         public Guid SaveCompanyDetails(CompanyDetails companyDetails)
         {
@@ -101,24 +101,18 @@ namespace BillingSoftware.Repository.CommonRepo
             return company.CompanyId;
         }
 
-        public Guid SaveInvoiceDetails(InvoiceDetails invoiceDtls)
+        public Guid SaveInvoiceDetails(InvoiceDto invoiceDtls, Guid supplierId)
         {
-            var invoice = new Invoice()
-            {
-                CompanyId = invoiceDtls.CompanyId,
-                InvoiceDate = invoiceDtls.InvoiceDate,
-                InvoiceDisplayNumber = invoiceDtls.InvoiceDisplayNumber,
-                InvoiceId = invoiceDtls.InvoiceId,
+            var purchaseOrders = new PurchaseOrders()
+            {  
                 InvoiceNo = invoiceDtls.InvoiceNo,
-                IsActive = invoiceDtls.IsActive,
-                SupplierAddress = invoiceDtls.SupplierAddress,
-                SupplierName = invoiceDtls.SupplierName,
-                SupplierPhoneNumber = invoiceDtls.SupplierPhoneNumber,
-                ProductItems = null
+                IsActive = invoiceDtls.IsActive, 
+                InvoiceDate = invoiceDtls.InvoiceDate,
+                SupplierId = supplierId,
             };
-            dbContext.Invoice.Add(invoice);
+            dbContext.PurchaseOrders.Add(purchaseOrders);
             dbContext.SaveChanges();
-            return invoice.InvoiceId;
+            return purchaseOrders.PurchaseId;
         }
          
     }

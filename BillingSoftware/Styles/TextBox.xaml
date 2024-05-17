@@ -3,8 +3,7 @@
 
     <Style x:Key="TextBoxStyle" TargetType="TextBox"> 
         <Setter Property="Foreground" Value="#DBDBDB" />
-        <Setter Property="Margin"
-                Value="2" />
+        <Setter Property="Margin" Value="2" />
         <Setter Property="Foreground"
        Value="Black" />
         <Setter Property="FontSize"

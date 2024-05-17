@@ -106,6 +106,7 @@ public partial class App : Application
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IPrintingService, PrintingService>();
         services.AddScoped<IPaginator, Paginator>();
+        services.AddScoped<ISupplierService, SupplierService>();
 
         // Views and ViewModels
         services.AddTransient<IShellWindow, ShellWindow>();
@@ -143,6 +144,12 @@ public partial class App : Application
 
         services.AddTransient<ListDetailsViewModel>();
         services.AddTransient<ListDetailsPage>();
+
+        services.AddTransient<PurchaseBoardViewModel>();
+        services.AddTransient<PurchaseBoardPage>();
+
+        services.AddTransient<AddPurchaseViewModel>();
+        services.AddTransient<AddPurchasePage>();
 
         // Configuration
         services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));

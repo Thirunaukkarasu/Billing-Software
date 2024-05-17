@@ -2,9 +2,9 @@
 
 namespace BillingSoftware.Domain.Models
 {
-    public class ProductItemCategory
+    public class ProductCategoryDto
     {
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
         public string CategoryName { get; set; }
         public override string ToString()
         {

@@ -61,17 +61,17 @@
                     <TextBlock Grid.Row="8" Name="lblProductName" Text="Product Name" Style="{StaticResource Text_Style}"/>
                     <TextBlock Grid.Row="9" Name="lblCategory" Text="Category" Style="{StaticResource Text_Style}"/>
                     <ComboBox Grid.Row="0" Grid.Column="1"  Name="cbCompanyName" Margin="2" ItemsSource="{Binding CompanySource}"  
-                     IsTextSearchEnabled="False"
+                     IsTextSearchEnabled="False" DisplayMemberPath="Name"
                      IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"
                         SelectedItem="{Binding SelectedCompany, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                               Text ="{Binding CompanyText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                               >
                     </ComboBox>
-                    <ComboBox Grid.Row="1" Grid.Column="1"  Name="cbInvoiceNo" Margin="2"  ItemsSource="{Binding InvoiceSource, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  
-                     IsTextSearchEnabled="False"
-                     IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"   SelectedItem="{Binding SelectedInvoice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-       Text ="{Binding InvoiceText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
-                              >
+                        <ComboBox Grid.Row="1" Grid.Column="1"  Name="cbInvoiceNo" Margin="2"  ItemsSource="{Binding InvoiceSource, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  
+                         IsTextSearchEnabled="False"
+                         IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"   SelectedItem="{Binding SelectedInvoice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+           Text ="{Binding InvoiceText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                                  >
                     </ComboBox>
                     <DatePicker Grid.Row="2" Grid.Column="1" Height="30" Margin="2" SelectedDate="{Binding SelectedInvoiceDetails.InvoiceDate , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedDateFormat="Short" />
                     <TextBox Grid.Row="4" Grid.Column="1"  Name="txtSupplierName"  Style="{StaticResource TextBoxStyle}" Text="{Binding SelectedInvoiceDetails.SupplierName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ></TextBox>

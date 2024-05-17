@@ -7,9 +7,9 @@ namespace BillingSoftware.Repository.Contracts
     public interface ICommonRepository
     {
         List<CompanyDetails> GetCompanyDetails();
-        List<InvoiceDetails> GetInvoiceDetails(Guid? companyId = null);
+        //List<InvoiceDetails> GetInvoiceDetails(Guid? companyId = null);
 
         Guid SaveCompanyDetails(CompanyDetails companyDetails);
-        Guid SaveInvoiceDetails(InvoiceDetails invoiceDetails);
+        Guid SaveInvoiceDetails(InvoiceDto invoiceDtls, Guid supplierId);
     }
 }

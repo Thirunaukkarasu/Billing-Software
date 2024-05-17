@@ -5,8 +5,6 @@ using BillingSoftware.Repository.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BillingSoftware.Repository.CommonRepo
 {
@@ -18,13 +16,27 @@ namespace BillingSoftware.Repository.CommonRepo
             this.dbContext = dbContext;
         } 
 
-        public List<ProductItemCategory> GetProductItemCategory()
+        public List<ProductCategoryDto> GetProductCategory()
         { 
-           return dbContext.ProductCategory.Select(x => new ProductItemCategory()
+           return dbContext.ProductCategory.Select(x => new ProductCategoryDto()
             {
                 CategoryId = x.CategoryId,
                 CategoryName = x.CategoryName 
             }).ToList();
         }
+
+        public Guid SaveProductCategory(ProductCategoryDto productCategory)
+        { 
+            var category = new ProductCategory() 
+            {
+               CategoryName = productCategory.CategoryName
+            };
+
+            dbContext.ProductCategory.Add(category);
+            dbContext.SaveChanges();
+            return category.CategoryId;
+        }
+
+
     }
 }

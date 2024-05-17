@@ -11,10 +11,18 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <None Remove="Icons\add.png" />
+    <None Remove="Icons\bill.png" />
     <None Remove="Images\IMG1.jpg" />
   </ItemGroup>
   
   <ItemGroup>
+    <Content Include="Icons\add.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\bill.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\IMG1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

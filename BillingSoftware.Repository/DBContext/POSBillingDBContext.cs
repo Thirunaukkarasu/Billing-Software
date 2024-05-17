@@ -20,18 +20,23 @@ namespace Billing.Repository.Imp.DBContext
         public DbSet<Company> Company { get; set; }
         public DbSet<Invoice> Invoice { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
-        public DbSet<ProductMeasurementUnit> ProductMeasurementUnit { get; set; } 
+        public DbSet<ProductMeasurementUnit> ProductMeasurementUnit { get; set; }  
+        public DbSet<Suppliers> Suppliers { get; set; } 
+        public DbSet<Products> Products { get; set; } 
+        public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
+        public DbSet<PurchasedProducts> PurchasedProducts { get; set; }
         #endregion
 
         #region Overridden method
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>();
-            modelBuilder.Entity<ProductItem>();
-            modelBuilder.Entity<Company>();
-            modelBuilder.Entity<Invoice>();
             modelBuilder.Entity<ProductCategory>();
-            modelBuilder.Entity<ProductMeasurementUnit>();
+            modelBuilder.Entity<PurchasedProducts>();
+            //modelBuilder.Entity<ProductItem>();
+            //modelBuilder.Entity<Company>();
+            //modelBuilder.Entity<Invoice>();
+            //modelBuilder.Entity<ProductCategory>();
+            //modelBuilder.Entity<ProductMeasurementUnit>();
             base.OnModelCreating(modelBuilder);
         }
         #endregion

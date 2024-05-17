@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BillingSoftware.Domain.Entities
 {
-    [Table("ProductItem")]
+    [Table("ProductItems")]
     public class ProductItem
     {
         [Key]
         public Guid ProductId { get; set; } 
         public string ProductName { get; set; }
-       
         public string DisplayName { get; set; }
         public string BatchNo { get; set; }
         public string QuantityPerUnit { get; set; }

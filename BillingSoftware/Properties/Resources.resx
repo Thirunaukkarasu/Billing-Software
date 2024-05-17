@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
+    <data name="ShellAddPurchasePage" xml:space="preserve">
+		    <value>AddPurchase</value>
+    </data>
+    <data name="AddPurchasePageTitle" xml:space="preserve">
+		    <value>AddPurchase</value>
+    </data>
+    <data name="ShellPurchaseBoardPage" xml:space="preserve">
+		    <value>PurchaseBoard</value>
+    </data>
+    <data name="PurchaseBoardPageTitle" xml:space="preserve">
+		    <value>PurchaseBoard</value>
+    </data>
     <data name="ShellListDetailsPage" xml:space="preserve">
 		    <value>ListDetails</value>
     </data>

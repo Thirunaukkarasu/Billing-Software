@@ -316,5 +316,49 @@ namespace BillingSoftware.Properties {
                 return ResourceManager.GetString("ShellListDetailsPage", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PurchaseBoard.
+        /// </summary>
+        public static string PurchaseBoardPageTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("PurchaseBoardPageTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PurchaseBoard.
+        /// </summary>
+        public static string ShellPurchaseBoardPage
+        {
+            get
+            {
+                return ResourceManager.GetString("ShellPurchaseBoardPage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to AddPurchase.
+        /// </summary>
+        public static string AddPurchasePageTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("AddPurchasePageTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to AddPurchase.
+        /// </summary>
+        public static string ShellAddPurchasePage
+        {
+            get
+            {
+                return ResourceManager.GetString("ShellAddPurchasePage", resourceCulture);
+            }
+        }
     }
 }

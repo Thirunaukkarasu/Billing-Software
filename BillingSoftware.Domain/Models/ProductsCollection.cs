@@ -6,7 +6,7 @@ namespace Billing.Domain.Models
     public class ProductsCollection
     {
         public CompanyDetails Company { get; set; }
-        public InvoiceDetails Invoice { get; set; }
+        public InvoiceDto Invoice { get; set; }
         public List<ProductItems> Products { get; set; }
 
         public ProductsCollection()

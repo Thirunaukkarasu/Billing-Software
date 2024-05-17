@@ -1,5 +1,6 @@
 ﻿using Billing.Domain.Results;
 using BillingSoftware.Core.Contracts;
+using BillingSoftware.Domain.Entities;
 using BillingSoftware.Domain.Models;
 using BillingSoftware.Repository.CommonRepo;
 using BillingSoftware.Repository.Contracts;
@@ -33,17 +34,22 @@ namespace BillingSoftware.Core.Services
             }
         }
 
-        public Result<List<InvoiceDetails>> GetInvoiceDetails(Guid? companyId = null)
+        //public Result<List<InvoiceDetails>> GetInvoiceDetails(Guid? companyId = null)
+        //{ 
+        //    try
+        //    {
+        //        var result = _commonRepository.GetInvoiceDetails(companyId);
+        //        return result is null ? Result.Fail<List<InvoiceDetails>>("Invoice not found. Please add invoice") : Result.Ok(result);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Result.Fail<List<InvoiceDetails>>("Error while reading " + e.Message);
+        //    }
+        //}
+
+        public Guid SaveInvoiceDetails(InvoiceDto invoiceDtls, Guid supplierId)
         { 
-            try
-            {
-                var result = _commonRepository.GetInvoiceDetails(companyId);
-                return result is null ? Result.Fail<List<InvoiceDetails>>("Invoice not found. Please add invoice") : Result.Ok(result);
-            }
-            catch (Exception e)
-            {
-                return Result.Fail<List<InvoiceDetails>>("Error while reading " + e.Message);
-            }
+          return _commonRepository.SaveInvoiceDetails(invoiceDtls, supplierId);
         }
 
         public Guid SaveCompanyDetails(CompanyDetails companyDetails)
@@ -51,23 +57,28 @@ namespace BillingSoftware.Core.Services
            return _commonRepository.SaveCompanyDetails(companyDetails); 
         }
 
-        public Guid SaveInvoiceDetails(InvoiceDetails invoiceDetails)
-        {
-            return _commonRepository.SaveInvoiceDetails(invoiceDetails); 
-        }
+        //public Guid SaveInvoiceDetails(InvoiceDetails invoiceDetails)
+        //{
+        //    return _commonRepository.SaveInvoiceDetails(invoiceDetails); 
+        //}
 
-        public Result<List<ProductItemCategory>> GetProductItemCategory()
+        public Result<List<ProductCategoryDto>> GetProductCategory()
         {
 
             try
             {
-                var result = _productCategoryRepository.GetProductItemCategory();
-                return result is null ? Result.Fail<List<ProductItemCategory>>("Category not fount. Please add Category") : Result.Ok(result);
+                var result = _productCategoryRepository.GetProductCategory();
+                return result is null ? Result.Fail<List<ProductCategoryDto>>("Category not fount. Please add Category") : Result.Ok(result);
             }
             catch (Exception e)
             {
-                return Result.Fail<List<ProductItemCategory>>("Error while reading " + e.Message);
+                return Result.Fail<List<ProductCategoryDto>>("Error while reading " + e.Message);
             }
+        }
+
+        public Guid SaveProductCategory(ProductCategoryDto productCategory)
+        { 
+            return _productCategoryRepository.SaveProductCategory(productCategory);
         }
 
         public Result<List<ProductItemMeasurementUnit>> GetProductItemMeasurementUnit()

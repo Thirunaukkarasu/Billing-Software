@@ -1,14 +1,14 @@
-﻿using BillingSoftware.Domain.Models;
+﻿using BillingSoftware.Domain.Entities;
+using BillingSoftware.Domain.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BillingSoftware.Repository.Contracts
 {
     public interface IProductCategoryRepository
     {
-        public List<ProductItemCategory> GetProductItemCategory();
+        public List<ProductCategoryDto> GetProductCategory();
+
+        Guid SaveProductCategory(ProductCategoryDto productCategory);
     }
 }
