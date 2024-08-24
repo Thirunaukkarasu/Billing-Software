@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 using BillingSoftware.Contracts.Services;
 using BillingSoftware.Properties;
 using BillingSoftware.Views;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -38,6 +39,7 @@ public class ShellViewModel : ObservableObject
         new HamburgerMenuImageItem() { Label = Resources.ShellPurchasePage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(PurchaseViewModel) },
         new HamburgerMenuImageItem() { Label = Resources.ShellPurchaseBoardPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(PurchaseBoardViewModel) },
         new HamburgerMenuImageItem() { Label = Resources.ShellAddPurchasePage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(AddPurchaseViewModel ) },
+        new HamburgerMenuImageItem() { Label = Resources.ShellAddProductPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(AddProductViewModel ) },
         new HamburgerMenuImageItem() { Label = Resources.ShellSalesPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(SalesViewModel) },
         new HamburgerMenuImageItem() { Label = Resources.ShellQuotationPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(QuotationViewModel) },
         new HamburgerMenuImageItem() { Label = Resources.ShellCustomersPage, Thumbnail = new BitmapImage(new Uri("./Icons/down.png", UriKind.Relative)), TargetPageType = typeof(CustomersViewModel) },

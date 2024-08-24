@@ -11,6 +11,10 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Remove="Converter\DoubleConverter.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Remove="Icons\add.png" />
     <None Remove="Icons\bill.png" />
     <None Remove="Images\IMG1.jpg" />
@@ -53,6 +57,7 @@
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 
@@ -67,5 +72,9 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Converter\DoubleConverter.cs" />
   </ItemGroup>
 </Project>

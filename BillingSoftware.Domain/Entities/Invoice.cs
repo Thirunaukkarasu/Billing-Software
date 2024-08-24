@@ -5,22 +5,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BillingSoftware.Domain.Entities
 {
-    [Table(nameof(Invoice))]
+    //Represents the purchase order details with supplier and invoice
+    [Table("Invoice")]
     public class Invoice
     {
         [Key]
-        public Guid InvoiceId { get; set; }
+        public Guid PurchaseId { get; set; }
         public string InvoiceNo { get; set; }
-        public DateTime InvoiceDate { get; set; }
-        public string InvoiceDisplayNumber { get; set; }
-        public string SupplierName { get; set; }
-        public string SupplierAddress { get; set; }
-        public string SupplierPhoneNumber { get; set; }
-        public bool IsActive { get; set; } = true;
-        public DateTime InsertedDt { get; set; } = DateTime.Now;
-        public DateTime? ModifiedDt { get; set; }
-        public Guid CompanyId { get; set; }
-        public Company? Company { get; set;} 
-        public ICollection<ProductItem>? ProductItems { get; set;}
+        public DateTime InvoiceDate { get; set; } 
+        public bool IsActive { get; set; } 
+        public DateTime CreatedDate { get; set; }
+        public DateTime? ModifyDate { get; set; }  
+        public Guid SupplierId { get; set; } //Required foreign key property
+        public Supplier Supplier{ get; set; } = null!; //Required reference navigation to principal 
+        public ICollection<PurchasedProduct> PurchasedProducts { get; } = new List<PurchasedProduct>();
+
     }
 }

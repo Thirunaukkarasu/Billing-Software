@@ -2,98 +2,99 @@
 using Billing.Repository.Contracts;
 using Billing.Repository.Imp.DBContext;
 using BillingSoftware.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
+using System.Collections.Generic;
+using System.Linq; 
 
 namespace Billing.Repository.Imp.ProductsRepo
 {
     public class ProductsRepository : IProductsRepository
     {
-        private readonly POSBillingDBContext dbContext;
+        private readonly POSBillingDBContext _dbContext;
         public ProductsRepository(POSBillingDBContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
-        public bool SaveProductsDetails(ProductItems productItems)
+        public Guid SaveProductsDetails(Product product)
         {
-            if (productItems.ProductId != null)
-            {
-                var productItm = dbContext.ProductItem.Where(x => x.ProductId == productItems.ProductId).FirstOrDefault();
-                if (productItm != null)
-                {
-                    productItm.BatchNo = productItems.BatchNo;
-                    productItm.CategoryId = productItems.CategoryId;
-                    productItm.MeasurementUnitId = productItems.MeasurementUnitId;
-                    productItm.DisplayName = productItems.DisplayName;
-                    productItm.QuantityPerUnit = productItems.QuantityPerUnit;
-                    productItm.DiscountPercent = Convert.ToDecimal(productItems.DiscountPercent);
-                    productItm.GSTPercent = Convert.ToDecimal(productItems.GSTPercent);
-                    productItm.HSNCode = productItems.HSNCode;
-                    productItm.ModifiedDt = DateTime.Now;
-                    productItm.MRP = Convert.ToDecimal(productItems.MRP);
-                    productItm.NoOfUnits = Convert.ToInt32(productItems.NoOfUnits);
-                    productItm.ProductName = productItems.ProductName;
-                    productItm.PurchaseRate = Convert.ToDecimal(productItems.PurchaseRate);
-                    productItm.SalesRate = Convert.ToDecimal(productItems.SalesRate);
-                }
-                dbContext.ProductItem.Update(productItm);
-            }
-            else
-            {
-                var product = new ProductItem()
-                {
-                    InvoiceId = productItems.InvoiceId,
-                    BatchNo = productItems.BatchNo,
-                    CategoryId = productItems.CategoryId,
-                    DisplayName = productItems.DisplayName,
-                    QuantityPerUnit = productItems.QuantityPerUnit,
-                    DiscountPercent = Convert.ToDecimal(productItems.DiscountPercent),
-                    GSTPercent = Convert.ToDecimal(productItems.GSTPercent),
-                    HSNCode = productItems.HSNCode,
-                    InsertedDt = DateTime.Now,
-                    ModifiedDt = null,
-                    MRP = Convert.ToDecimal(productItems.MRP),
-                    NoOfUnits = Convert.ToInt32(productItems.NoOfUnits),
-                    ProductName = productItems.ProductName,
-                    PurchaseRate = Convert.ToDecimal(productItems.PurchaseRate),
-                    SalesRate = Convert.ToDecimal(productItems.SalesRate),
-                    MeasurementUnitId = productItems.MeasurementUnitId,
-                };
-
-                dbContext.ProductItem.Add(product);
-            }
-            var rowAffected = dbContext.SaveChanges();
-            return rowAffected > 0;
+            _dbContext.Products.Add(product);
+            _dbContext.SaveChanges();
+            return product.ProductId; 
         }
 
-        public ProductsCollection GetProductsItemsDetails(Guid invoiceId, Guid companyId)
-        { 
-            var products = dbContext.ProductItem.Where(x => x.InvoiceId == invoiceId).Select(x => new ProductItems() 
-            {
-                CompanyId = companyId,
-                BatchNo = x.BatchNo,
-                CategoryId = x.CategoryId,
-                MeasurementUnitId = x.MeasurementUnitId,
-                DiscountPercent = x.DiscountPercent.ToString(),
-                DisplayName = x.DisplayName,
-                GSTPercent = x.GSTPercent.ToString(),
-                HSNCode = x.HSNCode,
-                InvoiceId = invoiceId,
-                MRP = x.MRP.ToString(),
-                NoOfUnits = x.NoOfUnits.ToString(),
-                ProductName = x.ProductName,
-                ProductId= x.ProductId,
-                PurchaseRate = x.PurchaseRate.ToString(),
-                QuantityPerUnit = x.QuantityPerUnit.ToString(),
-                SalesRate = x.SalesRate.ToString(), 
-            }).ToList();
+        //public ProductsCollection GetProductsItemsDetails(Guid invoiceId, Guid companyId)
+        //{ 
+        //    var products = dbContext.ProductItem.Where(x => x.InvoiceId == invoiceId).Select(x => new ProductItems() 
+        //    {
+        //        CompanyId = companyId,
+        //        BatchNo = x.BatchNo,
+        //        CategoryId = x.CategoryId,
+        //        MeasurementUnitId = x.MeasurementUnitId,
+        //        DiscountPercent = x.DiscountPercent.ToString(),
+        //        DisplayName = x.DisplayName,
+        //        GSTPercent = x.GSTPercent.ToString(),
+        //        HSNCode = x.HSNCode,
+        //        InvoiceId = invoiceId,
+        //        MRP = x.MRP.ToString(),
+        //        NoOfUnits = x.NoOfUnits.ToString(),
+        //        ProductName = x.ProductName,
+        //        ProductId= x.ProductId,
+        //        PurchaseRate = x.PurchaseRate.ToString(),
+        //        QuantityPerUnit = x.QuantityPerUnit.ToString(),
+        //        SalesRate = x.SalesRate.ToString(), 
+        //    }).ToList();
 
-            ProductsCollection productCollection = new()
-            {
-                Products = products
-            };
-            return productCollection; 
+        //    ProductsCollection productCollection = new()
+        //    {
+        //        Products = products
+        //    };
+        //    return productCollection; 
+        //}
+
+        public IEnumerable<Product> GetProductsByCategory(Guid? CategoryId)
+        {
+            return _dbContext.Products.Include(x => x.Category).Include(x => x.MeasurementUnit).Where(x => x.CategoryId.Equals(CategoryId)).ToList(); 
         }
+
+        public IEnumerable<Product> GetProducts()
+        {
+            return _dbContext.Products.Include(x => x.Category).Include(x => x.MeasurementUnit).AsEnumerable();
+        }
+        public  Product  GetProductsByProductId(Guid productId)
+        {
+            return _dbContext.Products.ToList().Where(x => x.ProductId == productId).FirstOrDefault(); 
+        }
+        public Guid UpdateProductsDetails(ProductsDto productsDto)
+        {
+            var product = _dbContext.Products.Where(x => x.ProductId == productsDto.ProductId).FirstOrDefault();
+            if (product != null)
+            { 
+                product.HSNCode = productsDto.HSNCode;
+                product.BatchNumber = productsDto.BatchNumber;
+                product.CategoryId = productsDto.CategoryId;
+                product.DisplayName = productsDto.DisplayName;
+                product.GSTPercent = productsDto.GSTPercent;
+                product.CGSTPercent = productsDto.CGSTPercent;
+                product.ProductDescription = productsDto.Description;
+                product.MRP = productsDto.MRP;
+                product.ProductName = productsDto.ProductName;
+                product.ProductSize = productsDto.ProductSize;
+                product.PurchaseDiscountPercent = productsDto.PurchaseDiscountPercent;
+                product.Quantity = productsDto.Quantity;
+                product.PurchaseRate = productsDto.PurchaseRate;
+                product.SalesDiscountPercent = productsDto.SalesDiscountPercent;
+                product.SalesRate = productsDto.SalesRate;
+                product.MeasurementUnitId = productsDto.SelectedMeasurementUnit.MeasurementUnitId;
+                product.ModifiedDate = DateTime.Now;
+                _dbContext.Entry(product).State = EntityState.Modified;
+                _dbContext.Products.Update(product);
+                _dbContext.SaveChanges(); 
+            }
+            return product.ProductId;
+        }
+
+      
     }
 }

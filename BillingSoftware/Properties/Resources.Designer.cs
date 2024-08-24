@@ -10,7 +10,8 @@
 
 namespace BillingSoftware.Properties {
     using System;
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -18,19 +19,19 @@ namespace BillingSoftware.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -44,7 +45,7 @@ namespace BillingSoftware.Properties {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -58,306 +59,287 @@ namespace BillingSoftware.Properties {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to ts.ItemName.
+        ///   Looks up a localized string similar to Add Catergory.
+        /// </summary>
+        public static string AddCatergoryPageTitle {
+            get {
+                return ResourceManager.GetString("AddCatergoryPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AddPurchase.
+        /// </summary>
+        public static string AddPurchasePageTitle {
+            get {
+                return ResourceManager.GetString("AddPurchasePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BillingSoftware.
         /// </summary>
         public static string AppDisplayName {
             get {
                 return ResourceManager.GetString("AppDisplayName", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to ShellGoBackButton.
+        ///   Looks up a localized string similar to Backup.
+        /// </summary>
+        public static string BackupPageTitle {
+            get {
+                return ResourceManager.GetString("BackupPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ContentGrid.
+        /// </summary>
+        public static string ContentGridPageTitle {
+            get {
+                return ResourceManager.GetString("ContentGridPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customers.
+        /// </summary>
+        public static string CustomersPageTitle {
+            get {
+                return ResourceManager.GetString("CustomersPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string DashboardPageTitle {
+            get {
+                return ResourceManager.GetString("DashboardPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sample Orders.
+        /// </summary>
+        public static string ListDetailsListDescription {
+            get {
+                return ResourceManager.GetString("ListDetailsListDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ListDetails.
+        /// </summary>
+        public static string ListDetailsPageTitle {
+            get {
+                return ResourceManager.GetString("ListDetailsPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main.
+        /// </summary>
+        public static string MainPageTitle {
+            get {
+                return ResourceManager.GetString("MainPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PurchaseBoard.
+        /// </summary>
+        public static string PurchaseBoardPageTitle {
+            get {
+                return ResourceManager.GetString("PurchaseBoardPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase.
+        /// </summary>
+        public static string PurchasePageTitle {
+            get {
+                return ResourceManager.GetString("PurchasePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quotation.
+        /// </summary>
+        public static string QuotationPageTitle {
+            get {
+                return ResourceManager.GetString("QuotationPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string ReportPageTitle {
+            get {
+                return ResourceManager.GetString("ReportPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales.
+        /// </summary>
+        public static string SalesPageTitle {
+            get {
+                return ResourceManager.GetString("SalesPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AddPurchase.
+        /// </summary>
+        public static string ShellAddPurchasePage {
+            get {
+                return ResourceManager.GetString("ShellAddPurchasePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup.
+        /// </summary>
+        public static string ShellBackupPage {
+            get {
+                return ResourceManager.GetString("ShellBackupPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ContentGrid.
+        /// </summary>
+        public static string ShellContentGridPage {
+            get {
+                return ResourceManager.GetString("ShellContentGridPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customers.
+        /// </summary>
+        public static string ShellCustomersPage {
+            get {
+                return ResourceManager.GetString("ShellCustomersPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string ShellDashboardPage {
+            get {
+                return ResourceManager.GetString("ShellDashboardPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go back.
         /// </summary>
         public static string ShellGoBackButton {
             get {
                 return ResourceManager.GetString("ShellGoBackButton", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to ShellHamburgerButtonName.
+        ///   Looks up a localized string similar to Open or close navigation.
         /// </summary>
         public static string ShellHamburgerButtonName {
             get {
                 return ResourceManager.GetString("ShellHamburgerButtonName", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Main.
+        ///   Looks up a localized string similar to ListDetails.
         /// </summary>
-        public static string MainPageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("MainPageTitle", resourceCulture);
+        public static string ShellListDetailsPage {
+            get {
+                return ResourceManager.GetString("ShellListDetailsPage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Main.
         /// </summary>
-        public static string ShellMainPage
-        {
-            get
-            {
+        public static string ShellMainPage {
+            get {
                 return ResourceManager.GetString("ShellMainPage", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Dashboard.
+        ///   Looks up a localized string similar to PurchaseBoard.
         /// </summary>
-        public static string DashboardPageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("DashboardPageTitle", resourceCulture);
+        public static string ShellPurchaseBoardPage {
+            get {
+                return ResourceManager.GetString("ShellPurchaseBoardPage", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Dashboard.
-        /// </summary>
-        public static string ShellDashboardPage
-        {
-            get
-            {
-                return ResourceManager.GetString("ShellDashboardPage", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Purchase.
         /// </summary>
-        public static string PurchasePageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("PurchasePageTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Purchase.
-        /// </summary>
-        public static string ShellPurchasePage
-        {
-            get
-            {
+        public static string ShellPurchasePage {
+            get {
                 return ResourceManager.GetString("ShellPurchasePage", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Sales.
+        ///   Looks up a localized string similar to Quotation.
         /// </summary>
-        public static string SalesPageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("SalesPageTitle", resourceCulture);
+        public static string ShellQuotationPage {
+            get {
+                return ResourceManager.GetString("ShellQuotationPage", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string ShellReportPage {
+            get {
+                return ResourceManager.GetString("ShellReportPage", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Sales.
         /// </summary>
-        public static string ShellSalesPage
-        {
-            get
-            {
+        public static string ShellSalesPage {
+            get {
                 return ResourceManager.GetString("ShellSalesPage", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Quotation.
+        ///   Looks up a localized string similar to AddProduct.
         /// </summary>
-        public static string QuotationPageTitle
+        public static string AddProductPageTitle
         {
             get
             {
-                return ResourceManager.GetString("QuotationPageTitle", resourceCulture);
+                return ResourceManager.GetString("AddProductPageTitle", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Quotation.
+        ///   Looks up a localized string similar to AddProduct.
         /// </summary>
-        public static string ShellQuotationPage
+        public static string ShellAddProductPage
         {
             get
             {
-                return ResourceManager.GetString("ShellQuotationPage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Customers.
-        /// </summary>
-        public static string CustomersPageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("CustomersPageTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Customers.
-        /// </summary>
-        public static string ShellCustomersPage
-        {
-            get
-            {
-                return ResourceManager.GetString("ShellCustomersPage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Report.
-        /// </summary>
-        public static string ReportPageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("ReportPageTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Report.
-        /// </summary>
-        public static string ShellReportPage
-        {
-            get
-            {
-                return ResourceManager.GetString("ShellReportPage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Backup.
-        /// </summary>
-        public static string BackupPageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("BackupPageTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Backup.
-        /// </summary>
-        public static string ShellBackupPage
-        {
-            get
-            {
-                return ResourceManager.GetString("ShellBackupPage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to ContentGrid.
-        /// </summary>
-        public static string ContentGridPageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("ContentGridPageTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to ContentGrid.
-        /// </summary>
-        public static string ShellContentGridPage
-        {
-            get
-            {
-                return ResourceManager.GetString("ShellContentGridPage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Sample Orders.
-        /// </summary>
-        public static string ListDetailsListDescription
-        {
-            get
-            {
-                return ResourceManager.GetString("ListDetailsListDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to ListDetails.
-        /// </summary>
-        public static string ListDetailsPageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("ListDetailsPageTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to ListDetails.
-        /// </summary>
-        public static string ShellListDetailsPage
-        {
-            get
-            {
-                return ResourceManager.GetString("ShellListDetailsPage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to PurchaseBoard.
-        /// </summary>
-        public static string PurchaseBoardPageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("PurchaseBoardPageTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to PurchaseBoard.
-        /// </summary>
-        public static string ShellPurchaseBoardPage
-        {
-            get
-            {
-                return ResourceManager.GetString("ShellPurchaseBoardPage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to AddPurchase.
-        /// </summary>
-        public static string AddPurchasePageTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("AddPurchasePageTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to AddPurchase.
-        /// </summary>
-        public static string ShellAddPurchasePage
-        {
-            get
-            {
-                return ResourceManager.GetString("ShellAddPurchasePage", resourceCulture);
+                return ResourceManager.GetString("ShellAddProductPage", resourceCulture);
             }
         }
     }

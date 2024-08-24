@@ -29,6 +29,8 @@ public class PageService : IPageService
         Configure<ListDetailsViewModel, ListDetailsPage>();
         Configure<PurchaseBoardViewModel, PurchaseBoardPage>();
         Configure<AddPurchaseViewModel, AddPurchasePage>();
+        Configure<AddCatergoryViewModel, AddCatergoryPage>();
+        Configure<AddProductViewModel, AddProductPage>();
     }
 
     public Type GetPageType(string key)

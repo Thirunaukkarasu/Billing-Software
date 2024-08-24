@@ -1,6 +1,4 @@
-﻿
-
-using Billing.Domain.Models;
+﻿ using Billing.Domain.Models;
 
 namespace Billing.Repository.Contracts
 {

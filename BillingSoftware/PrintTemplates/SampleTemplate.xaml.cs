@@ -1,4 +1,6 @@
-﻿using BillingSoftware.Models;
+﻿using Billing.Domain.Models;
+using BillingSoftware.Models;
+using BillingSoftware.ViewModels;
 using System.Windows.Controls;
 
 namespace BillingSoftware.PrintTemplates
@@ -7,15 +9,17 @@ namespace BillingSoftware.PrintTemplates
     /// Interaction logic for SampleTemplate.xaml
     /// </summary>
     public partial class SampleTemplate : UserControl
-    {
-        public SampleTemplate()
+    { 
+        public SampleTemplate(List<ProductsDto> products)
         {
             InitializeComponent();
-
-            for (var i = 1; i <= 10; i++)
+             
+            int i = 0;
+            foreach (var product in products)
             {
-                ItemsControl2.Items.Add(new ReportDataModel(i, $"Part of list xxxxxxxxx 2","", "Part HSN", 10*i, 10000*i, 1000, 100000*i ));
-            } 
+                i++;
+                ItemsControl2.Items.Add(new ReportDataModel(i, product.ProductName, product.Description, product.HSNCode, 1,2,3,4));
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Windows.Xps.Packaging;
 namespace BillingSoftware.Core.Contracts.Services
 {
     public interface IPrintingService
-    { 
+    {
         IReadOnlyList<PrinterModel> GetPrinters();
 
         IReadOnlyList<PrinterModel> GetPrinters(PrinterType printerTypes);

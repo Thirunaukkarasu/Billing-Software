@@ -1,8 +1,6 @@
 ﻿using Billing.Repository.Imp.DBContext;
-using BillingSoftware.Domain.Entities;
 using BillingSoftware.Domain.Models;
 using BillingSoftware.Repository.Contracts;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,9 +14,9 @@ namespace BillingSoftware.Repository.CommonRepo
             this.dbContext = dbContext;
         }
 
-        public List<ProductItemMeasurementUnit> GetProductMeasurementUnit()
+        public List<MeasurementUnitDto> GetProductMeasurementUnit()
         {
-            return dbContext.ProductMeasurementUnit.Select(x => new ProductItemMeasurementUnit()
+            return dbContext.ProductMeasurementUnit.Select(x => new MeasurementUnitDto()
             {
                 MeasurementUnitId = x.MeasurementUnitId,
                 MeasurementUnitName = x.MeasurementUnitName,

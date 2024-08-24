@@ -1,9 +1,6 @@
-﻿using System.IO;
-using System.Text;
-
-using BillingSoftware.Core.Contracts.Services;
-
+﻿using BillingSoftware.Core.Contracts.Services;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace BillingSoftware.Core.Services;
 

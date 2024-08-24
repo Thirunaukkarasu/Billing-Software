@@ -1,13 +1,14 @@
-﻿using System.Windows.Controls; 
+﻿using System.Windows.Controls;
+
 using BillingSoftware.ViewModels;
+
 namespace BillingSoftware.Views;
 
-public partial class AddPurchasePage : Page
+public partial class AddProductPage : Page
 {
-    public AddPurchasePage(AddPurchaseViewModel viewModel)
+    public AddProductPage(AddProductViewModel viewModel)
     {
         InitializeComponent();
         DataContext = viewModel;
     }
-     
 }

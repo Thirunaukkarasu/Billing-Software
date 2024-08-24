@@ -21,7 +21,8 @@ namespace BillingSoftware.Repository.CommonRepo
            return dbContext.ProductCategory.Select(x => new ProductCategoryDto()
             {
                 CategoryId = x.CategoryId,
-                CategoryName = x.CategoryName 
+                CategoryName = x.CategoryName, 
+                TamilCategoryName = x.TamilCategoryName,
             }).ToList();
         }
 
@@ -31,12 +32,9 @@ namespace BillingSoftware.Repository.CommonRepo
             {
                CategoryName = productCategory.CategoryName
             };
-
             dbContext.ProductCategory.Add(category);
             dbContext.SaveChanges();
             return category.CategoryId;
         }
-
-
     }
 }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BillingSoftware.Domain.Entities
 {
     [Table("Suppliers")]
-    public class Suppliers
+    public class Supplier
     {
         [Key]
         public Guid SupplierId { get; set; }
@@ -16,6 +16,6 @@ namespace BillingSoftware.Domain.Entities
         public bool IsActive { get; set; } = true;
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime? ModifyDate { get; set; }
-        public ICollection<PurchaseOrders> PurchaseOrders { get; } = new List<PurchaseOrders>();
+        public ICollection<Invoice> PurchaseOrders { get; } = new List<Invoice>();
     }
 }

@@ -5,7 +5,7 @@ namespace BillingSoftware.Domain.Models
      
     public class SuppliersDto
     {
-        public Guid? SupplierId { get; set; }
+        public Guid SupplierId { get; set; } = Guid.Empty;
         public string SupplierName { get; set; }
         public string SupplierAddress { get; set; }
         public string SupplierPhoneNumber { get; set; }

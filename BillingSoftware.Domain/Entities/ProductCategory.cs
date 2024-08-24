@@ -14,5 +14,6 @@ namespace BillingSoftware.Domain.Entities
         [Key]
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public string TamilCategoryName { get; set; }
     }
 }

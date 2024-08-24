@@ -71,7 +71,7 @@ namespace BillingSoftware.Core.Services
                 }
 
                 // Yield control back to the current dispatcher to keep UI responsive
-                 Dispatcher.Yield();
+                Dispatcher.Yield();
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
@@ -185,21 +185,21 @@ namespace BillingSoftware.Core.Services
             {
                 itemsControl.ItemsSource = null;
                 itemsControl.Items.Clear();
-                 
+
                 if (paginationTracker.ContainsKey(itemsControl.Name))
                 {
                     var items = paginationTracker[itemsControl.Name].Items;
                     var startIndex = paginationTracker[itemsControl.Name].CurrentIndex;
 
                     var needsPagination = PopulateItemsControl(items, itemsControl, startIndex, out var currentItemIndex);
-                    
+
                     itemsControl.Height = 25 * (itemsControl.Items.Count);
-                    itemsControl.Margin =new Thickness(0);
+                    itemsControl.Margin = new Thickness(0);
                     itemsControl.VerticalAlignment = VerticalAlignment.Top;
 
                     itemsControl.BorderBrush = Brushes.YellowGreen;
                     itemsControl.BorderThickness = new Thickness(1);
-                    
+
 
                     if (needsPagination)
                     {
@@ -244,15 +244,15 @@ namespace BillingSoftware.Core.Services
                 var itemContainer = (FrameworkElement)itemsControl.ItemContainerGenerator.ContainerFromItem(item);
                 var itemsPresenter = FindVisualParent<ItemsPresenter>(itemContainer).Single();
                 var isVisible = IsElementFullyVisibleInContainer(itemsPresenter, itemContainer);
-                
+
                 if (!isVisible)
                 {
                     itemsControl.Items.Remove(item);
                     currentItemIndex = i;
                     return true;
-                } 
+                }
             }
-           
+
             return false;
         }
 
@@ -284,10 +284,10 @@ namespace BillingSoftware.Core.Services
                 int count = 0;
                 foreach (var dp in logicalChildren)
                 {
-                     
+
                     if (dp is System.Windows.Controls.RowDefinition && ((RowDefinition)dp).Name == "itemControlRow")
                     {
-                        ItemsControl myListElementType = logicalChildren.OfType<ItemsControl>().FirstOrDefault(); 
+                        ItemsControl myListElementType = logicalChildren.OfType<ItemsControl>().FirstOrDefault();
                         ((RowDefinition)dp).Height = new GridLength(myListElementType.Height);
                     }
                     if (dp.GetValue(Document.SetLastPageNumberAttachedPropertyProperty) is bool setLastPageNumber && setLastPageNumber)

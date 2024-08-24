@@ -7,11 +7,11 @@ namespace Billing.Domain.Models
     {
         public CompanyDetails Company { get; set; }
         public InvoiceDto Invoice { get; set; }
-        public List<ProductItems> Products { get; set; }
+        public List<ProductsDto> Products { get; set; }
 
         public ProductsCollection()
         {
-            Products = new List<ProductItems>();
+            Products = new List<ProductsDto>();
         }
     }
 }

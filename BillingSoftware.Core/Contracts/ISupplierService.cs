@@ -3,8 +3,8 @@
 namespace BillingSoftware.Core.Contracts
 {
     public interface ISupplierService
-    { 
-       public List<SuppliersDto> GetSuppliers();
+    {
+        public List<SuppliersDto> GetSuppliers();
 
         public Guid SaveSupplier(SuppliersDto supplier);
 

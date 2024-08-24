@@ -1,5 +1,4 @@
-﻿using System.Runtime.Intrinsics.Arm;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace BillingSoftware.Core.Services

@@ -13,12 +13,12 @@ namespace BillingSoftware.Core.Services
         }
         public List<SuppliersDto> GetSuppliers()
         {
-            return  _suppliersRepository.GetSuppliersDetails();
+            return _suppliersRepository.GetSuppliersDetails();
         }
 
         public Guid SaveSupplier(SuppliersDto supplier)
         {
-            return _suppliersRepository.SaveSuppliersDetails(supplier); 
+            return _suppliersRepository.SaveSuppliersDetails(supplier);
         }
 
         public Guid UpdateSupplier(SuppliersDto supplier)

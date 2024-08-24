@@ -1,5 +1,4 @@
-﻿using BillingSoftware.Domain.Entities;
-using BillingSoftware.Domain.Models;
+﻿using BillingSoftware.Domain.Models;
 using System;
 using System.Collections.Generic;
 

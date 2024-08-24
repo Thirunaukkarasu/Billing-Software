@@ -5,19 +5,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:properties="clr-namespace:BillingSoftware.Properties"
+    xmlns:properties="clr-namespace:BillingSoftware.Properties" 
     xmlns:cb="clr-namespace:BillingSoftware.Behaviors" 
-           xmlns:markup="clr-namespace:BillingSoftware.Markup"
+    xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mdl="clr-namespace:BillingSoftware.Models"
+    xmlns:markup="clr-namespace:BillingSoftware.Markup"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
-xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+    xmlns:viewmodels="clr-namespace:BillingSoftware.ViewModels"  
     mc:Ignorable="d"
-    d:DesignHeight="636" d:DesignWidth="1073">
-
+    d:DesignHeight="636" d:DesignWidth="1073"> 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid.Resources>
+            <!--<conv:DoubleConverter x:Key="DoubleConverter"></conv:DoubleConverter>-->
+        </Grid.Resources>
         <TextBlock
             Style="{StaticResource PageTitleStyle}"
             Margin="{StaticResource MediumLeftMargin}"
@@ -26,32 +31,30 @@ xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
             Grid.Row="1"
             Margin="{StaticResource MediumLeftRightMargin}"
             Background="{DynamicResource MahApps.Brushes.Gray10}">
-            <Grid>
+            <Grid> 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="1*" />
-                </Grid.RowDefinitions> 
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" /> 
+                    <RowDefinition Height="Auto" /> 
+                </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" /> 
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Orientation="Vertical">
                         <TextBlock Text="Supplier Name" />
-                        <ComboBox Name="cbSupplierName" Margin="2" mah:TextBoxHelper.Watermark="Select/Enter Supplier Name" IsTextSearchEnabled="False" IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True" 
-                                   ItemsSource="{Binding SuppliersSource}" 
-                                  SelectedItem="{Binding SelectedSupplier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  Text="{Binding SupplierText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"></ComboBox>
+                        <ComboBox Name="cbSupplierName" Margin="2" mah:TextBoxHelper.Watermark="Select/Enter Supplier Name" IsTextSearchEnabled="False" IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"  StaysOpenOnEdit="True" IsTextSearchCaseSensitive="False"  ItemsSource="{Binding SuppliersSource}"  SelectedItem="{Binding SelectedSupplier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  Text="{Binding SupplierText, UpdateSourceTrigger=LostFocus}"></ComboBox>
                     </StackPanel>
                     <StackPanel Grid.Column="3">
                         <TextBlock Text="Invoice Number" />
                         <ComboBox Name="cbInvoiceNo" Margin="2" 
-                                  mah:TextBoxHelper.Watermark="Select/Enter Invoice Number" ItemsSource="{Binding InvoiceSource, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"   IsTextSearchEnabled="False" IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"   SelectedItem="{Binding SelectedInvoice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Text ="{Binding InvoiceText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
+                                  mah:TextBoxHelper.Watermark="Select/Enter Invoice Number" ItemsSource="{Binding InvoiceSource, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"   IsTextSearchEnabled="False" IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"   SelectedItem="{Binding SelectedInvoice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Text ="{Binding InvoiceText, UpdateSourceTrigger=LostFocus}" />
                     </StackPanel>
                     <StackPanel Grid.Column="4">
                         <TextBlock Text="Invoice Date" />
@@ -59,7 +62,7 @@ xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
 
                             <DatePicker Margin="2"
             mah:TextBoxHelper.Watermark="Select a date"
-            SelectedDate="{Binding InvoiceDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, StringFormat=dd/MM/yyyy}" Height="10"> 
+            SelectedDate="{Binding InvoiceDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, StringFormat=dd/MM/yyyy}" Height="10">
                             </DatePicker>
                             <!--<DatePicker  SelectedDateFormat="Short" SelectedDate="{Binding PropertyName, StringFormat=dd/MM/yyyy}"
 FirstDayOfWeek="Monday"  VerticalContentAlignment="Center">
@@ -97,132 +100,109 @@ FirstDayOfWeek="Monday"  VerticalContentAlignment="Center">
                         <TextBlock  Text="Phone Number"/>
                         <TextBox Text="{Binding  SupplierPhoneNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Phone Number"    SpellCheck.IsEnabled="True" />
                     </StackPanel>
-                     <StackPanel Margin="5"  Orientation="Vertical" Grid.Row="0" Grid.Column="1">
+                    <StackPanel Margin="5"  Orientation="Vertical" Grid.Row="0" Grid.Column="1">
                         <TextBlock  Text="Address"/>
                         <TextBox  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"  Text="{Binding SupplierAddress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Address"    SpellCheck.IsEnabled="True" />
                     </StackPanel>
                 </Grid>
-                <Grid x:Name="gdAddItems" Grid.Row="2" Margin="10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Margin="5" Orientation="Vertical" Grid.Row="0" Grid.Column="0">
-                                <TextBlock Text="Category"/>
-                                <ComboBox Name="cbCategory"  mah:TextBoxHelper.Watermark="Select Category"  ItemsSource="{Binding ProductCategorySource}"  IsTextSearchEnabled="False" IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"  SelectedItem="{Binding SelectedProductCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                        Text ="{Binding ProductCategoryText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"  >
-                                </ComboBox>
-                            </StackPanel>
-                            <StackPanel Margin="5" Orientation="Vertical" Grid.Row="0" Grid.Column="1">
-                                <TextBlock Text="Product Name"/>
-                                <ComboBox Name="cbProductName"  ItemsSource="{Binding ProductsSource}"  
-                       IsTextSearchEnabled="False" mah:TextBoxHelper.Watermark="Select Product Name"
-                        IsEditable="False" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"
-                        SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  >
-                                </ComboBox>
-                            </StackPanel> 
-                            <StackPanel Margin="5"  Orientation="Vertical" Grid.Row="0" Grid.Column="2">
-                                <TextBlock  Text="Description"/>
-                                <TextBox Text="{Binding  Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Description"    SpellCheck.IsEnabled="True" />
-                            </StackPanel> 
-                            <StackPanel Margin="5" Orientation="Vertical" Grid.Row="0" Grid.Column="3">
-                                <TextBlock  Text="HSN Code"/>
-                                <RichTextBox  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter HSN Code" IsDocumentEnabled="True"  SpellCheck.IsEnabled="True" />
-                            </StackPanel> 
-                            <StackPanel Margin="5"  Orientation="Vertical" Grid.Row="0" Grid.Column="4">
-                                <TextBlock  Text="Batch No"/>
-                                <RichTextBox  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Batch No" IsDocumentEnabled="True"  SpellCheck.IsEnabled="True" />
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Margin="5" Orientation="Vertical" Grid.Row="1" Grid.Column="0">
-                                <TextBlock  Text="Quantity"/>
-                                <RichTextBox  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Quantity" IsDocumentEnabled="True"  SpellCheck.IsEnabled="True" />
-                            </StackPanel>  
-                            <StackPanel Margin="5"  Orientation="Vertical" Grid.Row="1" Grid.Column="1">
-                                <TextBlock  Text="Rate/Unit"/>
-                                <RichTextBox  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Rate Per Unit" IsDocumentEnabled="True"    SpellCheck.IsEnabled="True" />
-                            </StackPanel> 
-                            <StackPanel Margin="5"  Orientation="Vertical" Grid.Row="1" Grid.Column="2">
-                                <TextBlock  Text="Product MRP"/>
-                                <RichTextBox  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Product MRP" IsDocumentEnabled="True"  SpellCheck.IsEnabled="True" />
-                            </StackPanel> 
-                            <StackPanel Margin="5" Orientation="Vertical" Grid.Row="1" Grid.Column="3">
-                                <TextBlock  Text="GST"/>
-                                <RichTextBox  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter GST" IsDocumentEnabled="True"  SpellCheck.IsEnabled="True" />
-                            </StackPanel>
-                            <StackPanel Margin="5"  Orientation="Vertical" Grid.Row="1" Grid.Column="4">
-                                <TextBlock  Text="CGST"/>
-                                <RichTextBox  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter CGST" IsDocumentEnabled="True"  SpellCheck.IsEnabled="True" />
-                            </StackPanel> 
-                            <StackPanel Margin="5" Orientation="Vertical" Grid.Row="1" Grid.Column="5">
-                                <TextBlock  Text="Discount"/>
-                                <RichTextBox  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Discount" IsDocumentEnabled="True"  SpellCheck.IsEnabled="True" />
-                            </StackPanel>
-                            <StackPanel Margin="5"  Orientation="Vertical" Grid.Row="1" Grid.Column="6">
-                                <TextBlock  Text="Sell Price"/>
-                                <RichTextBox  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Sell Price" IsDocumentEnabled="True"  SpellCheck.IsEnabled="True" />
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
+                <Grid Grid.Row="2" Margin="15,0,15,0">
+                    <DockPanel
+                          >
+                        <Button Margin="2" DockPanel.Dock="Left"  Width="150" Grid.Column="1"  Command="{Binding AddCategoryCommand}" >
+                          Add New Category   <!--<Image Source="/Icons/add.png" />-->
+                        </Button>
+                        <Button x:Name="btnAddProduct" DockPanel.Dock="Right" Width="150" Margin="2" Command="{Binding AddProductCommand}" BorderThickness="1">
+                            Add Product Row
+                        </Button>
+                    </DockPanel>
                 </Grid>
-                <Grid Name="grdDataGrid" Grid.Row="3" Margin="5">
+               <Grid Name="grdDataGrid" Grid.Row="3" Margin="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="470*" />
                         </Grid.ColumnDefinitions>
                         <ScrollViewer Grid.Column="0"
                    Margin="10,5,5,5"
-                   HorizontalScrollBarVisibility="Disabled"
+                   HorizontalScrollBarVisibility="Auto"
                    VerticalScrollBarVisibility="Auto">
-                            <ContentControl DataContext="{Binding ElementName=AzureDataGrid}" />
+                            <ContentControl DataContext="{Binding ElementName=ProductsDataGrid}" />
                         </ScrollViewer>
-                        <DataGrid x:Name="AzureDataGrid" Grid.Column="1" Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding Path=Albums}" RowHeaderWidth="0" Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" Grid.ColumnSpan="2">
+                        <DataGrid x:Name="ProductsDataGrid" Grid.Column="1" Margin="5" AutoGenerateColumns="False" ItemsSource="{Binding PurchaseProductsSource,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowHeaderWidth="0" Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectedItem="{Binding SelectedProductRow,UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" HorizontalScrollBarVisibility="Auto" SelectionMode="Single"  CanUserAddRows="False" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" >
                             <DataGrid.Columns>
-                                <DataGridTextColumn mah:VisibilityHelper.IsVisible="True" Binding="{Binding Title}" Header="Title" />
-                                <DataGridComboBoxColumn Header="Category"  SelectedValueBinding="{Binding CompanyID}" DisplayMemberPath="Name"  SelectedValuePath="ID">
-                                    <DataGridComboBoxColumn.ElementStyle>
-                                        <Style TargetType="{x:Type ComboBox}">
-                                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.CompanyItems, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                        </Style>
-                                    </DataGridComboBoxColumn.ElementStyle>
-                                    <DataGridComboBoxColumn.EditingElementStyle>
-                                        <Style TargetType="{x:Type ComboBox}">
-                                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.CompanyItems, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                        </Style>
-                                    </DataGridComboBoxColumn.EditingElementStyle>
-                                </DataGridComboBoxColumn>
-                                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
-                                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
+                                <DataGridTemplateColumn Header="Add">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Add"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
+                                                          Path=DataContext.AddProductGridRowCommand}"
+                                        CommandParameter="{Binding}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Delete">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Delete"
+                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
+                                              Path=DataContext.DeleteProductRowCommand}"
+                            CommandParameter="{Binding}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+ 
+                                <DataGridTemplateColumn Header="Category">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox  
+                                                ItemsSource="{Binding DataContext.ProductCategorySource, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" 
+                                                SelectedItem="{Binding Path=SelectedProductCategoryRow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }"/> 
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>  
+                                <DataGridTemplateColumn Header="Product Name">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox  
+                                                ItemsSource="{Binding Path=CBProductsSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                SelectedItem="{Binding Path=SelectedProduct,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/> 
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header = "Description" Binding = "{Binding Path=Description}"  /> 
+                                <DataGridTextColumn Header = "HSN Code"  Binding = "{Binding Path=HSNCode}" />
+                                <DataGridTextColumn Header = "Batch Number"  Binding = "{Binding Path=BatchNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }" />
+                                <DataGridTextColumn Header = "Quantity"  Binding = "{Binding Path=Quantity}" />
+                                <DataGridTextColumn Header = "Size"  Binding = "{Binding Path=ProductSize}" />
+                                <DataGridTemplateColumn Header="Unit">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox  
+                                                    ItemsSource="{Binding  DataContext.MeasurementUnitSource, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" 
+                                                    SelectedItem="{Binding Path=SelectedMeasurementUnit,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                     />
+                                            
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header = "Price/Quantity (MRP)"  Binding = "{Binding Path=MRP}" />
+                                <DataGridTextColumn Header = "Purchase Discount"  Binding = "{Binding Path=PurchaseDiscountPercent}" /> 
+                                <DataGridTextColumn Header = "GST %"  Binding = "{Binding Path=GSTPercent}" />
+                                <DataGridTextColumn Header = "CGST %"  Binding = "{Binding Path=CGSTPercent}" />
+                                <DataGridTextColumn Header = "Purchase Rate"  Binding = "{Binding Path=PurchaseRate}"/> 
+                                <DataGridTextColumn Header = "Sales Discount %"  Binding = "{Binding Path=SalesDiscountPercent}" />
+                                <DataGridTextColumn Header = "Sales Price"  Binding = "{Binding Path=SalesRate}" />
                             </DataGrid.Columns>
-                        </DataGrid>
+                        </DataGrid>  
                     </Grid>
                 </Grid>
-                <Grid Grid.Row="4">
+                <Grid Grid.Row="4" Margin="15,0,15,0">
                     <DockPanel>
                         <Button x:Name="btnSave" Width="100" Height="30" Margin="2" DockPanel.Dock="Left" Command="{Binding SavePurchaseOrderCommand}" BorderThickness="3">Save
-                            </Button>
-
+                        </Button>
+                        <Button x:Name="btnPrint" Width="100" Height="30" Margin="2" DockPanel.Dock="Left" Command="{Binding PrintInvoiceCommand}" BorderThickness="3">Print
+                        </Button>
                     </DockPanel>
                 </Grid>
             </Grid>

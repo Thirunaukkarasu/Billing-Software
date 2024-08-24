@@ -2,7 +2,7 @@
 
 namespace BillingSoftware.Domain.Models
 {
-    public class ProductItemMeasurementUnit
+    public class MeasurementUnitDto
     {
         public Guid MeasurementUnitId { get; set; }
 
