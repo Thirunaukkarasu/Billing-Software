@@ -4,7 +4,7 @@ namespace BillingSoftware.Domain.Models
 {
     public class ProductCategoryDto
     {
-        public Guid CategoryId { get; set; } = Guid.Empty;
+        public Guid CategoryId { get; set; } 
 
         public string CategoryName { get; set; }
 
@@ -13,6 +13,20 @@ namespace BillingSoftware.Domain.Models
         public override string ToString()
         {
             return $"{CategoryName} ({TamilCategoryName})";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ProductCategoryDto category)
+            {
+                return CategoryId == category.CategoryId;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return CategoryId.GetHashCode();
         }
     }
 }

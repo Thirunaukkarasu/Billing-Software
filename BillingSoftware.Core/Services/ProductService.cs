@@ -33,39 +33,43 @@ namespace BillingSoftware.Core.Services
                 Quantity = productsDto.Quantity,
                 PurchaseRate = productsDto.PurchaseRate,
                 SalesDiscountPercent = productsDto.SalesDiscountPercent,
-                SalesRate = productsDto.SalesRate
+                SalesRate = productsDto.SalesRate,
+                CreatedBy = "Admin",
+                CreatedDate = DateTime.Now,
+                Stocks = productsDto.Stocks,
+                MeasurementUnitId = productsDto.MeasurementUnit.MeasurementUnitId,
             };
             return _productsRepository.SaveProductsDetails(product);
         }
 
         public Guid UpdateProduct(ProductsDto productsDto)
         {
-            Guid guid = productsDto.ProductId ?? Guid.Empty;
-            return _productsRepository.UpdateProductsDetails(productsDto);
-            //var product = _productsRepository.GetProductsByProductId(guid);
-            //if (product != null)
-            //{
-            //    product.ProductId = guid;
-            //    product.HSNCode = productsDto.HSNCode;
-            //    product.BatchNumber = productsDto.BatchNumber;
-            //    product.CategoryId = productsDto.CategoryId;
-            //    product.DisplayName = productsDto.DisplayName;
-            //    product.GSTPercent = productsDto.GSTPercent;
-            //    product.CGSTPercent = productsDto.CGSTPercent;
-            //    product.ProductDescription = productsDto.Description;
-            //    product.MRP = productsDto.MRP;
-            //    product.ProductName = productsDto.ProductName;
-            //    product.ProductSize = productsDto.ProductSize;
-            //    product.PurchaseDiscountPercent = productsDto.PurchaseDiscountPercent;
-            //    product.Quantity = productsDto.Quantity;
-            //    product.PurchaseRate = productsDto.PurchaseRate;
-            //    product.SalesDiscountPercent = productsDto.SalesDiscountPercent;
-            //    product.SalesRate = productsDto.SalesRate;
-            //    product.MeasurementUnitId = productsDto.SelectedMeasurementUnit.MeasurementUnitId; 
-            //    product.ModifiedDate = DateTime.Now;
-            //    return _productsRepository.UpdateProductsDetails(product);
-            //}
-            //return product.ProductId;
+            Guid guid = productsDto.ProductId; 
+            var product = _productsRepository.GetProductsByProductId(guid);
+            if (product != null)
+            {
+                product.ProductId = guid;
+                product.HSNCode = productsDto.HSNCode;
+                product.BatchNumber = productsDto.BatchNumber;
+                product.CategoryId = productsDto.CategoryId;
+                product.DisplayName = productsDto.DisplayName;
+                product.GSTPercent = productsDto.GSTPercent;
+                product.CGSTPercent = productsDto.CGSTPercent;
+                product.ProductDescription = productsDto.Description;
+                product.MRP = productsDto.MRP;
+                product.ProductName = productsDto.ProductName;
+                product.ProductSize = productsDto.ProductSize;
+                product.PurchaseDiscountPercent = productsDto.PurchaseDiscountPercent;
+                product.Quantity = productsDto.Quantity;
+                product.PurchaseRate = productsDto.PurchaseRate;
+                product.SalesDiscountPercent = productsDto.SalesDiscountPercent;
+                product.SalesRate = productsDto.SalesRate;
+                product.MeasurementUnitId = productsDto.MeasurementUnit.MeasurementUnitId;
+                product.ModifiedDate = DateTime.Now;
+                product.Stocks = productsDto.Stocks;    
+                return _productsRepository.UpdateProductsDetails(product);
+            }
+            return product.ProductId;
         }
 
         public List<ProductsDto> GetProductsByCategory(Guid? CategoryId)
@@ -88,7 +92,7 @@ namespace BillingSoftware.Core.Services
                 HSNCode = x.HSNCode,
                 BatchNumber = x.BatchNumber,
                 CategoryId = x.CategoryId,
-                SelectedProductCategoryRow = new ProductCategoryDto()
+                Category = new ProductCategoryDto()
                 {
                     CategoryId = x.Category.CategoryId,
                     CategoryName = x.Category.CategoryName,
@@ -107,7 +111,8 @@ namespace BillingSoftware.Core.Services
                 PurchaseRate = x.PurchaseRate,
                 SalesDiscountPercent = x.SalesDiscountPercent,
                 SalesRate = x.SalesRate,
-                SelectedMeasurementUnit = new MeasurementUnitDto()
+                Stocks = x.Stocks,
+                MeasurementUnit = new MeasurementUnitDto()
                 {
                     MeasurementUnitId = x.MeasurementUnit.MeasurementUnitId,
                     MeasurementUnitName = x.MeasurementUnit.MeasurementUnitName,

@@ -7,7 +7,9 @@ namespace BillingSoftware.Repository.Contracts
 {
     public interface IPurchaseRepository
     {
-        Guid SavePurchasedProducts(PurchasedProduct purchasedProduct);
+        Guid AddPurchasedProducts(PurchasedProduct purchasedProduct, Guid PurchaseId);
+
+        void UpdatePurchasedProducts(PurchasedProduct purchasedProduct, Guid PurchaseId);
 
         IEnumerable<PurchasedProduct> GetPurchasedProduct(Guid purchaseId);
     }

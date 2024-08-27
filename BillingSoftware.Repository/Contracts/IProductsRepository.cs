@@ -7,14 +7,15 @@ namespace Billing.Repository.Contracts
 {
     public interface IProductsRepository
     {
-        Guid SaveProductsDetails(Product product);
-         
+        Guid SaveProductsDetails(Product product); 
 
         IEnumerable<Product> GetProductsByCategory(Guid? CategoryId);
 
         IEnumerable<Product> GetProducts();
+      
         Product GetProductsByProductId(Guid productId);
-        Guid UpdateProductsDetails(ProductsDto productsDto);
+        
+        Guid UpdateProductsDetails(Product product);
 
         //bool SaveProductsDetails(ProductItems productItems);
         //ProductsCollection GetProductsItemsDetails(Guid invoiceId, Guid companyId);

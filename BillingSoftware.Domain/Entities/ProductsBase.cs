@@ -31,7 +31,9 @@ namespace BillingSoftware.Domain.Entities
         public decimal SalesDiscountPercent { get; set; }
         
         public decimal SalesRate { get; set; }
-         
+
+        
+
         public DateTime? CreatedDate { get; set; }
         
         public DateTime? ModifiedDate { get; set; }

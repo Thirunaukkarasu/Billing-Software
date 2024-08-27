@@ -1,21 +1,12 @@
-﻿using BillingSoftware.Domain.Extentions;
+﻿using BillingSoftware.Domain.Entities;
 using BillingSoftware.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 
 namespace Billing.Domain.Models
 {
-    public class ProductsDto :  INotifyPropertyChanged
+    public class ProductsDto  
     {
-        public ProductsDto()
-        {
-            ProductsDBSource = new List<ProductsDto>(); 
-        }
          
-        public Guid? ProductId { get; set; }
         private string productName;
         private string _description;
         private string displayName;
@@ -26,157 +17,91 @@ namespace Billing.Domain.Models
         private decimal productSize;
         private decimal gSTPercent;
         private decimal cGSTPercent;
-        private decimal purchaseDiscountPercent; 
+        private decimal purchaseDiscountPercent;
         private decimal purchaseRate;
         private decimal salesDiscountPercent;
-        private decimal salesRate;
-        private Guid? purchaseId;
+        private decimal salesRate; 
         private Guid categoryId;
+        private int stocks;
+        private Guid productId;
 
-        public List<ProductsDto> ProductsDBSource { get; set; }
+        public Guid ProductId { get => productId; set => productId = value; }
+     
+        public ProductCategoryDto Category { get; set; }
 
-        private ProductCategoryDto _SelectedProductCategory;
-        public ProductCategoryDto SelectedProductCategoryRow
-        {
-            get
-            {
-                return _SelectedProductCategory;
-            }
-            set
-            {
-                if (value != null && _SelectedProductCategory != value)
-                {
-                    _SelectedProductCategory = value;
-                    LoadProducts();
-                    ClearRowValues();
-                    OnPropertyChanged(nameof(SelectedProductCategoryRow));
-                }
-            }
-        }
-
-        private void ClearRowValues()
-        {
-            //throw new NotImplementedException();
-        }
-
-        private ObservableCollection<ProductsDto> _cBProductsSource;
-        public ObservableCollection<ProductsDto> CBProductsSource
-        {
-            get
-            {
-                return _cBProductsSource;
-            }
-            set
-            {
-                _cBProductsSource = value;
-                OnPropertyChanged(nameof(CBProductsSource));
-            }
-        }
-         
-        private  MeasurementUnitDto  _selectedMeasurementUnit; 
-        public  MeasurementUnitDto SelectedMeasurementUnit
-        {
-            get
-            {
-                return _selectedMeasurementUnit;
-            }
-            set
-            {
-                _selectedMeasurementUnit = value;
-                OnPropertyChanged(nameof(SelectedMeasurementUnit));
-            }
-        }
-
-        private ProductsDto _SelectedProduct;
-       
-        public ProductsDto SelectedProduct
-        {
-            get
-            {
-                return _SelectedProduct;
-            }
-            set
-            {
-                if (value != null && _SelectedProduct != value)
-                {
-                    _SelectedProduct = value;
-                    LoadProductRow();
-                    OnPropertyChanged(nameof(SelectedMeasurementUnit));
-                    OnPropertyChanged(nameof(SelectedProduct));
-                }
-            }
-        }
-
+        public int Stocks { get => stocks; set => stocks = value; }
+        
+        public MeasurementUnitDto MeasurementUnit { get; set; }
         public string ProductName
         {
-            get 
-            { 
-                return productName; 
+            get
+            {
+                return productName;
             }
             set
             {
                 productName = value;
-                OnPropertyChanged(nameof(ProductName));
+                //OnPropertyChanged(nameof(ProductName));
             }
         }
         public string Description
         {
-            get 
-            { 
-                return _description; 
+            get
+            {
+                return _description;
             }
             set
             {
                 _description = value;
-                OnPropertyChanged(nameof(Description));
+                //OnPropertyChanged(nameof(Description));
             }
         }
         public string DisplayName
         {
-            get 
-            { 
-                return displayName; 
+            get
+            {
+                return displayName;
             }
             set
             {
                 displayName = value;
-                OnPropertyChanged(nameof(DisplayName));
+                //OnPropertyChanged(nameof(DisplayName));
             }
         }
         public string HSNCode
         {
-            get 
-            { 
-                return hSNCode; 
+            get
+            {
+                return hSNCode;
             }
             set
             {
                 hSNCode = value;
-                OnPropertyChanged(nameof(HSNCode));
+                //OnPropertyChanged(nameof(HSNCode));
             }
         }
         public string BatchNumber
         {
-            get 
-            { 
-                return batchNumber; 
+            get
+            {
+                return batchNumber;
             }
             set
             {
                 batchNumber = value;
-                OnPropertyChanged(nameof(BatchNumber));
+                //OnPropertyChanged(nameof(BatchNumber));
             }
         }
         public int Quantity
         {
-            get 
-            { 
-                return quantity; 
+            get
+            {
+                return quantity;
             }
             set
             {
                 quantity = value;
-                OnPropertyChanged(nameof(Quantity));
+                //OnPropertyChanged(nameof(Quantity));
             }
         }
         public decimal ProductSize
@@ -189,7 +114,7 @@ namespace Billing.Domain.Models
             set
             {
                 productSize = value;
-                OnPropertyChanged(nameof(ProductSize));
+                //OnPropertyChanged(nameof(ProductSize));
             }
         }
         public decimal MRP
@@ -202,7 +127,7 @@ namespace Billing.Domain.Models
             set
             {
                 mRP = value;
-                OnPropertyChanged(nameof(MRP));
+                //OnPropertyChanged(nameof(MRP));
             }
         }
         public decimal GSTPercent
@@ -215,7 +140,7 @@ namespace Billing.Domain.Models
             set
             {
                 gSTPercent = value;
-                OnPropertyChanged(nameof(GSTPercent));
+                //OnPropertyChanged(nameof(GSTPercent));
             }
         }
         public decimal CGSTPercent
@@ -228,7 +153,7 @@ namespace Billing.Domain.Models
             set
             {
                 cGSTPercent = value;
-                OnPropertyChanged(nameof(CGSTPercent));
+                 
             }
         }
         public decimal PurchaseDiscountPercent
@@ -241,7 +166,7 @@ namespace Billing.Domain.Models
             set
             {
                 purchaseDiscountPercent = value;
-                OnPropertyChanged(nameof(PurchaseDiscountPercent));
+                 
             }
         }
         public decimal PurchaseRate
@@ -254,7 +179,7 @@ namespace Billing.Domain.Models
             set
             {
                 purchaseRate = value;
-                OnPropertyChanged(nameof(PurchaseRate));
+                
             }
         }
         public decimal SalesRate
@@ -267,7 +192,7 @@ namespace Billing.Domain.Models
             set
             {
                 salesRate = value;
-                OnPropertyChanged(nameof(SalesRate));
+                
             }
         }
 
@@ -281,21 +206,9 @@ namespace Billing.Domain.Models
             set
             {
                 salesDiscountPercent = value;
-                OnPropertyChanged(nameof(SalesDiscountPercent));
+                
             }
-        }
-        public Guid? PurchaseId
-        {
-            get
-            {
-                return purchaseId;
-            }
-
-            set
-            {
-                purchaseId = value;
-            }
-        }
+        } 
         public Guid CategoryId
         {
             get
@@ -313,46 +226,21 @@ namespace Billing.Domain.Models
         {
             return DisplayName;
         }
-
-
-
-        #region Private Methods
-        private void LoadProducts()
+          
+        #region Override Methods
+        public override bool Equals(object obj)
         {
-            CBProductsSource = new ObservableCollection<ProductsDto>();
-            CBProductsSource = ProductsDBSource.Where(x => x.CategoryId == SelectedProductCategoryRow.CategoryId).ToList().ToObservableCollection();
+            if (obj is ProductsDto productsDto)
+            {
+                return ProductId == productsDto.ProductId;
+            }
+            return false;
         }
 
-
-        private void LoadProductRow()
+        public override int GetHashCode()
         {
-             ProductId = SelectedProduct.ProductId;
-             Description = SelectedProduct.Description;
-             hSNCode = SelectedProduct.HSNCode;
-             BatchNumber = SelectedProduct.BatchNumber;
-             Quantity = SelectedProduct.Quantity;
-             ProductSize = SelectedProduct.ProductSize;
-             MRP = SelectedProduct.MRP;
-             GSTPercent = SelectedProduct.GSTPercent;
-             CGSTPercent = SelectedProduct.CGSTPercent;
-             PurchaseDiscountPercent = SelectedProduct.PurchaseDiscountPercent;
-             PurchaseRate = SelectedProduct.PurchaseRate;
-             SalesDiscountPercent = SelectedProduct.SalesDiscountPercent;
-             SalesRate = SelectedProduct.SalesRate;
-             DisplayName = SelectedProduct.DisplayName;
-             SelectedMeasurementUnit = SelectedProduct.SelectedMeasurementUnit;
-             CategoryId = SelectedProductCategoryRow.CategoryId;
+            return ProductId.GetHashCode();
         }
-
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion Private Methods
-    
+        #endregion Override Methods
     }
 }

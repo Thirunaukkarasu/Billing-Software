@@ -14,5 +14,19 @@ namespace BillingSoftware.Domain.Models
         {
             return $"{MeasurementUnitName} ({Symbol})";
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is MeasurementUnitDto measurementUnit)
+            {
+                return MeasurementUnitId == measurementUnit.MeasurementUnitId;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return MeasurementUnitId.GetHashCode();
+        }
     }
 }

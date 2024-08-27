@@ -6,7 +6,7 @@ namespace BillingSoftware.Core.Contracts
 {
     public interface IPurchaseService
     {
-        Guid SavePurchaseProducts(List<ProductsDto> productsDtos, Guid purchaseId);
-        List<ProductsDto> GetPurchasedProduct(Guid purchaseId);
+        Guid SavePurchaseProducts(List<PurchasedProductsDto> productsDtos, Guid purchaseId);
+        List<PurchasedProductsDto> GetPurchasedProduct(Guid purchaseId);
     }
 }

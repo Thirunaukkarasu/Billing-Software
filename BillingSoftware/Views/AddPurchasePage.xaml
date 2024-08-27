@@ -155,9 +155,9 @@ FirstDayOfWeek="Monday"  VerticalContentAlignment="Center">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <ComboBox  
-                                                ItemsSource="{Binding DataContext.ProductCategorySource, 
-                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" 
-                                                SelectedItem="{Binding Path=SelectedProductCategoryRow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }"/> 
+                                                ItemsSource="{Binding DataContext.ProductCategorySource, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" 
+                                                SelectedItem="{Binding Path=SelectedProductCategoryRow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }" 
+                                                /> 
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>  
@@ -166,33 +166,34 @@ FirstDayOfWeek="Monday"  VerticalContentAlignment="Center">
                                         <DataTemplate>
                                             <ComboBox  
                                                 ItemsSource="{Binding Path=CBProductsSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                                                SelectedItem="{Binding Path=SelectedProduct,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/> 
+                                                SelectedItem="{Binding Path=SelectedProduct,UpdateSourceTrigger=PropertyChanged,   Mode=TwoWay}"/> 
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header = "Description" Binding = "{Binding Path=Description}"  /> 
-                                <DataGridTextColumn Header = "HSN Code"  Binding = "{Binding Path=HSNCode}" />
-                                <DataGridTextColumn Header = "Batch Number"  Binding = "{Binding Path=BatchNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }" />
-                                <DataGridTextColumn Header = "Quantity"  Binding = "{Binding Path=Quantity}" />
-                                <DataGridTextColumn Header = "Size"  Binding = "{Binding Path=ProductSize}" />
+                                <DataGridTextColumn Header = "Description" Binding = "{Binding Path=Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
+                                <DataGridTextColumn Header = "HSN Code"  Binding = "{Binding Path=HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                <DataGridTextColumn Header = "Batch Number"  Binding = "{Binding Path=BatchNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                <DataGridTextColumn Header = "Quantity"  Binding = "{Binding Path=Quantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                <DataGridTextColumn Header = "Size"  Binding = "{Binding Path=ProductSize, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 <DataGridTemplateColumn Header="Unit">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <ComboBox  
                                                     ItemsSource="{Binding  DataContext.MeasurementUnitSource, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" 
-                                                    SelectedItem="{Binding Path=SelectedMeasurementUnit,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                    SelectedItem="{Binding Path=SelectedMeasurementUnit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                      />
                                             
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header = "Price/Quantity (MRP)"  Binding = "{Binding Path=MRP}" />
-                                <DataGridTextColumn Header = "Purchase Discount"  Binding = "{Binding Path=PurchaseDiscountPercent}" /> 
-                                <DataGridTextColumn Header = "GST %"  Binding = "{Binding Path=GSTPercent}" />
-                                <DataGridTextColumn Header = "CGST %"  Binding = "{Binding Path=CGSTPercent}" />
-                                <DataGridTextColumn Header = "Purchase Rate"  Binding = "{Binding Path=PurchaseRate}"/> 
-                                <DataGridTextColumn Header = "Sales Discount %"  Binding = "{Binding Path=SalesDiscountPercent}" />
-                                <DataGridTextColumn Header = "Sales Price"  Binding = "{Binding Path=SalesRate}" />
+                                <DataGridTextColumn Header = "Price/Quantity (MRP)"  Binding = "{Binding Path=MRP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                <DataGridTextColumn Header = "Purchase Discount"  Binding = "{Binding Path=PurchaseDiscountPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                <DataGridTextColumn Header = "GST %"  Binding = "{Binding Path=GSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                <DataGridTextColumn Header = "CGST %"  Binding = "{Binding Path=CGSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                <DataGridTextColumn Header = "Purchase Rate"  Binding = "{Binding Path=PurchaseRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                <DataGridTextColumn Header = "Sales Discount %"  Binding = "{Binding Path=SalesDiscountPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                <DataGridTextColumn Header = "Sales Price"  Binding = "{Binding Path=SalesRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                <DataGridTextColumn Header = "Stocks" IsReadOnly="True" Binding = "{Binding Path=Stocks, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                             </DataGrid.Columns>
                         </DataGrid>  
                     </Grid>

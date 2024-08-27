@@ -15,6 +15,8 @@ namespace BillingSoftware.Domain.Entities
 
         public Guid CategoryId { get; set; } // Required foreign key property
 
+        public int Stocks { get; set; }
+
         public Guid MeasurementUnitId { get; set; }
 
         public ProductCategory Category { get; set; }

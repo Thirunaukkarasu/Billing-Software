@@ -25,7 +25,7 @@ public class AddPurchaseViewModel : ObservableObject
     private ICommand _savePurchaseOrderCommand;
     private ICommand _addProductCommand;
     private ICommand _deleteProductRowCommand;
-    private ProductsDto _products;
+    private PurchasedProductsDto _products;
     private readonly ICommonService _commonService;
     private readonly IProductService _productService;
     private readonly ISupplierService _supplierService;
@@ -197,13 +197,14 @@ public class AddPurchaseViewModel : ObservableObject
     public ICommand PrintInvoiceCommand => _printInvoiceCommand ?? (_printInvoiceCommand = new RelayCommand(PrintInvoice));
     private void DeleteProductRow()
     {
-        PurchaseProductsSource.Remove(_products);
+        PurchaseProductsSource.Remove(_products);        
     }
 
     private void AddProductGridRow()
     {
-        _products = new ProductsDto() { ProductsDBSource = ProductsList };
+        _products = new PurchasedProductsDto() { ProductsDBSource = ProductsList };
         PurchaseProductsSource.Add(_products);
+        OnPropertyChanged(nameof(ProductCategorySource));
         OnPropertyChanged(nameof(ProductsSource));
     }
      
@@ -213,7 +214,7 @@ public class AddPurchaseViewModel : ObservableObject
         //bool isNull = _products.GetType().GetProperties().All(p => p.GetValue(_products) == null); 
         //if (!isNull)
         //{
-        _products = new ProductsDto() { ProductsDBSource = ProductsList };
+        _products = new PurchasedProductsDto() { ProductsDBSource = ProductsList };
         PurchaseProductsSource.Add(_products);
             //_productService.SaveProduct(_products);
             //_products = new();
@@ -265,7 +266,7 @@ public class AddPurchaseViewModel : ObservableObject
         AddCategoryCommand = new RelayCommand(OpenAddProductCategoryDialog);
         ProductCategorySource = _commonService.GetProductCategory().Value.ToObservableCollection();
         SuppliersSource = _supplierService.GetSuppliers().ToObservableCollection();
-        PurchaseProductsSource = new ObservableCollection<ProductsDto>();
+        PurchaseProductsSource = new ObservableCollection<PurchasedProductsDto>();
         _printingService = printingService;
         _paginator = paginator;
 
@@ -333,8 +334,8 @@ public class AddPurchaseViewModel : ObservableObject
 
    
 
-    private ObservableCollection<ProductsDto> _purchaseProductsSource;
-    public ObservableCollection<ProductsDto> PurchaseProductsSource
+    private ObservableCollection<PurchasedProductsDto> _purchaseProductsSource;
+    public ObservableCollection<PurchasedProductsDto> PurchaseProductsSource
     {
         get
         {
@@ -350,8 +351,8 @@ public class AddPurchaseViewModel : ObservableObject
         }
     }
       
-    private ObservableCollection<ProductsDto> _productsSource;
-    public ObservableCollection<ProductsDto> ProductsSource
+    private ObservableCollection<PurchasedProductsDto> _productsSource;
+    public ObservableCollection<PurchasedProductsDto> ProductsSource
     {
         get
         {

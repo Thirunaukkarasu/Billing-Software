@@ -66,27 +66,11 @@ namespace Billing.Repository.Imp.ProductsRepo
         {
             return _dbContext.Products.ToList().Where(x => x.ProductId == productId).FirstOrDefault(); 
         }
-        public Guid UpdateProductsDetails(ProductsDto productsDto)
+        public Guid UpdateProductsDetails(Product product)
         {
-            var product = _dbContext.Products.Where(x => x.ProductId == productsDto.ProductId).FirstOrDefault();
+             
             if (product != null)
-            { 
-                product.HSNCode = productsDto.HSNCode;
-                product.BatchNumber = productsDto.BatchNumber;
-                product.CategoryId = productsDto.CategoryId;
-                product.DisplayName = productsDto.DisplayName;
-                product.GSTPercent = productsDto.GSTPercent;
-                product.CGSTPercent = productsDto.CGSTPercent;
-                product.ProductDescription = productsDto.Description;
-                product.MRP = productsDto.MRP;
-                product.ProductName = productsDto.ProductName;
-                product.ProductSize = productsDto.ProductSize;
-                product.PurchaseDiscountPercent = productsDto.PurchaseDiscountPercent;
-                product.Quantity = productsDto.Quantity;
-                product.PurchaseRate = productsDto.PurchaseRate;
-                product.SalesDiscountPercent = productsDto.SalesDiscountPercent;
-                product.SalesRate = productsDto.SalesRate;
-                product.MeasurementUnitId = productsDto.SelectedMeasurementUnit.MeasurementUnitId;
+            {  
                 product.ModifiedDate = DateTime.Now;
                 _dbContext.Entry(product).State = EntityState.Modified;
                 _dbContext.Products.Update(product);

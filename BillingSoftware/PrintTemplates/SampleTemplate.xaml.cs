@@ -10,7 +10,7 @@ namespace BillingSoftware.PrintTemplates
     /// </summary>
     public partial class SampleTemplate : UserControl
     { 
-        public SampleTemplate(List<ProductsDto> products)
+        public SampleTemplate(List<PurchasedProductsDto> products)
         {
             InitializeComponent();
              
