@@ -84,7 +84,10 @@ namespace BillingSoftware.Repository.CommonRepo
                   InvoiceDate = y.InvoiceDate,
                   InvoiceNo = y.InvoiceNo,
                   IsActive = y.IsActive,
-                  PurchaseId = y.PurchaseId
+                  PurchaseId = y.PurchaseId,
+                  AmountPaid = y.AmountPaid,
+                  Balance  = y.Balance,
+                  TotalPurchaseAmount = y.TotalPurchaseAmount,
                 }).ToList();
         }
 
@@ -118,6 +121,10 @@ namespace BillingSoftware.Repository.CommonRepo
                 IsActive = invoiceDtls.IsActive, 
                 InvoiceDate = invoiceDtls.InvoiceDate,
                 SupplierId = supplierId,
+                Balance = invoiceDtls.Balance,
+                AmountPaid = invoiceDtls.AmountPaid,
+                TotalPurchaseAmount = invoiceDtls.TotalPurchaseAmount,
+                CreatedDate = DateTime.Now,
             };
             dbContext.Invoice.Add(purchaseOrders);
             dbContext.SaveChanges();
@@ -129,7 +136,11 @@ namespace BillingSoftware.Repository.CommonRepo
             var invoice = dbContext.Invoice.Where( x => x.PurchaseId == invoiceDtls.PurchaseId && x.IsActive).FirstOrDefault();
             invoice.InvoiceNo = invoiceDtls.InvoiceNo;
             invoice.IsActive = invoiceDtls.IsActive; 
-            invoice.PurchaseId = invoiceDtls.PurchaseId;    
+            invoice.PurchaseId = invoiceDtls.PurchaseId;
+            invoice.Balance = invoiceDtls.Balance;
+            invoice.AmountPaid = invoiceDtls.AmountPaid;
+            invoice.TotalPurchaseAmount = invoiceDtls.TotalPurchaseAmount;
+            invoice.ModifyDate = DateTime.Now;
             dbContext.Invoice.Update(invoice);
             dbContext.SaveChanges(); 
         }

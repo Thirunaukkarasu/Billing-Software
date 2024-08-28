@@ -34,7 +34,7 @@ namespace Billing.Domain.Models
         private  Guid?    purchaseId;
         private  Guid     categoryId;
         private  int      stocks;
-
+        private decimal amount;
         public Guid ProductId { get => productId; set => productId = value; }
         public List<ProductsDto> ProductsDBSource { get; set; }
 
@@ -201,8 +201,10 @@ namespace Billing.Domain.Models
             {
                 quantity = value;
                 SetIProductnStock(value); // Calculate Stocks
+                CalculateTotalPurchaseAmount();
                 OnPropertyChanged(nameof(Quantity));
                 OnPropertyChanged(nameof(Stocks));
+               
             }
         }
 
@@ -307,20 +309,42 @@ namespace Billing.Domain.Models
             }
         }
 
-        private void CalculatePurchaseRate()
-        { 
-            var percent = GSTPercent + CGSTPercent - PurchaseDiscountPercent;
-            if (percent > 0)
+        public decimal Amount
+        {
+            get
             {
-                var parcentage = percent / 100;
-                PurchaseRate = MRP + (MRP * parcentage);
+                return amount;
             }
-            else
+
+            set
             {
-                PurchaseRate = MRP;
-            } 
+                if (amount != value)
+                {
+                    amount = value;
+                    OnPropertyChanged(nameof(Amount));
+                }
+            }
         }
 
+        private void CalculatePurchaseRate()
+        {
+            var taxpercent = Math.Abs(GSTPercent + CGSTPercent);
+            var purchasedisPrnt = purchaseDiscountPercent / 100;
+
+            var parcentage = taxpercent / 100;
+            PurchaseRate = MRP + (MRP * parcentage) - (MRP * purchasedisPrnt);
+
+            CalculateTotalPurchaseAmount();
+        }
+
+        private void CalculateTotalPurchaseAmount()
+        {
+            Amount = 0;
+            if (Quantity > 0)
+            {
+                Amount = PurchaseRate * Quantity; 
+            }
+        }
         public decimal SalesRate
         {
             get
@@ -456,8 +480,7 @@ namespace Billing.Domain.Models
         public event PropertyChangingEventHandler PropertyChanging;
         protected void OnPropertyChanging(string propertyName)
         {
-            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
-
+            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName)); 
         }
         #endregion
 

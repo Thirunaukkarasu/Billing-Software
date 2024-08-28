@@ -38,6 +38,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" /> 
                     <RowDefinition Height="Auto" /> 
+                    <RowDefinition Height="Auto" /> 
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="15">
                     <Grid.ColumnDefinitions>
@@ -191,6 +192,7 @@ FirstDayOfWeek="Monday"  VerticalContentAlignment="Center">
                                 <DataGridTextColumn Header = "GST %"  Binding = "{Binding Path=GSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 <DataGridTextColumn Header = "CGST %"  Binding = "{Binding Path=CGSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 <DataGridTextColumn Header = "Purchase Rate"  Binding = "{Binding Path=PurchaseRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                <DataGridTextColumn Header = "Amount" IsReadOnly="True" Binding = "{Binding Path=Amount, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                                 <DataGridTextColumn Header = "Sales Discount %"  Binding = "{Binding Path=SalesDiscountPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 <DataGridTextColumn Header = "Sales Price"  Binding = "{Binding Path=SalesRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 <DataGridTextColumn Header = "Stocks" IsReadOnly="True" Binding = "{Binding Path=Stocks, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
@@ -199,12 +201,33 @@ FirstDayOfWeek="Monday"  VerticalContentAlignment="Center">
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="4" Margin="15,0,15,0">
-                    <DockPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="Total Purchase:  " FontSize="12" FontWeight="Bold" VerticalAlignment="Center"  />
+                        <TextBox  Text="{Binding TotalPurchasedRate,  UpdateSourceTrigger=PropertyChanged , Mode=OneWay}" Width="150" Height="20" FontSize="10" IsReadOnly="True" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+                    </StackPanel>
+                        <StackPanel Grid.Row="1" Margin="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="Amount Paid:  " FontSize="12" FontWeight="Bold" VerticalAlignment="Center"  />
+                        <TextBox  Text="{Binding TotalAmountPaid,  UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}" Width="150" Height="20" FontSize="10" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+                    </StackPanel>
+                        <StackPanel Grid.Row="2" Margin="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="Balance:  " FontSize="12" FontWeight="Bold" VerticalAlignment="Center"  />
+                            <TextBox  Text="{Binding BalanceAmount,  UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}" Width="150" Height="20" FontSize="10" IsReadOnly="True" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="5" Margin="15,0,15,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button x:Name="btnSave" Width="100" Height="30" Margin="2" DockPanel.Dock="Left" Command="{Binding SavePurchaseOrderCommand}" BorderThickness="3">Save
                         </Button>
                         <Button x:Name="btnPrint" Width="100" Height="30" Margin="2" DockPanel.Dock="Left" Command="{Binding PrintInvoiceCommand}" BorderThickness="3">Print
                         </Button>
-                    </DockPanel>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Grid>

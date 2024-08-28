@@ -14,6 +14,9 @@ namespace BillingSoftware.Domain.Entities
         public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; } 
         public bool IsActive { get; set; } 
+        public decimal TotalPurchaseAmount { get; set; }
+        public decimal AmountPaid { get; set; }
+        public decimal Balance { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifyDate { get; set; }  
         public Guid SupplierId { get; set; } //Required foreign key property

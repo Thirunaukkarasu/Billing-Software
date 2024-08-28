@@ -261,41 +261,7 @@
                           
                         </Grid>
                         <Grid Grid.Row="1" Margin="0 10 0 0">
-
-                            <DataGrid
-            AutoGenerateColumns="False"
-            ItemsSource="{Binding Collection}">
-                                <DataGrid.Columns>
-                                    <DataGridComboBoxColumn
-                    Header="Type"
-                    SelectedItemBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}">
-                                        <!-- property changed so we get the change right after we select-->
-                                        <DataGridComboBoxColumn.ElementStyle>
-                                            <Style
-                            TargetType="ComboBox">
-                                                <Setter
-                                Property="ItemsSource"
-                                Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.TypeCollection}" />
-                                            </Style>
-                                        </DataGridComboBoxColumn.ElementStyle>
-                                        <DataGridComboBoxColumn.EditingElementStyle>
-                                            <Style
-                            TargetType="ComboBox">
-                                                <Setter
-                                Property="ItemsSource"
-                                Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.TypeCollection}" />
-                                            </Style>
-                                        </DataGridComboBoxColumn.EditingElementStyle>
-                                    </DataGridComboBoxColumn>
-
-                                    <DataGridComboBoxColumn
-                Header="Sub Type"
-                SelectedItemBinding="{Binding SubType}">
-                                        <!-- How do we bind to the ItemSource based on the selected type?-->
-                                    </DataGridComboBoxColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-
+ 
                         </Grid>
                     </Grid>
                 </Grid>

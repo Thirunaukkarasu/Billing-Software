@@ -11,7 +11,10 @@ namespace BillingSoftware.Domain.Models
         public string? InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
         public string InvoiceDisplayNumber { get; set; }
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; } = true; 
+        public decimal TotalPurchaseAmount { get; set; }
+        public decimal AmountPaid { get; set; }
+        public decimal Balance { get; set; }
 
         public override string ToString()
         {

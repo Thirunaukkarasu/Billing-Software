@@ -16,6 +16,8 @@ using System.Printing;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using BillingSoftware.Models;
+using BillingSoftware.Domain.Entities;
+using System.ComponentModel;
 
 namespace BillingSoftware.ViewModels;
 
@@ -63,6 +65,8 @@ public class AddPurchaseViewModel : ObservableObject
         {
             SetProperty(ref _selectedSupplier, value, nameof(SelectedSupplier));
             suppliersDto = value;
+            PurchaseProductsSource = new();
+            GetInvoiceSourceDetails();
             OnPropertyChanged(nameof(SupplierAddress));
             OnPropertyChanged(nameof(SupplierPhoneNo));
             OnPropertyChanged(nameof(InvoiceSource));
@@ -80,6 +84,8 @@ public class AddPurchaseViewModel : ObservableObject
             _supplierText = value;
             suppliersDto ??= new();
             suppliersDto.SupplierName = value;
+            PurchaseProductsSource = new();
+            GetInvoiceSourceDetails();
             OnPropertyChanged(nameof(SelectedSupplier));
             OnPropertyChanged(nameof(SupplierText));
             OnPropertyChanged(nameof(SupplierAddress));
@@ -98,6 +104,7 @@ public class AddPurchaseViewModel : ObservableObject
         {
             _supplierAddress = value;
             suppliersDto.SupplierAddress = value;
+            GetInvoiceSourceDetails();
             OnPropertyChanged(nameof(SupplierAddress));
         }
     }
@@ -122,7 +129,7 @@ public class AddPurchaseViewModel : ObservableObject
     {
         get
         {
-            return _invoiceSource ?? GetInvoiceSourceDetails();
+            return _invoiceSource;
         }
         set
         {
@@ -132,13 +139,22 @@ public class AddPurchaseViewModel : ObservableObject
         }
     }
 
-    private ObservableCollection<InvoiceDto> GetInvoiceSourceDetails()
+    private void GetInvoiceSourceDetails()
     {
         if (suppliersDto.SupplierId != Guid.Empty)
         {
-            return _commonService.GetInvoicesBySupplier(suppliersDto.SupplierId).ToObservableCollection();
+            InvoiceSource = _commonService.GetInvoicesBySupplier(suppliersDto.SupplierId).ToObservableCollection();
+            InvoiceText = string.Empty;
+            SelectedInvoice = new();
         }
-        return _invoiceSource;
+        else {
+            InvoiceSource = new ObservableCollection<InvoiceDto>();
+            InvoiceText = string.Empty;
+            SelectedInvoice = new();
+        }
+        OnPropertyChanged(nameof(InvoiceSource));
+        OnPropertyChanged(nameof(InvoiceText));
+        OnPropertyChanged(nameof(SelectedInvoice));
     }
 
     private InvoiceDto _selectedInvoice;
@@ -152,10 +168,26 @@ public class AddPurchaseViewModel : ObservableObject
         {
             _selectedInvoice = value;
             invoiceDto = value;
-            PurchaseProductsSource = _purchaseService.GetPurchasedProduct(invoiceDto.PurchaseId).ToObservableCollection();
+            if (value != null)
+            {
+                PurchaseProductsSource = _purchaseService.GetPurchasedProduct(invoiceDto.PurchaseId).ToObservableCollection();
+                AddPropertyChangedForPPSource();
+                CalculateTotalPurchasedRate(); 
+                TotalAmountPaid = value.AmountPaid;
+                BalanceAmount = value.Balance;
+                PurchaseProductsSource.CollectionChanged += (s, e) => CalculateTotalPurchasedRate();
+            }
             OnPropertyChanged(nameof(SelectedInvoice));
-            OnPropertyChanged(nameof(PurchaseProductsSource)); 
+            OnPropertyChanged(nameof(PurchaseProductsSource));
             OnPropertyChanged(nameof(InvoiceDate));
+        }
+    }
+
+    private void AddPropertyChangedForPPSource()
+    {
+        foreach (var product in PurchaseProductsSource)
+        {
+            product.PropertyChanged += PurchaseProducts_PropertyChanged;
         }
     }
 
@@ -191,39 +223,41 @@ public class AddPurchaseViewModel : ObservableObject
     public ICommand AddProductCommand => _addProductCommand ??= new RelayCommand(AddProduct);
     private ICommand _addProductRowCommand;
     public ICommand AddProductGridRowCommand => _addProductRowCommand ??= new RelayCommand(AddProductGridRow);
-    public ICommand DeleteProductRowCommand => _deleteProductRowCommand ??=new RelayCommand(DeleteProductRow);
+    public ICommand DeleteProductRowCommand => _deleteProductRowCommand ??= new RelayCommand(DeleteProductRow);
     private ICommand _printInvoiceCommand;
-   
+
     public ICommand PrintInvoiceCommand => _printInvoiceCommand ?? (_printInvoiceCommand = new RelayCommand(PrintInvoice));
     private void DeleteProductRow()
     {
-        PurchaseProductsSource.Remove(_products);        
+        PurchaseProductsSource.Remove(_products);
     }
 
     private void AddProductGridRow()
     {
         _products = new PurchasedProductsDto() { ProductsDBSource = ProductsList };
+        _products.PropertyChanged += PurchaseProducts_PropertyChanged;
         PurchaseProductsSource.Add(_products);
         OnPropertyChanged(nameof(ProductCategorySource));
         OnPropertyChanged(nameof(ProductsSource));
     }
-     
+
     private void AddProduct()
     {
         //TODO: Add validation
         //bool isNull = _products.GetType().GetProperties().All(p => p.GetValue(_products) == null); 
         //if (!isNull)
-        //{
+        //{ 
         _products = new PurchasedProductsDto() { ProductsDBSource = ProductsList };
+        _products.PropertyChanged += PurchaseProducts_PropertyChanged;
         PurchaseProductsSource.Add(_products);
-            //_productService.SaveProduct(_products);
-            //_products = new();
+        //_productService.SaveProduct(_products);
+        //_products = new();
         //}
         OnPropertyChanged(nameof(ProductCategorySource));
     }
 
     private void SavePurchaseOrder()
-    {  
+    {
         if (suppliersDto.SupplierId == Guid.Empty)
         {
             suppliersDto.SupplierId = _supplierService.SaveSupplier(suppliersDto);
@@ -231,8 +265,11 @@ public class AddPurchaseViewModel : ObservableObject
         else
         {
             suppliersDto.SupplierId = _supplierService.UpdateSupplier(suppliersDto);
-        } 
-        
+        }
+
+        invoiceDto.TotalPurchaseAmount = TotalPurchasedRate;
+        invoiceDto.AmountPaid = TotalAmountPaid;
+        invoiceDto.Balance = BalanceAmount;
         if (invoiceDto.PurchaseId == Guid.Empty)
         {
             invoiceDto.PurchaseId = _commonService.SaveInvoiceDetails(invoiceDto, suppliersDto.SupplierId);
@@ -242,6 +279,8 @@ public class AddPurchaseViewModel : ObservableObject
             _commonService.UpdateInvoiceDetails(invoiceDto);
         }
         _purchaseService.SavePurchaseProducts(PurchaseProductsSource.ToList(), invoiceDto.PurchaseId);
+
+        MessageBox.Show("Saved Successfully..!!");
     }
     #endregion Commands
 
@@ -272,7 +311,80 @@ public class AddPurchaseViewModel : ObservableObject
 
         ProductsList = _productService.GetProducts().ToList();
         MeasurementUnitSource = _commonService.GetMeasurementUnits().ToObservableCollection();
+
+        PurchaseProductsSource.CollectionChanged += (s, e) => CalculateTotalPurchasedRate();
     }
+
+    private void PurchaseProducts_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(PurchasedProductsDto.Amount))
+        {
+            CalculateTotalPurchasedRate();
+        }
+    }
+
+
+    private void CalculateTotalPurchasedRate()
+    {
+        TotalPurchasedRate = PurchaseProductsSource.Sum(x => x.Amount);
+    }
+
+    private decimal _totalPurchaseRate;
+    public decimal TotalPurchasedRate
+    {
+        get
+        {
+            return _totalPurchaseRate;
+        }
+        set
+        {
+            _totalPurchaseRate = value;
+            OnPropertyChanged(nameof(TotalPurchasedRate));
+            OnPropertyChanged(nameof(TotalAmountPaid));
+            CalculateBalanceAmount();
+        }
+    }
+
+
+    private decimal _totalAmountPaid;
+    public decimal TotalAmountPaid
+    {
+        get
+        {
+            return _totalAmountPaid;
+        }
+        set
+        {
+            if (_totalAmountPaid != value)
+            {
+                _totalAmountPaid = value;
+                CalculateBalanceAmount();
+                OnPropertyChanged(nameof(TotalAmountPaid));
+
+            }
+        }
+    }
+
+    private void CalculateBalanceAmount()
+    {
+        BalanceAmount = TotalPurchasedRate - TotalAmountPaid;
+        OnPropertyChanged(nameof(BalanceAmount));
+    }
+
+    private decimal _balanceAmount;
+    public decimal BalanceAmount
+    {
+        get
+        {
+            return _balanceAmount;
+        }
+        set
+        {
+            _balanceAmount = value;
+            OnPropertyChanged(nameof(TotalPurchasedRate));
+        }
+    }
+
 
     private void OpenAddProductCategoryDialog()
     {
@@ -332,7 +444,7 @@ public class AddPurchaseViewModel : ObservableObject
     //    }
     //}
 
-   
+
 
     private ObservableCollection<PurchasedProductsDto> _purchaseProductsSource;
     public ObservableCollection<PurchasedProductsDto> PurchaseProductsSource
@@ -350,7 +462,7 @@ public class AddPurchaseViewModel : ObservableObject
             OnPropertyChanged(nameof(PurchaseProductsSource));
         }
     }
-      
+
     private ObservableCollection<PurchasedProductsDto> _productsSource;
     public ObservableCollection<PurchasedProductsDto> ProductsSource
     {
@@ -415,7 +527,7 @@ public class AddPurchaseViewModel : ObservableObject
         {
             generatedDocument = value;
         }
-    } 
+    }
 
     private void LoadReport(Func<UIElement> reportFactory, CancellationToken cancellationToken)
     {
@@ -488,7 +600,7 @@ public class AddPurchaseViewModel : ObservableObject
         {
             pageMargins.Bottom = minimumMargins.Bottom;
         }
-    }    
+    }
 
     #endregion Print
 }
