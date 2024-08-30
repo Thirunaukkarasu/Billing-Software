@@ -11,12 +11,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Documents;
 using System.Windows.Xps.Packaging;
-using BillingSoftware.PrintTemplates;
 using System.Printing;
 using System.IO;
-using Newtonsoft.Json.Linq;
-using BillingSoftware.Models;
-using BillingSoftware.Domain.Entities;
 using System.ComponentModel;
 
 namespace BillingSoftware.ViewModels;

@@ -1,7 +1,4 @@
-﻿using BillingSoftware.Domain.Entities;
-using BillingSoftware.Domain.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BillingSoftware.ViewModels;
 
