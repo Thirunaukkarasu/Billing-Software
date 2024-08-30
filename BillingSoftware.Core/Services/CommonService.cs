@@ -8,12 +8,12 @@ namespace BillingSoftware.Core.Services
 {
     public class CommonService : ICommonService
     {
-        private readonly ICommonRepository _commonRepository;
+        private readonly IInvoiceRepository _invoiceRepository;
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IProductMeasurementRepository _productMeasurementRepository;
-        public CommonService(ICommonRepository commonRepository, IProductCategoryRepository productCategoryRepository, IProductMeasurementRepository productMeasurementRepository)
+        public CommonService(IInvoiceRepository invoiceRepository, IProductCategoryRepository productCategoryRepository, IProductMeasurementRepository productMeasurementRepository)
         {
-            _commonRepository = commonRepository;
+            _invoiceRepository = invoiceRepository;
             _productCategoryRepository = productCategoryRepository;
             _productMeasurementRepository = productMeasurementRepository;
         }
@@ -47,16 +47,21 @@ namespace BillingSoftware.Core.Services
 
         public Guid SaveInvoiceDetails(InvoiceDto invoiceDtls, Guid supplierId)
         {
-            return _commonRepository.SaveInvoiceDetails(invoiceDtls, supplierId);
+            return _invoiceRepository.SaveInvoiceDetails(invoiceDtls, supplierId);
         }
         public void UpdateInvoiceDetails(InvoiceDto invoiceDtls)
         { 
-            _commonRepository.UpdateInvoiceDetails(invoiceDtls); 
+            _invoiceRepository.UpdateInvoiceDetails(invoiceDtls); 
         }
         public List<InvoiceDto> GetInvoicesBySupplier(Guid supplierId)
         {
-            return _commonRepository.GetInvoicesBySupplier(supplierId);
+            return _invoiceRepository.GetInvoicesBySupplier(supplierId);
+        } 
+        public List<InvoiceDto> GetAllInvoicesDetails()
+        {
+            return _invoiceRepository.GetInvoices();
         }
+
 
         //public Guid SaveCompanyDetails(CompanyDetails companyDetails)
         //{

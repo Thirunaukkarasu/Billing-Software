@@ -22,5 +22,7 @@ namespace BillingSoftware.Core.Contracts
         public List<MeasurementUnitDto>  GetMeasurementUnits();
 
         public List<InvoiceDto> GetInvoicesBySupplier(Guid supplierId);
+
+        List<InvoiceDto> GetAllInvoicesDetails();
     }
 }

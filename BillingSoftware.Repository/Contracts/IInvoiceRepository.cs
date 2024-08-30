@@ -4,14 +4,17 @@ using System.Collections.Generic;
 
 namespace BillingSoftware.Repository.Contracts
 {
-    public interface ICommonRepository
+    public interface IInvoiceRepository
     {
         //List<CompanyDetails> GetCompanyDetails();
         //List<InvoiceDetails> GetInvoiceDetails(Guid? companyId = null);
         void UpdateInvoiceDetails(InvoiceDto invoiceDtls);
+        
         List<InvoiceDto> GetInvoicesBySupplier(Guid supplierId);
 
         //Guid SaveCompanyDetails(CompanyDetails companyDetails);
         Guid SaveInvoiceDetails(InvoiceDto invoiceDtls, Guid supplierId);
+
+        List<InvoiceDto> GetInvoices();
     }
 }

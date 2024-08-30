@@ -2,16 +2,17 @@
 using BillingSoftware.Domain.Entities;
 using BillingSoftware.Domain.Models;
 using BillingSoftware.Repository.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BillingSoftware.Repository.CommonRepo
 {
-    public class CommonRepository : ICommonRepository
+    public class InvoiceRepository : IInvoiceRepository
     {
         private readonly POSBillingDBContext dbContext;
-        public CommonRepository(POSBillingDBContext dbContext)
+        public InvoiceRepository(POSBillingDBContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -89,6 +90,24 @@ namespace BillingSoftware.Repository.CommonRepo
                   Balance  = y.Balance,
                   TotalPurchaseAmount = y.TotalPurchaseAmount,
                 }).ToList();
+        }
+
+        public List<InvoiceDto> GetInvoices()
+        {
+            return dbContext.Invoice
+                            .Include(y => y.Supplier)
+                            .Where(x => x.IsActive == true)
+                            .Select(y => new InvoiceDto()
+                            {
+                                InvoiceDate = y.InvoiceDate,
+                                InvoiceNo = y.InvoiceNo,
+                                IsActive = y.IsActive,
+                                PurchaseId = y.PurchaseId,
+                                AmountPaid = y.AmountPaid,
+                                Balance = y.Balance,
+                                TotalPurchaseAmount = y.TotalPurchaseAmount,
+                                SupplierName = y.Supplier.SupplierName,
+                            }).ToList();
         }
 
         //public Guid SaveCompanyDetails(CompanyDetails companyDetails)

@@ -21,7 +21,7 @@ namespace Billing.Repository.Imp.DI
                 options.UseSqlite(configuration.GetSection("Sqlite:ConnectionString").Value));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductsRepository, ProductsRepository>();
-            services.AddScoped<ICommonRepository, CommonRepository>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddScoped<IProductMeasurementRepository, ProductMeasurementRepository>();
             services.AddScoped<ISuppliersRepository, SuppliersRepository>();
