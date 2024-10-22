@@ -17,6 +17,7 @@ namespace Billing.Domain.Models
         private decimal productSize;
         private decimal gSTPercent;
         private decimal cGSTPercent;
+        private decimal sGSTPercent;
         private decimal purchaseDiscountPercent;
         private decimal purchaseRate;
         private decimal salesDiscountPercent;
@@ -24,8 +25,17 @@ namespace Billing.Domain.Models
         private Guid categoryId;
         private int stocks;
         private Guid productId;
+        private decimal? wholeSalePrice;
+        private int? minimumQuatityForWS;
+        private string _productCode;
+        private string _brand;
+        private decimal? _priceWithTax;
 
-        public Guid ProductId { get => productId; set => productId = value; }
+        public Guid ProductId 
+        { 
+            get => productId; 
+            set => productId = value; 
+        }
      
         public ProductCategoryDto Category { get; set; }
 
@@ -92,6 +102,32 @@ namespace Billing.Domain.Models
                 //OnPropertyChanged(nameof(BatchNumber));
             }
         }
+
+        public string ProductCode
+        {
+            get
+            {
+                return _productCode;
+            }
+            set
+            {
+                _productCode = value;
+                //OnPropertyChanged(nameof(BatchNumber));
+            }
+        }
+
+        public string Brand
+        {
+            get
+            {
+                return _brand;
+            }
+            set
+            {
+                _brand = value;
+                //OnPropertyChanged(nameof(BatchNumber));
+            }
+        }
         public int Quantity
         {
             get
@@ -130,6 +166,8 @@ namespace Billing.Domain.Models
                 //OnPropertyChanged(nameof(MRP));
             }
         }
+        public decimal? WholeSalePrice { get => wholeSalePrice; set => wholeSalePrice = value; }
+        public int? MinimumQuatityForWS { get => minimumQuatityForWS; set => minimumQuatityForWS = value; }
         public decimal GSTPercent
         {
             get
@@ -139,8 +177,7 @@ namespace Billing.Domain.Models
 
             set
             {
-                gSTPercent = value;
-                //OnPropertyChanged(nameof(GSTPercent));
+                gSTPercent = value; 
             }
         }
         public decimal CGSTPercent
@@ -154,6 +191,19 @@ namespace Billing.Domain.Models
             {
                 cGSTPercent = value;
                  
+            }
+        }
+        public decimal SGSTPercent
+        {
+            get
+            {
+                return sGSTPercent;
+            }
+
+            set
+            {
+                sGSTPercent = value;
+
             }
         }
         public decimal PurchaseDiscountPercent
@@ -195,7 +245,6 @@ namespace Billing.Domain.Models
                 
             }
         }
-
         public decimal SalesDiscountPercent
         {
             get
@@ -208,7 +257,21 @@ namespace Billing.Domain.Models
                 salesDiscountPercent = value;
                 
             }
-        } 
+        }
+
+        public decimal? PriceWithTax
+        {
+            get
+            {
+                return _priceWithTax;
+            }
+
+            set
+            {
+                _priceWithTax = value;
+
+            }
+        }
         public Guid CategoryId
         {
             get
@@ -221,7 +284,6 @@ namespace Billing.Domain.Models
                 categoryId = value;
             }
         }
-
         public override string ToString()
         {
             return DisplayName;

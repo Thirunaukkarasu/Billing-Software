@@ -37,6 +37,12 @@ namespace BillingSoftware.Core.Services
                 CreatedBy = "Admin",
                 CreatedDate = DateTime.Now,
                 Stocks = productsDto.Stocks,
+                MinimumQuatityForWS = productsDto.MinimumQuatityForWS,
+                SGSTPercent = productsDto.SGSTPercent,
+                Brand = productsDto.Brand,
+                WholeSalePrice = productsDto.WholeSalePrice,
+                ProductCode = productsDto.ProductCode,
+                PriceWithTax = productsDto.PriceWithTax, 
                 MeasurementUnitId = productsDto.MeasurementUnit.MeasurementUnitId,
             };
             return _productsRepository.SaveProductsDetails(product);
@@ -66,7 +72,13 @@ namespace BillingSoftware.Core.Services
                 product.SalesRate = productsDto.SalesRate;
                 product.MeasurementUnitId = productsDto.MeasurementUnit.MeasurementUnitId;
                 product.ModifiedDate = DateTime.Now;
-                product.Stocks = productsDto.Stocks;    
+                product.Stocks = productsDto.Stocks;
+                product.MinimumQuatityForWS = productsDto.MinimumQuatityForWS;
+                product.SGSTPercent = productsDto.SGSTPercent;
+                product.Brand = productsDto.Brand;
+                product.WholeSalePrice = productsDto.WholeSalePrice;
+                product.ProductCode = productsDto.ProductCode;
+                product.PriceWithTax = productsDto.PriceWithTax;
                 return _productsRepository.UpdateProductsDetails(product);
             }
             return product.ProductId;
@@ -96,7 +108,7 @@ namespace BillingSoftware.Core.Services
                 {
                     CategoryId = x.Category.CategoryId,
                     CategoryName = x.Category.CategoryName,
-                    TamilCategoryName = x.Category.CategoryName,
+                    LocalCategoryName = x.Category.CategoryName,
                 },
                 DisplayName = x.DisplayName,
                 GSTPercent = x.GSTPercent,
@@ -112,6 +124,13 @@ namespace BillingSoftware.Core.Services
                 SalesDiscountPercent = x.SalesDiscountPercent,
                 SalesRate = x.SalesRate,
                 Stocks = x.Stocks,
+                Brand = x.Brand,
+                MinimumQuatityForWS = x.MinimumQuatityForWS,
+                PriceWithTax = x.PriceWithTax,
+                ProductCode = x.ProductCode,
+                SGSTPercent = x.SGSTPercent,
+                WholeSalePrice = x.WholeSalePrice,
+                
                 MeasurementUnit = new MeasurementUnitDto()
                 {
                     MeasurementUnitId = x.MeasurementUnit.MeasurementUnitId,

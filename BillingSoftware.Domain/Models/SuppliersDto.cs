@@ -1,4 +1,5 @@
-﻿using System; 
+﻿using BillingSoftware.Domain.Entities;
+using System; 
 
 namespace BillingSoftware.Domain.Models
 {
@@ -16,6 +17,20 @@ namespace BillingSoftware.Domain.Models
         public override string ToString()
         {
             return SupplierName;
+        }
+          
+        public override bool Equals(object obj)
+        {
+            if (obj is SuppliersDto supplier)
+            {
+                return SupplierId == supplier.SupplierId;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return SupplierId.GetHashCode();
         }
     }
 }

@@ -8,7 +8,7 @@
     xmlns:properties="clr-namespace:BillingSoftware.Properties"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
     mc:Ignorable="d"
-    d:DesignHeight="450" d:DesignWidth="800">
+    d:DesignHeight="400" d:DesignWidth="700">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
@@ -20,27 +20,35 @@
             Text="{x:Static properties:Resources.AddCatergoryPageTitle}" />
         <Grid
             Grid.Row="1"
-            Margin="{StaticResource MediumLeftRightMargin}"
+            Margin="{StaticResource XSmallLeftTopRightBottomMargin}"
             Background="{DynamicResource MahApps.Brushes.Gray10}">
             <!--
             The Mahapps Gray10 color represents where you should place your content.
             Place your content here.
-            -->
+            --> 
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition> 
-                </Grid.ColumnDefinitions>
-                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".1*"></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition> 
+                    <RowDefinition Height="*"></RowDefinition> 
+                    <RowDefinition Height="*"></RowDefinition> 
+                </Grid.RowDefinitions>
+    
+                <StackPanel Margin="5"  Grid.Column="0" Grid.Row="1" Width="600" Orientation="Vertical"  >
+                    <TextBlock Margin="5" Text="Category Name"/>
+                    <TextBox Margin="5" Width="250" HorizontalAlignment="Left" Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter New Category" SpellCheck.IsEnabled="True" />
+                    <TextBlock Margin="5" Text="Local Language"/>
+                    <TextBox Margin="5" Width="250" HorizontalAlignment="Left" Text="{Binding LocalCategoryName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Category Name In Local Language" SpellCheck.IsEnabled="True" />
+                    <TextBlock Margin="5" Text="Category Code"/>
+                    <TextBox Margin="5" Width="250" HorizontalAlignment="Left" Text="{Binding CategoryCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Category Code" SpellCheck.IsEnabled="True" />
+                    <CheckBox x:Name="AGCategoryCode" Margin="0,5" IsChecked="{Binding IsAutoGenerateCategoryCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Content="Auto Generate Category Code" />
+                </StackPanel>
+                <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,0,0">
+                    <Button x:Name="SubmitButton" Content="Add Product"  Command="{Binding AddCategoryCommand}" Background="#007ACC" Foreground="White" Width="100" Margin="10"/>
+                    <Button x:Name="ResetButton" Content="Reset" Command="{Binding ResetFieldsCommand}" Background="#FF6347" Foreground="White" Width="100" Margin="10"/>
+                    <Button x:Name="CancelButton" Content="Cancel" Command="{Binding CancelCommand}"  Background="#FF6347" Foreground="White" Width="100" Margin="10"/>
+                </StackPanel>
             </Grid>
-            <StackPanel Margin="5"  Grid.Column="0" Orientation="Vertical"  >
-               
-
-                <TextBlock Margin="5" Text="Category"/>
-                <TextBox Margin="5" Text="{Binding  CategoryName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter New Category" SpellCheck.IsEnabled="True" />
-
-                <Button Margin="5" Command="{Binding AddCategoryCommand}"  Content="save" ></Button>
-            </StackPanel>
-
         </Grid>
     </Grid>
 </Page>

@@ -8,11 +8,13 @@ namespace BillingSoftware.Domain.Models
 
         public string CategoryName { get; set; }
 
-        public string TamilCategoryName { get; set; }
+        public string LocalCategoryName { get; set; }
+
+        public string CategoryCode { get; set; }
 
         public override string ToString()
         {
-            return $"{CategoryName} ({TamilCategoryName})";
+            return $"{CategoryName} ({LocalCategoryName})";
         }
 
         public override bool Equals(object obj)

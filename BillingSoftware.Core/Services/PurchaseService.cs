@@ -118,7 +118,7 @@ namespace BillingSoftware.Core.Services
                     {
                         CategoryId = x.Category.CategoryId,
                         CategoryName = x.Category.CategoryName,
-                        TamilCategoryName = x.Category.TamilCategoryName
+                        LocalCategoryName = x.Category.LocalCategoryName
                     },
                     SelectedProduct = productsList.Where(y => y.ProductId == x.ProductId).FirstOrDefault(),
                     //CBProductsSource = productsList.Where(y => y.CategoryId == x.CategoryId).ToList().ToObservableCollection(),

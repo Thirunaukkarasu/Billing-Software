@@ -5,26 +5,232 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
     xmlns:properties="clr-namespace:BillingSoftware.Properties"
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock
-            Style="{StaticResource PageTitleStyle}"
-            Margin="{StaticResource MediumLeftMargin}"
-            Text="{x:Static properties:Resources.BackupPageTitle}" />
-        <Grid
-            Grid.Row="1"
-            Margin="{StaticResource MediumLeftRightMargin}"
-            Background="{DynamicResource MahApps.Brushes.Gray10}">
-            <!--
-            The Mahapps Gray10 color represents where you should place your content.
-            Place your content here.
-            -->
-        </Grid>
+
+        <!-- Page Title -->
+        
+            <TextBlock Text="Add New Product" FontSize="24" FontWeight="Bold" Grid.Row="0" Margin="0,0,0,5" />
+         
+            <!-- Main Form Section -->
+            <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">-->
+            <StackPanel Grid.Row="1" Background="White" Margin="10">
+
+            <!-- Basic Information -->
+            <TextBlock Text="Basic Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" /> 
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Product Name" />
+                    <TextBox x:Name="ProductName" mah:TextBoxHelper.Watermark="Enter product name" />
+                    <CheckBox x:Name="AGProductName" Margin="0,5" Content="Auto Generate Product Name" />
+                </StackPanel>
+                <!-- Free Shipping Checkbox -->
+              
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Product Code" />
+                    <TextBox x:Name="ProductCode" mah:TextBoxHelper.Watermark="Enter product code" />
+                    <CheckBox x:Name="AGProductCode" Margin="0,5" Content="Auto Generate Product Code" /> 
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="Product Description" />
+                    <TextBox x:Name="Description" AcceptsReturn="True" Height="20" TextWrapping="Wrap" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                    <!-- Upload Image -->
+                    <TextBlock Text="Upload Prodcut Image" />
+                    <Button x:Name="UploadImage" Content="Upload Product Image"   HorizontalAlignment="Left" />
+                </StackPanel>
+               
+
+            </Grid>
+
+            <!-- Category and Brand -->
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Category" />
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions> 
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox x:Name="ProductCategory" Width="250" >
+                                    <ComboBoxItem Content="Electronics" />
+                                    <ComboBoxItem Content="Apparel" />
+                                    <ComboBoxItem Content="Groceries" />
+                                </ComboBox>
+                                <Button Content="+" 
+                                 Width="30" 
+                                 Margin="5,0,0,0" 
+                                 ToolTip="Add New Category"
+                                 Background="#007ACC" 
+                                 Foreground="White"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Brand" />
+                    <TextBox x:Name="Brand" mah:TextBoxHelper.Watermark="Enter brand" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="HSN Code" />
+                    <TextBox x:Name="HSNCode" mah:TextBoxHelper.Watermark="Enter brand" />
+                </StackPanel>
+            </Grid> 
+
+            <TextBlock Text="Measurement" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" />
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Size" />
+                    <TextBox x:Name="ProductSize" mah:TextBoxHelper.Watermark="Enter size of product" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Measurement Unit" />
+                    <ComboBox  
+                     ItemsSource="{Binding  DataContext.MeasurementUnitSource, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" 
+                     SelectedItem="{Binding Path=SelectedMeasurementUnit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         mah:TextBoxHelper.Watermark="Select Measurement Unit"  />
+                </StackPanel> 
+
+            </Grid>
+ 
+            <!-- Pricing & Stock Information -->
+            <TextBlock Text="Pricing Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" />
+            <Grid Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel  Grid.Row="0" Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="MRP" />
+                    <TextBox x:Name="MRP" mah:TextBoxHelper.Watermark="Enter MRP price" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Sales Price" />
+                    <TextBox x:Name="SalesPrice" mah:TextBoxHelper.Watermark="Enter sales price" />
+                </StackPanel>
+
+
+                <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="Discount for Sales (%)" />
+                    <TextBox x:Name="Discount" mah:TextBoxHelper.Watermark="Enter sales discount (%)" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,10,10,0">
+                    <TextBlock Text="Wholesale Price" />
+                    <TextBox x:Name="Price" mah:TextBoxHelper.Watermark="Enter Wholesale price" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,10,10,0">
+                    <TextBlock Text="Minimum Quatity" />
+                    <TextBox x:Name="MinimumQuatity" mah:TextBoxHelper.Watermark="Enter Wholesale price" />
+                </StackPanel>
+
+            </Grid>
+
+            <TextBlock Text="Stock Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" />
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Quantity" />
+                    <TextBox x:Name="Quantity" mah:TextBoxHelper.Watermark="Enter number of quantities" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="In Stocks" />
+                    <TextBox x:Name="Stock" mah:TextBoxHelper.Watermark="Enter in stocks" />
+                </StackPanel> 
+            </Grid>
+            
+            <!-- Tax Information -->
+            <TextBlock Text="Tax Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" />
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="GST (%)" />
+                    <TextBox x:Name="GSTPercent" mah:TextBoxHelper.Watermark="Enter GST (%)" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="SGST (%)" />
+                    <TextBox x:Name="SGSTPercent" mah:TextBoxHelper.Watermark="Enter CGST (%)" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="CGST (%)" />
+                    <TextBox x:Name="CGSTPercent" mah:TextBoxHelper.Watermark="Enter CGST (%)" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                    <TextBlock Text="Price With Tax" />
+                    <TextBox x:Name="TaxPrice" />
+                </StackPanel>
+
+            </Grid>
+ 
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,0,0">
+                <Button x:Name="SubmitButton" Content="Add Product" Background="#007ACC" Foreground="White" Width="100" Margin="10"/>
+                <Button x:Name="ResetButton" Content="Reset" Background="#FF6347" Foreground="White" Width="100" Margin="10"/>
+            </StackPanel>
+        </StackPanel>
+        <!--</ScrollViewer>-->
     </Grid>
 </Page>

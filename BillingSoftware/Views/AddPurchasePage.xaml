@@ -117,7 +117,7 @@ FirstDayOfWeek="Monday"  VerticalContentAlignment="Center">
                         </Button>
                     </DockPanel>
                 </Grid>
-               <Grid Name="grdDataGrid" Grid.Row="3" Margin="5">
+                <Grid Name="grdDataGrid" Grid.Row="3" Margin="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -129,7 +129,9 @@ FirstDayOfWeek="Monday"  VerticalContentAlignment="Center">
                    VerticalScrollBarVisibility="Auto">
                             <ContentControl DataContext="{Binding ElementName=ProductsDataGrid}" />
                         </ScrollViewer>
-                        <DataGrid x:Name="ProductsDataGrid" Grid.Column="1" Margin="5" AutoGenerateColumns="False" ItemsSource="{Binding PurchaseProductsSource,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowHeaderWidth="0" Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectedItem="{Binding SelectedProductRow,UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single"  CanUserAddRows="False" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" >
+                        <DataGrid x:Name="ProductsDataGrid" Grid.Column="1" Margin="5" AutoGenerateColumns="False" ItemsSource="{Binding PurchaseProductsSource,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowHeaderWidth="0" 
+                                  Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectedItem="{Binding SelectedProductRow,UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" HorizontalScrollBarVisibility="Auto" 
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single"  CanUserAddRows="False" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" >
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Add">
                                     <DataGridTemplateColumn.CellTemplate>

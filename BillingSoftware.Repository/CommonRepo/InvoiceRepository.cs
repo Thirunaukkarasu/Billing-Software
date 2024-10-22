@@ -107,6 +107,7 @@ namespace BillingSoftware.Repository.CommonRepo
                                 Balance = y.Balance,
                                 TotalPurchaseAmount = y.TotalPurchaseAmount,
                                 SupplierName = y.Supplier.SupplierName,
+                                SupplierId = y.Supplier.SupplierId,
                             }).ToList();
         }
 

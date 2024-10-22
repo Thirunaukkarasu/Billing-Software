@@ -87,9 +87,18 @@ namespace BillingSoftware.Core.Services
             }
         }
 
-        public Guid SaveProductCategory(ProductCategoryDto productCategory)
+        public Result<Guid> SaveProductCategory(ProductCategoryDto productCategory)
         {
-            return _productCategoryRepository.SaveProductCategory(productCategory);
+            try
+            {
+               var categoryId = _productCategoryRepository.SaveProductCategory(productCategory);
+               return categoryId == Guid.Empty ? Result.Fail<Guid>("Error while adding category. Please try again.!!") : Result.Ok(categoryId);
+
+            }
+            catch (Exception e)
+            {
+                return Result.Fail<Guid>("Error while adding category. Please try again.!!");
+            }
         }
 
         public List<MeasurementUnitDto>  GetMeasurementUnits()

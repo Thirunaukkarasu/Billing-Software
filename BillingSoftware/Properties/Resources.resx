@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-    <data name="ShellAddProductPage" xml:space="preserve">
-		    <value>AddProduct</value>
-    </data>
-    <data name="AddProductPageTitle" xml:space="preserve">
-		    <value>AddProduct</value>
-    </data>
-
   <!-- 
     Microsoft ResX Schema 
     
@@ -124,17 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ShellAddProductPage" xml:space="preserve">
+    <value>Add Product</value>
+  </data>
+  <data name="AddProductPageTitle" xml:space="preserve">
+    <value>Add Product</value>
+  </data>
   <data name="ShellAddPurchasePage" xml:space="preserve">
-    <value>AddPurchase</value>
+    <value>Add Purchase</value>
   </data>
   <data name="AddPurchasePageTitle" xml:space="preserve">
-    <value>AddPurchase</value>
+    <value>Add Purchase</value>
   </data>
   <data name="ShellPurchaseBoardPage" xml:space="preserve">
-    <value>PurchaseBoard</value>
+    <value>Purchase Board</value>
   </data>
   <data name="PurchaseBoardPageTitle" xml:space="preserve">
-    <value>PurchaseBoard</value>
+    <value>Purchase Board</value>
   </data>
   <data name="ShellListDetailsPage" xml:space="preserve">
     <value>ListDetails</value>

@@ -6,7 +6,9 @@
         xmlns:views="clr-namespace:BillingSoftware.Views"
         xmlns:viewmodels="clr-namespace:BillingSoftware.ViewModels"
         mc:Ignorable="d"
-        Title="CategoryDialog" Height="450" Width="800">
+        Title="CategoryDialog"
+        WindowStartupLocation = "CenterScreen"
+        Height="450" Width="700">
     
         <Window.Resources>
             <DataTemplate DataType="{x:Type viewmodels:AddCatergoryViewModel}">

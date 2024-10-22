@@ -17,7 +17,7 @@ namespace BillingSoftware.Core.Contracts
 
         public Result<List<ProductCategoryDto>> GetProductCategory();
 
-        public Guid SaveProductCategory(ProductCategoryDto productCategory);
+        public Result<Guid> SaveProductCategory(ProductCategoryDto productCategory);
 
         public List<MeasurementUnitDto>  GetMeasurementUnits();
 

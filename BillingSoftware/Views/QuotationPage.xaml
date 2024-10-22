@@ -6,6 +6,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:properties="clr-namespace:BillingSoftware.Properties"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    Background="{DynamicResource MaterialDesignPaper}"
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -25,6 +28,274 @@
             The Mahapps Gray10 color represents where you should place your content.
             Place your content here.
             -->
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Page Title -->
+                <TextBlock Text="Add New Product" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Foreground="DarkSlateGray"
+                   Margin="0,0,0,20" />
+
+                <!-- Main Form Section -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                    <StackPanel Background="White"   VerticalAlignment="Top">
+
+                        <!-- Basic Information -->
+                        <TextBlock Text="Basic Information" 
+                           FontSize="18" 
+                           FontWeight="SemiBold" 
+                           Foreground="SlateGray" 
+                           Margin="0,0,0,10" />
+
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Product Name" />
+                                <TextBox x:Name="ProductName" Margin="0,5" Padding="5" Background="#F0F0F0" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Product Code / SKU" />
+                                <TextBox x:Name="ProductCode" Margin="0,5" Padding="5" Background="#F0F0F0" />
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Pricing Information -->
+                        <TextBlock Text="Pricing Information" 
+                           FontSize="18" 
+                           FontWeight="SemiBold" 
+                           Foreground="SlateGray" 
+                           Margin="0,0,0,10" />
+
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Sales Price" />
+                                <TextBox x:Name="SalesPrice" Margin="0,5" Padding="5" Background="#F0F0F0" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Wholesale Price" />
+                                <TextBox x:Name="WholesalePrice" Margin="0,5" Padding="5" Background="#F0F0F0" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="MRP" />
+                                <TextBox x:Name="MRP" Margin="0,5" Padding="5" Background="#F0F0F0" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="GST (%)" />
+                                <TextBox x:Name="GST" Margin="0,5" Padding="5" Background="#F0F0F0" />
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Stock Information -->
+                        <TextBlock Text="Stock Information" 
+                           FontSize="18" 
+                           FontWeight="SemiBold" 
+                           Foreground="SlateGray" 
+                           Margin="0,0,0,10" />
+
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Quantity" />
+                                <TextBox x:Name="Quantity" Margin="0,5" Padding="5" Background="#F0F0F0" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Stocks" />
+                                <TextBox x:Name="Stocks" Margin="0,5" Padding="5" Background="#F0F0F0" />
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Product Details -->
+                        <TextBlock Text="Product Details" 
+                           FontSize="18" 
+                           FontWeight="SemiBold" 
+                           Foreground="SlateGray" 
+                           Margin="0,0,0,10" />
+
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="HSN Code" />
+                                <TextBox x:Name="HSNCode" Margin="0,5" Padding="5" Background="#F0F0F0" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Product Category" />
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox x:Name="ProductCategory" Width="200" Background="#F0F0F0">
+                                        <ComboBoxItem Content="Electronics" />
+                                        <ComboBoxItem Content="Apparel" />
+                                        <ComboBoxItem Content="Groceries" />
+                                    </ComboBox>
+                                    <Button Content="+" 
+                                    Width="30" 
+                                    Margin="5,0,0,0" 
+                                    ToolTip="Add New Category"
+                                    Background="#007ACC" 
+                                    Foreground="White"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Section Title -->
+                            <TextBlock Text="Product Pricing Details" FontSize="24" FontWeight="Bold" Grid.Row="0" Margin="0,0,0,20" />
+
+                            <StackPanel Grid.Row="1" Background="White" Margin="20">
+
+                                <!-- Price Information Section -->
+                                <TextBlock Text="Price Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" />
+                                <Grid Margin="0,0,0,20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Sales Price -->
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock Text="Sales Price" />
+                                        <TextBox  mah:TextBoxHelper.Watermark="Enter sales price" />
+                                    </StackPanel>
+
+                                    <!-- Wholesale Price -->
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Wholesale Price" />
+                                        <TextBox  mah:TextBoxHelper.Watermark="Enter wholesale price" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- MRP Information -->
+                                <Grid Margin="0,0,0,20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- MRP -->
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock Text="MRP" />
+                                        <TextBox  mah:TextBoxHelper.Watermark="Enter MRP" />
+                                    </StackPanel>
+
+                                    <!-- Discount on Sales -->
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Discount on Sales (%)" />
+                                        <TextBox x:Name="SalesDiscount" mah:TextBoxHelper.Watermark="Enter sales discount (%)" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Tax Information Section -->
+                                <TextBlock Text="Tax Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" />
+                                <Grid Margin="0,0,0,20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- GST -->
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock Text="GST (%)" />
+                                        <TextBox   mah:TextBoxHelper.Watermark="Enter GST (%)" />
+                                    </StackPanel>
+
+                                    <!-- CGST -->
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="CGST (%)" />
+                                        <TextBox x:Name="CGST" mah:TextBoxHelper.Watermark="Enter CGST (%)" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- SGST Information -->
+                                <Grid Margin="0,0,0,20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- SGST -->
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock Text="SGST (%)" />
+                                        <TextBox x:Name="SGST" mah:TextBoxHelper.Watermark="Enter SGST (%)" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Calculated Final Price -->
+                                <TextBlock Text="Final Price After Discount  Tax" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10" />
+                                <StackPanel Margin="0,0,0,20">
+                                    <TextBlock Text="Final Price" />
+                                    <TextBox x:Name="FinalPrice" IsReadOnly="True" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Product Information -->
+                        <TextBlock Text="Product Information" 
+                           FontSize="18" 
+                           FontWeight="SemiBold" 
+                           Foreground="SlateGray" 
+                           Margin="0,0,0,10" />
+                        <TextBox x:Name="ProductInformation" 
+                         AcceptsReturn="True" 
+                         Height="100" 
+                         TextWrapping="Wrap" 
+                         Margin="0,5" Padding="5" 
+                         Background="#F0F0F0" />
+
+                        <!-- Buttons -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,20,0,0">
+                            <Button x:Name="SubmitButton" Content="Add Product" 
+                            Background="#007ACC" 
+                            Foreground="White" 
+                            Width="120" 
+                            Margin="10"/>
+                            <Button x:Name="ResetButton" Content="Reset" 
+                            Background="#FF6347" 
+                            Foreground="White" 
+                            Width="120" 
+                            Margin="10"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

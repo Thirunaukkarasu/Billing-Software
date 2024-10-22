@@ -22,15 +22,18 @@ namespace BillingSoftware.Repository.CommonRepo
             {
                 CategoryId = x.CategoryId,
                 CategoryName = x.CategoryName, 
-                TamilCategoryName = x.TamilCategoryName,
+                LocalCategoryName = x.LocalCategoryName,
+                CategoryCode = x.CategoryCode,
             }).ToList();
         }
 
         public Guid SaveProductCategory(ProductCategoryDto productCategory)
-        { 
-            var category = new ProductCategory() 
+        {
+            var category = new ProductCategory()
             {
-               CategoryName = productCategory.CategoryName
+                CategoryName = productCategory.CategoryName,
+                LocalCategoryName = productCategory.LocalCategoryName,
+                CategoryCode = productCategory.CategoryCode,
             };
             dbContext.ProductCategory.Add(category);
             dbContext.SaveChanges();

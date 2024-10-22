@@ -14,10 +14,13 @@ using System.Windows.Xps.Packaging;
 using System.Printing;
 using System.IO;
 using System.ComponentModel;
+using BillingSoftware.PrintTemplates;
+using BillingSoftware.Contracts.ViewModels;
+using BillingSoftware.Views;
 
 namespace BillingSoftware.ViewModels;
 
-public class AddPurchaseViewModel : ObservableObject
+public class AddPurchaseViewModel : ObservableObject, INavigationAware
 {
     #region Private Property
     private ICommand _savePurchaseOrderCommand;
@@ -63,6 +66,7 @@ public class AddPurchaseViewModel : ObservableObject
             suppliersDto = value;
             PurchaseProductsSource = new();
             GetInvoiceSourceDetails();
+            OnPropertyChanged(nameof(SelectedSupplier));
             OnPropertyChanged(nameof(SupplierAddress));
             OnPropertyChanged(nameof(SupplierPhoneNo));
             OnPropertyChanged(nameof(InvoiceSource));
@@ -100,7 +104,6 @@ public class AddPurchaseViewModel : ObservableObject
         {
             _supplierAddress = value;
             suppliersDto.SupplierAddress = value;
-            GetInvoiceSourceDetails();
             OnPropertyChanged(nameof(SupplierAddress));
         }
     }
@@ -143,7 +146,8 @@ public class AddPurchaseViewModel : ObservableObject
             InvoiceText = string.Empty;
             SelectedInvoice = new();
         }
-        else {
+        else 
+        {
             InvoiceSource = new ObservableCollection<InvoiceDto>();
             InvoiceText = string.Empty;
             SelectedInvoice = new();
@@ -303,12 +307,29 @@ public class AddPurchaseViewModel : ObservableObject
         SuppliersSource = _supplierService.GetSuppliers().ToObservableCollection();
         PurchaseProductsSource = new ObservableCollection<PurchasedProductsDto>();
         _printingService = printingService;
-        _paginator = paginator;
-
+        _paginator = paginator; 
         ProductsList = _productService.GetProducts().ToList();
         MeasurementUnitSource = _commonService.GetMeasurementUnits().ToObservableCollection();
-
         PurchaseProductsSource.CollectionChanged += (s, e) => CalculateTotalPurchasedRate();
+    }
+     
+    public void OnNavigatedTo(object parameter)
+    {
+        if(parameter != null)
+        {
+            if (parameter is InvoiceDto data)
+            {
+                SuppliersSource = _supplierService.GetSuppliers().ToObservableCollection();
+                SelectedSupplier = SuppliersSource.First(x => x.SupplierId == data.SupplierId);
+                SupplierText = SelectedSupplier.SupplierName;
+                SelectedInvoice = data;
+                InvoiceText = SelectedInvoice.InvoiceNo;
+            }
+        }    
+    }
+
+    public void OnNavigatedFrom()
+    {
     }
 
     private void PurchaseProducts_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -318,8 +339,7 @@ public class AddPurchaseViewModel : ObservableObject
             CalculateTotalPurchasedRate();
         }
     }
-
-
+     
     private void CalculateTotalPurchasedRate()
     {
         TotalPurchasedRate = PurchaseProductsSource.Sum(x => x.Amount);
@@ -340,8 +360,7 @@ public class AddPurchaseViewModel : ObservableObject
             CalculateBalanceAmount();
         }
     }
-
-
+     
     private decimal _totalAmountPaid;
     public decimal TotalAmountPaid
     {
@@ -380,11 +399,10 @@ public class AddPurchaseViewModel : ObservableObject
             OnPropertyChanged(nameof(TotalPurchasedRate));
         }
     }
-
-
+     
     private void OpenAddProductCategoryDialog()
     {
-        _dialogService.ShowDialog(_addCatergoryViewModel);
+        _dialogService.ShowDialog<CategoryDialog>(_addCatergoryViewModel);
         ProductCategorySource = _commonService.GetProductCategory().Value.ToObservableCollection();
     }
 
@@ -416,32 +434,7 @@ public class AddPurchaseViewModel : ObservableObject
             OnPropertyChanged(nameof(ProductCategorySource));
         }
     }
-
-
-    //private ProductCategoryDto _SelectedProductCategory;
-    //public ProductCategoryDto SelectedProductCategory
-    //{
-    //    get
-    //    {
-    //        return _SelectedProductCategory;
-    //    }
-    //    set
-    //    {
-    //        _SelectedProductCategory = value;
-    //        //productCategoryDto = value;
-    //        _products.CategoryId = value.CategoryId;
-    //        _products.SelectedProductCategoryRow = value;
-    //        if (value.CategoryId != Guid.Empty)
-    //        {
-    //            ProductsSource = _productService.GetProductsByCategory(value.CategoryId).ToObservableCollection();
-    //        }
-    //        OnPropertyChanged(nameof(SelectedProductCategory));
-    //        OnPropertyChanged(nameof(ProductsSource));
-    //    }
-    //}
-
-
-
+     
     private ObservableCollection<PurchasedProductsDto> _purchaseProductsSource;
     public ObservableCollection<PurchasedProductsDto> PurchaseProductsSource
     {
@@ -472,46 +465,13 @@ public class AddPurchaseViewModel : ObservableObject
             OnPropertyChanged(nameof(ProductsSource));
         }
     }
-
-    //private ProductsDto _selectedProductRow;
-    //public ProductsDto SelectedProductRow
-    //{
-    //    get => _selectedProductRow;
-    //    set
-    //    {
-    //        if (value != null)
-    //        {
-    //            SetProperty(ref _selectedProductRow, value);
-    //            _products = value;
-    //        }
-    //        OnPropertyChanged(nameof(SelectedProductRow));
-    //        //OnPropertyChanged(nameof(SelectedProductCategory));
-    //    }
-    //}
-
-    //private ProductsDto _selectedProduct;
-    //public ProductsDto SelectedProduct
-    //{
-    //    get
-    //    {
-    //        return _selectedProduct;
-    //    }
-    //    set
-    //    {
-    //        _selectedProduct = value;
-    //        //productCategoryDto = value;
-    //        _products.ProductName = value?.ProductName;
-    //        OnPropertyChanged(nameof(SelectedProduct));
-    //    }
-    //}
-
-
+     
     #region Print
     public void PrintInvoice()
     {
         Func<UIElement> reportFactory;
-        //reportFactory = () => new SampleTemplate(PurchaseProductsSource.ToList());
-        //LoadReport(reportFactory, CancellationToken.None);
+        reportFactory = () => new SampleTemplate(PurchaseProductsSource.ToList());
+        LoadReport(reportFactory, CancellationToken.None);
     }
     private XpsDocument xpsDocument;
 

@@ -15,123 +15,221 @@
     xmlns:viewmodels="clr-namespace:BillingSoftware.ViewModels"  
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock
-            Style="{StaticResource PageTitleStyle}"
-            Margin="{StaticResource MediumLeftMargin}"
-            Text="{x:Static properties:Resources.AddProductPageTitle}" />
-        <Grid
-            Grid.Row="1"
-            Margin="{StaticResource MediumLeftRightMargin}"
-            Background="{DynamicResource MahApps.Brushes.Gray10}">
-            <!--
-            The Mahapps Gray10 color represents where you should place your content.
-            Place your content here.
-            -->
-       
 
-		<Grid x:Name="gdAddItems" Grid.Row="2" Margin="10">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Grid Grid.Row="0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
-					<StackPanel Margin="5" Orientation="Vertical" Grid.Row="0" Grid.Column="0">
-						<TextBlock Text="Category"/>
+        <!-- Page Title -->
 
-						<ComboBox Grid.Column="0" Name="cbCategory" mah:TextBoxHelper.Watermark="Select Category"           ItemsSource="{Binding ProductCategorySource}"  IsTextSearchEnabled="False" IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"  SelectedItem="{Binding SelectedProductCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-					Text ="{Binding ProductCategoryText, UpdateSourceTrigger=LostFocus}" >
-						</ComboBox>
-						<Button Height="30" Grid.Column="1"  Command="{Binding AddCategoryCommand}" >
-							<Image Source="/Icons/add.png" />
-						</Button>
+        <TextBlock Text="Add New Product" FontSize="24" FontWeight="Bold" Grid.Row="0" Margin="0,0,0,5" />
 
-					</StackPanel>
-					<StackPanel Margin="5" Orientation="Vertical" Grid.Row="0" Grid.Column="1">
-						<TextBlock Text="Product Name"/>
-						<ComboBox Name="cbProductName"  ItemsSource="{Binding ProductsSource}"
-			   IsTextSearchEnabled="False" mah:TextBoxHelper.Watermark="Select Product Name"
-				IsEditable="True" cb:ComboBox.IsFilterOnAutocompleteEnabled="True"
-				SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"    Text ="{Binding ProductNameText, UpdateSourceTrigger=LostFocus}"  >
-						</ComboBox>
-					</StackPanel>
-					<StackPanel Margin="5"  Orientation="Vertical" Grid.Row="0" Grid.Column="2">
-						<TextBlock  Text="Description"/>
-						<TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Description"    SpellCheck.IsEnabled="True" />
-					</StackPanel>
-					<StackPanel Margin="5" Orientation="Vertical" Grid.Row="0" Grid.Column="3">
-						<TextBlock  Text="HSN Code"/>
-						<TextBox Text="{Binding HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter HSN Code"  SpellCheck.IsEnabled="True" />
-					</StackPanel>
-					<StackPanel Margin="5"  Orientation="Vertical" Grid.Row="0" Grid.Column="4">
-						<TextBlock  Text="Batch No"/>
-						<TextBox Text="{Binding BatchNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Batch No" SpellCheck.IsEnabled="True" />
-					</StackPanel>
-				</Grid>
-				<Grid Grid.Row="1">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
+        <!-- Main Form Section -->
+        <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">-->
+        <StackPanel Grid.Row="1" Background="White" Margin="10">
 
-					<StackPanel Margin="5" Orientation="Vertical" Grid.Row="1" Grid.Column="0">
-						<TextBlock  Text="Quantity"/>
-						<TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Quantity" SpellCheck.IsEnabled="True" />
-					</StackPanel>
-					<StackPanel Margin="5"  Orientation="Vertical" Grid.Row="1" Grid.Column="1">
-						<TextBlock  Text="Rate/Unit"/>
-						<TextBox Text="{Binding RatePerUnit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-								 mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Rate Per Unit" SpellCheck.IsEnabled="True" />
-					</StackPanel>
-					<StackPanel Margin="5"  Orientation="Vertical" Grid.Row="1" Grid.Column="2">
-						<TextBlock  Text="Product MRP"/>
-						<TextBox  Text="{Binding ProductMRP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"   mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Product MRP" SpellCheck.IsEnabled="True" />
-					</StackPanel>
-					<StackPanel Margin="5" Orientation="Vertical" Grid.Row="1" Grid.Column="3">
-						<TextBlock  Text="GST %"/>
-						<TextBox Text="{Binding GSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter GST %" SpellCheck.IsEnabled="True" />
-					</StackPanel>
-					<StackPanel Margin="5"  Orientation="Vertical" Grid.Row="1" Grid.Column="4">
-						<TextBlock  Text="CGST %"/>
-						<TextBox Text="{Binding CGSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter CGST %"  SpellCheck.IsEnabled="True" />
-					</StackPanel>
-					<StackPanel Margin="5" Orientation="Vertical" Grid.Row="1" Grid.Column="5">
-						<TextBlock  Text="Discount"/>
-						<TextBox Text="{Binding Discount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Discount" SpellCheck.IsEnabled="True" />
-					</StackPanel>
-					<StackPanel Margin="5"  Orientation="Vertical" Grid.Row="1" Grid.Column="6">
-						<TextBlock  Text="Sells Price"/>
-						<TextBox  Text="{Binding SellsRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.ClearTextButton="True"  mah:TextBoxHelper.Watermark="Enter Sells Price" SpellCheck.IsEnabled="True" />
-					</StackPanel>
-					<StackPanel Margin="5" VerticalAlignment="Bottom"  Orientation="Vertical" Grid.Row="1" Grid.Column="7">
-						<Button x:Name="btnAddProduct" Width="100" Margin="2" DockPanel.Dock="Left" Command="{Binding AddProductCommand}" BorderThickness="1">
-							Add Product
-						</Button>
-					</StackPanel>
+            <!-- Basic Information -->
+            <TextBlock Text="Basic Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,5" />
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Category" />
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox x:Name="ProductCategory" Width="250" 
+                                  ItemsSource="{Binding Path=ProductCategorySource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                  SelectedItem="{Binding Path=SelectedProductCategory ,UpdateSourceTrigger=PropertyChanged,   Mode=TwoWay}" >
+                                </ComboBox>
+                                <Button Content="+" Command="{Binding AddCategoryCommand}" Width="30"  Margin="5,0,0,0" 
+                                ToolTip="Add New Category"  Background="#007ACC"  Foreground="White"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Brand" />
+                    <TextBox x:Name="Brand" Text="{Binding Path=Brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.Watermark="Enter brand" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="HSN Code" />
+                    <TextBox x:Name="HSNCode" Text="{Binding Path=HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="Enter brand" />
+                </StackPanel>
 
 
-				</Grid>
-			</Grid>
-		</Grid>
-        </Grid>
+                <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                    <!-- Upload Image -->
+                    <TextBlock Text="Upload Prodcut Image" />
+                    <Button x:Name="UploadImage" Content="Upload Product Image"   HorizontalAlignment="Left" />
+                </StackPanel>
+
+
+            </Grid>
+
+            <TextBlock Text="Measurement" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,5" />
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Size" />
+                    <TextBox x:Name="ProductSize" Text="{Binding Path=ProductSize, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.Watermark="Enter size of product" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Measurement Unit" />
+                    <ComboBox  
+                   ItemsSource="{Binding  Path=MeasurementUnitSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                   SelectedItem="{Binding Path=SelectedMeasurementUnit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       mah:TextBoxHelper.Watermark="Select Measurement Unit"  />
+                </StackPanel>
+
+            </Grid>
+
+            <!-- Product Name & Product Code -->
+            <TextBlock Text="Product Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,5" />
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Product Name" />
+                    <TextBox x:Name="ProductName" Text="{Binding Path=ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.Watermark="Enter product name" />
+                    <CheckBox x:Name="AGProductName" Margin="0,5" IsChecked="{Binding IsAutoGenerateProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Content="Auto Generate Product Name" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Product Code" />
+                    <TextBox x:Name="ProductCode" Text="{Binding Path=ProductCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.Watermark="Enter product code" />
+                    <CheckBox x:Name="AGProductCode" IsChecked="{Binding IsAutoGenerateProductCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,5" Content="Auto Generate Product Code" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="Product Description" />
+                    <TextBox x:Name="Description" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" AcceptsReturn="True" Height="20" TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Pricing Information -->
+            <TextBlock Text="Pricing Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,5" />
+            <Grid Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel  Grid.Row="0" Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="MRP" />
+                    <TextBox x:Name="MRP" Text="{Binding Path=ProductMRP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="Enter MRP price" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Sales Price" />
+                    <TextBox x:Name="SalesPrice" Text="{Binding Path=SalesPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="Enter sales price" />
+                </StackPanel>
+
+
+                <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="Discount for Sales (%)" />
+                    <TextBox x:Name="Discount" Text="{Binding Path=Discount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="Enter sales discount (%)" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,10,10,0">
+                    <TextBlock Text="Wholesale Price" />
+                    <TextBox x:Name="WholeSalePrice" Text="{Binding Path=WholeSalePrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="Enter Wholesale price" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,10,10,0">
+                    <TextBlock Text="Minimum Quatity" />
+                    <TextBox x:Name="MinimumQuatity" Text="{Binding Path=MinimumQuatityForWS, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="Enter minimum order" />
+                </StackPanel>
+
+            </Grid>
+
+            <!-- Stock Information -->
+            <TextBlock Text="Stock Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,5" />
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Quantity" />
+                    <TextBox x:Name="Quantity" Text="{Binding Path=Quantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="Enter number of quantities" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="In Stocks" />
+                    <TextBox x:Name="Stock"  Text="{Binding Path=Stock, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.Watermark="Enter in stocks" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Tax Information -->
+            <TextBlock Text="Tax Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,5" />
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="GST (%)" />
+                    <TextBox x:Name="GSTPercent" Text="{Binding Path=GSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.Watermark="Enter GST (%)" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="SGST (%)" />
+                    <TextBox x:Name="SGSTPercent" Text="{Binding Path=SGSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.Watermark="Enter CGST (%)" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="CGST (%)" />
+                    <TextBox x:Name="CGSTPercent" Text="{Binding Path=CGSTPercent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  mah:TextBoxHelper.Watermark="Enter CGST (%)" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                    <TextBlock Text="Price With Tax" />
+                    <TextBox x:Name="PriceWithTax" Text="{Binding Path=PriceWithTax, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
+                </StackPanel>
+
+            </Grid>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,0,0">
+                <Button x:Name="SubmitButton" Content="Add Product" Command="{Binding SaveProductCommand}"  Background="#007ACC" Foreground="White" Width="100" Margin="10"/>
+                <Button x:Name="ResetButton" Content="Reset" Background="#FF6347" Foreground="White" Width="100" Margin="10"/>
+            </StackPanel>
+        </StackPanel>
+        <!--</ScrollViewer>-->
     </Grid>
 </Page>
